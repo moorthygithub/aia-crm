@@ -1,118 +1,226 @@
-import { useLocation, Link } from "react-router-dom";
-import {
-  Navbar,
-  Typography,
-  IconButton,
-  Breadcrumbs,
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-} from "@material-tailwind/react";
-import { UserCircleIcon, Bars3Icon } from "@heroicons/react/24/solid";
-import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
-import Logout from "./Logout";
-import { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import Layout from "../../../layout/Layout";
+import { ContextPanel } from "../../../utils/ContextPanel";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import BASE_URL from "../../../base/BaseUrl";
+import MUIDataTable from "mui-datatables";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { CiSquarePlus } from "react-icons/ci";
+import Moment from "moment";
+import BookingFilter from "../../../components/BookingFilter";
 
-const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
-  const { pathname } = useLocation();
+const TodayBooking = () => {
+  const [todayBookingData, setTodayBookingData] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const { isPanelUp } = useContext(ContextPanel);
+  const navigate = useNavigate();
 
-  const [openModal, setOpenModal] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  useEffect(() => {
+    const fetchTodayData = async () => {
+      try {
+        if (!isPanelUp) {
+          navigate("/maintenance");
+          return;
+        }
+        setLoading(true);
+        const token = localStorage.getItem("token");
+        const response = await axios.get(
+          `${BASE_URL}/api/panel-fetch-booking-today-list`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
-  const handleOpenLogout = () => setOpenModal(!openModal);
+        setTodayBookingData(response.data?.booking);
+      } catch (error) {
+        console.error("Error fetching dashboard data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchTodayData();
+    setLoading(false);
+  }, []);
 
-  const pathSegments = pathname.split("/").filter((el) => el !== "");
-
-  const breadcrumbs = [
-    { name: "Home", link: "/home" },
-    ...pathSegments.map((segment, index) => ({
-      name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/${pathSegments.slice(0, index + 1).join("/")}`,
-    })),
+  const columns = [
+    {
+      name: "order_ref",
+      label: "ID",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "branch_name",
+      label: "Branch",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
+      name: "order_customer",
+      label: "Customer",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "order_customer_mobile",
+      label: "Mobile",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "order_date",
+      label: "Booking Date",
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: (value) => {
+          return Moment(value).format("DD-MM-YYYY");
+        },
+      },
+    },
+    {
+      name: "order_service_date",
+      label: "Service Date",
+      options: {
+        filter: true,
+        sort: false,
+        customBodyRender: (value) => {
+          return Moment(value).format("DD-MM-YYYY");
+        },
+      },
+    },
+    {
+      name: "order_service",
+      label: "Service",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "order_amount",
+      label: "Price",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "order_no_assign",
+      label: "No of Assign",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "updated_by",
+      label: "Confirm By",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "order_status",
+      label: "Status",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "id",
+      label: "Action",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (id) => {
+          return (
+            <div className="flex items-center space-x-2">
+              <CiSquarePlus
+                onClick={() => navigate(`/edit-booking/${id}`)}
+                title="edit booking"
+                className="h-5 w-5 cursor-pointer"
+              />
+              <MdOutlineRemoveRedEye
+                onClick={() => navigate(`/view-booking/${id}`)}
+                title="View Cylinder Info"
+                className="h-5 w-5 cursor-pointer"
+              />
+            </div>
+          );
+        },
+      },
+    },
   ];
+  const options = {
+    selectableRows: "none",
+    elevation: 0,
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5, 10, 25],
+    responsive: "standard",
+    viewColumns: true,
+    download: false,
+    print: false,
+    setRowProps: (rowData) => {
+      const orderStatus = rowData[10];
+      let backgroundColor = "";
+      if (orderStatus === "Confirmed") {
+        backgroundColor = "#d4edda"; // light green
+      } else if (orderStatus === "Completed") {
+        backgroundColor = "#fff3cd"; // light yellow
+      } else if (orderStatus === "Inspection") {
+        backgroundColor = "#e2e3e5"; // light gray
+      } else if (orderStatus === "Pending") {
+        backgroundColor = "#f8d7da"; // light red
+      } else if (orderStatus === "Cancel") {
+        backgroundColor = "#ADD8E6"; // light  blue
+      } else if (orderStatus === "On the way") {
+        backgroundColor = "#b68dee"; // light  purple
+      }
 
-  const pageTitle =
-    pathSegments.length === 0
-      ? "Home"
-      : pathSegments[pathSegments.length - 1]?.charAt(0).toUpperCase() +
-        pathSegments[pathSegments.length - 1]?.slice(1);
-
-  // Hardcode fixedNavbar to true
-  const fixedNavbar = true;
-
+      return {
+        style: {
+          backgroundColor: backgroundColor,
+          borderBottom: "10px solid #f1f7f9",
+        },
+      };
+    },
+  };
   return (
-    <Navbar
-      color={fixedNavbar ? "white" : "transparent"}
-      className={`fixed top-0 left-0 right-0 z-40 py-3 px-4 bg-gradient-to-br from-gray-800 to-gray-700 text-white shadow-lg shadow-blue-900`}
-      style={{ margin: "16px", padding: "12px", borderRadius: "12px" }}
-    >
-      <div className="flex justify-between items-center gap-6">
-        <div className="capitalize">
-          <Breadcrumbs
-            className={`bg-transparent p-0 transition-all ${
-              fixedNavbar ? "mt-1" : ""
-            }`}
-          >
-            {breadcrumbs.map((breadcrumb, index) => (
-              <Link key={index} to={breadcrumb.link}>
-                <Typography
-                  variant="small"
-                  color="white"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
-                >
-                  {breadcrumb.name}
-                </Typography>
-              </Link>
-            ))}
-          </Breadcrumbs>
-          <Typography variant="h6" color="white">
-            {pageTitle}
-          </Typography>
-        </div>
-        <div className="flex items-center">
-          {/* Sidebar toggle button for mobile view */}
-          <IconButton
-            variant="text"
-            color="white"
-            className="grid xl:hidden"
-            onClick={() => setOpenSideNav(!openSideNav)}
-          >
-            <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
-          </IconButton>
-          {/* Profile icon */}
-          <Menu
-            open={profileMenuOpen}
-            handler={setProfileMenuOpen}
-            placement="bottom-end"
-          >
-            <MenuHandler>
-              <IconButton variant="text" color="orange">
-                <UserCircleIcon className="h-5 w-5 text-white" />
-              </IconButton>
-            </MenuHandler>
-            <MenuList className="bg-gray-700">
-              <MenuItem>
-                <Link to="/profile" className="text-black">
-                  Profile
-                </Link>
-              </MenuItem>
-              <MenuItem>
-                <Link to="/change-password" className="text-black">
-                  Change Password
-                </Link>
-              </MenuItem>
-            </MenuList>
-          </Menu>
-          {/* Settings icon */}
-          <IconButton variant="text" color="red" onClick={handleOpenLogout}>
-            <HiArrowRightStartOnRectangle className="h-5 w-5 text-red" />
-          </IconButton>
-        </div>
+    <Layout>
+      <BookingFilter />
+      {/* <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
+          Today Booking List
+        </h3>
+
+        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+          + Add Booking
+        </Link>
+      </div> */}
+      <div className="mt-5">
+        <MUIDataTable
+          title={"Today Booking List"}
+          data={todayBookingData ? todayBookingData : []}
+          columns={columns}
+          options={options}
+        />
       </div>
-      <Logout open={openModal} handleOpen={handleOpenLogout} />
-    </Navbar>
+    </Layout>
   );
 };
 
-export default DashboardNavbar;
+export default TodayBooking;
