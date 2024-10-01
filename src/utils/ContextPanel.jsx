@@ -36,28 +36,33 @@ const AppProvider = ({ children }) => {
       navigate("/maintenance");
     } else if (isPanelUp?.success) {
       if (token) {
-        if (
-          currentPath === "/home" ||
-          currentPath === "/profile" ||
-          currentPath === "/country" ||
-          currentPath === "/courses" ||
-          currentPath === "/openList-enquiry" ||
-          currentPath === "/overdueList-enquiry" ||
-          currentPath === "/closeList-enquiry" ||
-          currentPath === "/student" ||
-          currentPath === "/pending-delivery" ||
-          currentPath === "/deliverd-delivery" ||
-          currentPath === "/class" ||
-          currentPath === "/request-pending" ||
-          currentPath === "/request-completed" ||
-          currentPath === "/request-approved" ||
-          currentPath === "/task-pending" ||
-          currentPath === "/task-inspection" ||
-          currentPath === "/task-completed" ||
-          currentPath === "/notification" ||
-          currentPath === "/download-enquiry" ||
-          currentPath === "/change-password"
-        ) {
+        const allowedPaths = [
+          "/home",
+          "/profile",
+          "/country",
+          "/add-country",
+          "/courses",
+          "/openList-enquiry",
+          "/overdueList-enquiry",
+          "/closeList-enquiry",
+          "/student",
+          "/pending-delivery",
+          "/deliverd-delivery",
+          "/class",
+          "/request-pending",
+          "/request-completed",
+          "/request-approved",
+          "/task-pending",
+          "/task-inspection",
+          "/task-completed",
+          "/notification",
+          "/download-enquiry",
+          "/change-password",
+        ];
+        const isAllowedPath = allowedPaths.some((path) =>
+          currentPath.startsWith(path)
+        );
+        if (isAllowedPath) {
           navigate(currentPath);
         } else {
           navigate("/home");

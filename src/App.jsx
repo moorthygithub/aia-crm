@@ -24,18 +24,24 @@ import ApprovedListRequest from "./pages/request/approvedList/ApprovedListReques
 import CompletedListRequest from "./pages/request/completedList/CompletedListRequest";
 import InspectionListTask from "./pages/taskManager/inspectionList/InspectionListTask";
 import CompletedListTask from "./pages/taskManager/completedList/CompletedListTask";
+import AddCountry from "./pages/country/AddCountry";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   return (
     <>
+      <ToastContainer />
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/register" element={<SIgnUp />} />
         <Route path="/forget-password" element={<ForgetPassword />} />
         <Route path="/home" element={<ProtectedRoute element={<Home />} />} />
         <Route path="/maintenance" element={<Maintenance />} />
-
+        {/* country  */}
         <Route path="/country" element={<CountryList />} />
+        <Route path="/add-country" element={<AddCountry />} />
+        courses
         <Route path="/courses" element={<CoursesList />} />
         {/* enquiry  */}
         <Route path="/openList-enquiry" element={<OpenListEnquiry />} />
@@ -58,7 +64,6 @@ const App = () => {
         <Route path="/task-completed" element={<CompletedListTask />} />
         <Route path="/notification" element={<NotificationList />} />
         <Route path="/download-enquiry" element={<EnquiryDownload />} />
-
         <Route
           path="/profile"
           element={<ProtectedRoute element={<Profile />} />}
@@ -67,7 +72,6 @@ const App = () => {
           path="/change-password"
           element={<ProtectedRoute element={<ChangePassword />} />}
         />
-
         {/* <Route
           path="*"
           element={<ProtectedRoute element={<Navigate to="/" />} />}
