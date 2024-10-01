@@ -240,7 +240,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/task-pending">
+            <NavLink to="/task-completed">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}

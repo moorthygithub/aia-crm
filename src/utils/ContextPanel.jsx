@@ -42,11 +42,18 @@ const AppProvider = ({ children }) => {
           currentPath === "/country" ||
           currentPath === "/courses" ||
           currentPath === "/openList-enquiry" ||
+          currentPath === "/overdueList-enquiry" ||
+          currentPath === "/closeList-enquiry" ||
           currentPath === "/student" ||
           currentPath === "/pending-delivery" ||
+          currentPath === "/deliverd-delivery" ||
           currentPath === "/class" ||
           currentPath === "/request-pending" ||
+          currentPath === "/request-completed" ||
+          currentPath === "/request-approved" ||
           currentPath === "/task-pending" ||
+          currentPath === "/task-inspection" ||
+          currentPath === "/task-completed" ||
           currentPath === "/notification" ||
           currentPath === "/download-enquiry" ||
           currentPath === "/change-password"
