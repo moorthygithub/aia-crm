@@ -7,11 +7,13 @@ import {
 } from "@material-tailwind/react";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Logout = ({ open, handleOpen }) => {
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.clear();
+    toast.success("User Logged Out Successfully");
     navigate("/");
   };
 

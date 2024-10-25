@@ -5,13 +5,21 @@ import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import { Link, useNavigate } from "react-router-dom";
 import { ContextPanel } from "../../utils/ContextPanel";
-import { CiSquarePlus } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
+import { Email, GroupAdd, Visibility, WhatsApp } from "@mui/icons-material";
+import moment from "moment";
+import { Tooltip } from "@mui/material";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import Edit from "@mui/icons-material/Edit";
+import PermPhoneMsgIcon from "@mui/icons-material/PermPhoneMsg";
+import { toast } from "react-toastify";
 
 const ClassList = () => {
   const [classListData, setClassListData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+  const [shouldRefetch, setShouldRefetch] = useState(false);
   useEffect(() => {
     const fetchClassData = async () => {
       try {
@@ -30,7 +38,21 @@ const ClassList = () => {
           }
         );
 
-        setClassListData(response.data?.class);
+        const res = response.data?.class;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["class_date"]).format("DD-MM-YYYY"),
+            item["class_time"],
+            item["class_to_time"],
+            item["class_subject"],
+            item["class_status"],
+            item["id"],
+          ]);
+          console.log(tempRows, "tempRows");
+          setClassListData(tempRows);
+        }
+
+        // setClassListData(response.data?.class);
       } catch (error) {
         console.error("Error fetching class data", error);
       } finally {
@@ -39,7 +61,107 @@ const ClassList = () => {
     };
     fetchClassData();
     setLoading(false);
-  }, []);
+  }, [shouldRefetch]);
+
+  const updateData = (e, value) => {
+    e.preventDefault();
+    axios({
+      url: BASE_URL + "/api/panel-update-class-status/" + value,
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.status == 200) {
+        toast.success("Data Update Sucessfully");
+        setShouldRefetch(true);
+      } else {
+        toast.error("Error in Updating");
+      }
+    });
+  };
+
+  const sendclassEmail = (e, value) => {
+    e.preventDefault();
+    let data = {
+      class_id: value,
+    };
+    axios({
+      url: BASE_URL + "/api/panel-send-email-template-class",
+      method: "post",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.status == "200") {
+        toast.success("Email Sent Sucessfully");
+      } else {
+        toast.error("Email Not Sent Sucessfully");
+      }
+    });
+  };
+
+  const classwhatsApp = (e, value) => {
+    e.preventDefault();
+
+    axios({
+      url: BASE_URL + "/api/panel-fetch-class-by-id/" + value,
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      const phoneNumber = "+91";
+      const message = `Hello dear,
+        \n
+        *Reminder: Your next live class.*
+        \n
+        Details : 
+        \n
+        Date : ${res.data.class.class_date}
+        \n
+        Time : ${res.data.class.class_time} (please adjust for your time zone)
+        \n
+        Platform : Microsoft Teams
+        \n
+        Meeting Link : ${res.data.class.class_url}
+        \n
+        Please join on time. Let me know if you have any questions!
+        \n
+        Best Regards,\n
+        *Sadaf Choudhary*\n
+        Sr. Officer- Coordination\n
+        Academy of Internal Audit\n
+        C-826, Vipul Plaza, Sector-81`;
+      const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(
+        message
+      )}`;
+      window.open(whatsappLink, "_blank");
+    });
+  };
+
+  const mobilenotification = (e, value) => {
+    e.preventDefault();
+    const data = {
+      class_id: value,
+    };
+    axios({
+      url: BASE_URL+"/api/panel-create-class-notification",
+      method: "POST",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.status == "200") {
+        console.log("clicking")
+        toast.success("Notification Sent Sucessfully");
+      } else {
+        toast.error("Notification Not Sent Sucessfully");
+      }
+    });
+  };
 
   const columns = [
     {
@@ -47,7 +169,10 @@ const ClassList = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        /* customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        }, */
       },
     },
     {
@@ -55,7 +180,7 @@ const ClassList = () => {
       label: "Time",
       options: {
         filter: true,
-        sort: true,
+        sort: false,
         customBodyRender: (value, tableMeta) => {
           const time_class = tableMeta.rowData[1];
           const time_class_to = tableMeta.rowData[2];
@@ -93,28 +218,73 @@ const ClassList = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (id) => {
+        customBodyRender: (id, statusValue) => {
+          const status = classListData[statusValue.rowIndex][4];
+
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
-                title="edit country list"
-                className="h-5 w-5 cursor-pointer"
-              />
+              {status == "Inactive" && (
+                <Tooltip title="View" placement="top">
+                  <VisibilityIcon
+                    onClick={() => navigate(`/view-class/${id}`)}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
+              {status == "Active" && (
+                <Tooltip title="Update Status" placement="top">
+                  <Edit
+                    onClick={(e) => updateData(e, id)}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
+              {status == "Active" && (
+                <Tooltip title="Send Email" placement="top">
+                  <Email
+                    onClick={(e) => sendclassEmail(e, id)}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
+              {status == "Active" && (
+                <Tooltip title="Send Whatsapp" placement="top">
+                  <WhatsApp
+                    onClick={(e) => classwhatsApp(e, id)}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
+              {status == "Active" && (
+                <Tooltip title="Mobile Notification" placement="top">
+                  <PermPhoneMsgIcon
+                    onClick={(e) => mobilenotification(e, id)}
+                    className="h-5 w-5 cursor-pointer"
+                  />
+                </Tooltip>
+              )}
+              {status == "Active" && (
+                <Tooltip title="Add Attendence" placement="top">
+                  <Link to={`/add-attendence/${id}`}>
+                    <GroupAdd className="h-5 w-5 cursor-pointer" />
+                  </Link>
+                </Tooltip>
+              )}
             </div>
           );
         },
       },
     },
   ];
+
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    filter: false,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -130,7 +300,10 @@ const ClassList = () => {
           Class List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link
+          to="/add-class"
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        >
           + Add Class
         </Link>
       </div>

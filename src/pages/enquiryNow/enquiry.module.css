@@ -1,0 +1,251 @@
+
+
+.sub-container{
+    margin-top: 20px;
+    background : #fff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .main-container-out{
+  /* margin-top: 20px; */
+  display: flex;
+  justify-content: center;
+   height: 100vh;
+  }
+  
+  .sub-container-out{
+   
+    background: #fff;
+   width: 80%;
+    margin-top: 100px;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: 400px;
+  }
+  
+  .form-container > div:first-child{
+   display: grid;
+   grid-template-columns: repeat(4,1fr);
+   gap: 15px;
+  }
+  
+  
+  
+  .form-container > div:first-child > div{
+   display: flex;
+   flex-direction: column;
+  }
+  
+  .second-div{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+  }
+  
+  .second-div > div{
+   display: flex;
+   flex-direction: column;
+  }
+  
+  .third-div{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    gap: 15px;
+  }
+  
+  .third-div-out{
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 15px;
+  }
+  
+  
+  
+  .third-div > div{
+   display: flex;
+   flex-direction: column;
+  }
+  
+  
+  .search-div{
+    border: 1px solid  rgb(176 190 197);
+    padding: 9px;
+    border-radius: 5px;
+  }
+  
+  
+  .address-heading h1{
+     margin: 20px;
+     font-size: 22px;
+     font-weight: bold;
+     color: black;
+  }
+  
+  .address-div{
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(1,1fr);
+    gap: 15px;
+  }
+  
+  .address-div > div{
+   display: flex;
+   flex-direction: column;
+  }
+  
+  .address-first-div{
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+  }
+  
+  .address-first-div > div{
+   display: flex;
+   flex-direction: column;
+  }
+  
+  .address-second-div{
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px;
+  }
+  
+  
+  
+  .address-second-div > div{
+    display: flex;
+    flex-direction: column;
+  }
+  
+  
+  @media (min-width: 1200px) {
+    .address-second-div {
+        grid-template-columns: 4fr 8fr;
+    }
+  }
+  
+  
+  
+  
+  .heading{
+    color: black;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px !important;
+  }
+  
+  
+  
+  .custom-service-dev {
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    gap: 30px;
+    margin-top: 15px;
+  }
+  
+  
+  @media (min-width: 1200px) {
+    .custom-service-dev {
+        grid-template-columns: 8fr 4fr;
+    }
+  }
+  
+  
+  .submit-button{
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .submit-button > *:first-child{
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: "Urbanist-Regular";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21.6px;
+    text-align: left;
+    background: linear-gradient(360deg, #6F53D3 -25.41%, #C5B5FF 131.15%);
+    color: #ffffff;
+  }
+  
+  .submit-button > *:last-child{
+     margin-left: 10px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-family: "Urbanist-Regular";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 21.6px;
+    text-align: left;
+    background: linear-gradient(360deg, #6F53D3 -25.41%, #C5B5FF 131.15%);
+    color: #ffffff;
+  }
+  
+  
+
+  @media screen and (max-width: 770px) {
+      
+    .sub-container-out{
+   
+          width: 95%;
+      }
+  }
+
+
+  @media screen and (max-width: 550px) {
+
+
+    .sub-container-out{
+   
+        margin-top: 20px;
+        height: 93%;
+      }
+
+    .form-container > div:first-child {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 15px;
+    }
+    .second-div {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 15px;
+    }
+    .third-div {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 15px;
+    }
+    .third-div-out {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 15px;
+    }
+    .custom-service-dev {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .heading {
+      font-size: 12px;
+    }
+    .address-second-div {
+      grid-template-columns: 1fr;
+    }
+    .address-first-div{
+      grid-template-columns: repeat(1, 1fr);
+    }
+  
+   
+  
+  }

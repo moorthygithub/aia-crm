@@ -6,6 +6,9 @@ import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
+import moment from "moment";
+import { CircularProgress } from "@mui/material";
+import { toast } from "react-toastify";
 
 const StudentList = () => {
   const [studentListData, setStudentListData] = useState(null);
@@ -30,7 +33,23 @@ const StudentList = () => {
           }
         );
 
-        setStudentListData(response.data?.student);
+        const res = response.data?.student;
+        console.log(res , "res")
+
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            item["user_uid"],
+            moment(item["registration_date"]).format("DD-MM-YYYY"),
+
+            item["name"],
+            item["mobile"],
+            item["qualification"],
+            item["admission_form_no"],
+            item["status"],
+            item["id"],
+          ]);
+          setStudentListData(response.data?.student);
+        }
       } catch (error) {
         console.error("Error fetching student data", error);
       } finally {
@@ -47,15 +66,18 @@ const StudentList = () => {
       label: "UID",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
       name: "registration_date",
       label: "Date",
       options: {
-        filter: true,
+        filter: false,
         sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
@@ -95,7 +117,7 @@ const StudentList = () => {
       label: "Status",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
 
@@ -109,6 +131,7 @@ const StudentList = () => {
           return (
             <div className="flex items-center space-x-2">
               <MdOutlineRemoveRedEye
+              onClick={() => navigate(`/view-student/${id}`)}
                 title="view "
                 className="h-5 w-5 cursor-pointer"
               />
@@ -121,12 +144,11 @@ const StudentList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    filter: false,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -135,25 +157,63 @@ const StudentList = () => {
       };
     },
   };
-  return (
-    <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Student List
-        </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
-          Month End Email Notification
-        </Link>
-      </div>
-      <div className="mt-5">
-        <MUIDataTable
-          data={studentListData ? studentListData : []}
-          columns={columns}
-          options={options}
+ const emailnotification = (e) => {
+    e.preventDefault();
+    setLoading(true)
+    axios({
+      url: BASE_URL+"/api/panel-send-email-notification",
+      method: "get",
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+    
+   
+        if(res.data.code == '200'){
+          toast.success("Notification Sent Sucessfully");
+            setLoading(false);
+        }else{
+          toast.error("Notification Not Sent Sucessfully");
+            setLoading(false);
+        }
+    })  
+  };
+
+  return (
+    <>
+      {loading && (
+        <CircularProgress
+          disableShrink
+          style={{
+            marginLeft: "600px",
+            marginTop: "300px",
+            marginBottom: "300px",
+          }}
+          color="secondary"
         />
-      </div>
-    </Layout>
+      )}
+      {!loading && (
+        <Layout>
+          <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+            <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
+              Student List
+            </h3>
+
+            {/* <button onClick={emailnotification} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+              Month End Email Notification
+            </button> */}
+          </div>
+          <div className="mt-5">
+            <MUIDataTable
+              data={studentListData ? studentListData : []}
+              columns={columns}
+              options={options}
+            />
+          </div>
+        </Layout>
+      )}
+    </>
   );
 };
 

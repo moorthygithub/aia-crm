@@ -5,15 +5,68 @@ import { ContextPanel } from "../../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
-import { CiSquarePlus } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
+import moment from "moment";
+import { Clear, Done } from "@mui/icons-material";
+import { Tooltip } from "@mui/material";
+import { toast } from "react-toastify";
 
 const ApprovedListRequest = () => {
   const [approvedRListData, setApprovedRListData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+
+
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+
+
+  const updateData = (e, value) => {
+    const data = {
+      course_request_status: "Completed",
+    };
+    axios({
+      url: BASE_URL + "/api/panel-update-request/" + value,
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      console.log("clicking")
+      if (res.status == 200) {
+        toast.success("Data Update Sucessfully");
+        setShouldRefetch(true);
+      } else {
+        toast.error("Error in Updating");
+      }
+    });
+  };
+
+  const updateDataCancel = (e, value) => {
+    const data = {
+      course_request_status: "Cancel",
+    };
+    axios({
+      url: BASE_URL + "/api/panel-update-request/" + value,
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      setShouldRefetch(true);
+      if (res.status == 200) {
+        toast.success("Data Update Sucessfully");
+        setShouldRefetch(true);
+      } else {
+        toast.error("Error in Updating");
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchApprovedRData = async () => {
       try {
@@ -32,7 +85,21 @@ const ApprovedListRequest = () => {
           }
         );
 
-        setApprovedRListData(response.data?.urequest);
+        const res = response.data?.urequest;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["course_request_date"]).format("DD-MM-YYYY"),
+            item["name"],
+            item["course_opted"],
+            item["course_request"],
+            item["course_request_remarks"],
+            item["course_request_status"],
+            item["id"],
+          ]);
+          setApprovedRListData(response.data?.urequest);
+        }
+
+        // setApprovedRListData(response.data?.urequest);
       } catch (error) {
         console.error("Error fetching approved list request data", error);
       } finally {
@@ -41,7 +108,7 @@ const ApprovedListRequest = () => {
     };
     fetchApprovedRData();
     setLoading(false);
-  }, []);
+  }, [shouldRefetch]);
 
   const columns = [
     {
@@ -49,15 +116,18 @@ const ApprovedListRequest = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
       name: "name",
       label: "Full Name",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
@@ -72,7 +142,7 @@ const ApprovedListRequest = () => {
       name: "course_request",
       label: "Request Type",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -99,17 +169,21 @@ const ApprovedListRequest = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (id) => {
+        customBodyRender: (value) => {
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
-                title="edit country list"
+              <Tooltip title="Completed" placement="top">
+              <Done 
+              onClick={(e) => updateData(e, value)}
                 className="h-5 w-5 cursor-pointer"
               />
-              <MdOutlineRemoveRedEye
-                title="edit country list"
+              </Tooltip> 
+              <Tooltip title="Cancel" placement="top">
+              <Clear
+                onClick={(e) => updateDataCancel(e, value)}
                 className="h-5 w-5 cursor-pointer"
               />
+               </Tooltip> 
             </div>
           );
         },
@@ -119,12 +193,11 @@ const ApprovedListRequest = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -141,7 +214,7 @@ const ApprovedListRequest = () => {
           Request Approved List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link to="/add-request" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Request
         </Link>
       </div>
