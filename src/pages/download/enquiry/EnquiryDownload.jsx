@@ -1,12 +1,15 @@
 import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 import Layout from "../../../layout/Layout";
-
-const EnquiryDownload = () => {
+import DownloadCommon from "../delivery/DeliveryDownload";
+const Download = () => {
   return (
-    <Layout>
-      <div>EnquiryDowndload</div>
-    </Layout>
+    <>
+      <Layout>
+        <DownloadCommon />
+      </Layout>
+    </>
   );
 };
 
-export default EnquiryDownload;
+export default Download;

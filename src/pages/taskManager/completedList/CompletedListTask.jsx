@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
+import moment from "moment";
 
 const CompletedListTask = () => {
   const [completedTListData, setCompletedTListData] = useState(null);
@@ -29,8 +30,22 @@ const CompletedListTask = () => {
             },
           }
         );
+        let res = response.data?.taskmanager;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["task_from_date"]).format("DD-MM-YYYY"),
+            moment(item["task_to_date"]).format("DD-MM-YYYY"),
 
-        setCompletedTListData(response.data?.taskmanager);
+            item["name"],
+            item["task_details"],
+            item["task_status"],
+            item["id"],
+          ]);
+          console.log(tempRows, "tempRows");
+          setCompletedTListData(response.data?.taskmanager);
+        }
+
+     
       } catch (error) {
         console.error("Error fetching completed list task manager data", error);
       } finally {
@@ -47,15 +62,21 @@ const CompletedListTask = () => {
       label: "Assign Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
       name: "task_to_date",
       label: "Due Date",
       options: {
-        filter: true,
+        filter: false,
         sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
@@ -86,12 +107,12 @@ const CompletedListTask = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    filter: false,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -108,7 +129,7 @@ const CompletedListTask = () => {
           Task Manager Completed List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link to='/add-task' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Task
         </Link>
       </div>

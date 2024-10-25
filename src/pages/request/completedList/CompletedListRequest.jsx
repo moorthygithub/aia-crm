@@ -6,6 +6,7 @@ import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
 import { ContextPanel } from "../../../utils/ContextPanel";
+import moment from "moment";
 
 const CompletedListRequest = () => {
   const [completedRListData, setCompletedRListData] = useState(null);
@@ -30,7 +31,21 @@ const CompletedListRequest = () => {
           }
         );
 
-        setCompletedRListData(response.data?.urequest);
+        const res = response.data?.urequest;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["course_request_date"]).format("DD-MM-YYYY"),
+            item["name"],
+            item["course_opted"],
+            item["course_request"],
+            item["course_request_remarks"],
+            item["course_request_status"],
+            item["id"],
+          ]);
+          setCompletedRListData(response.data?.urequest);
+        }
+
+        // setCompletedRListData(response.data?.urequest);
       } catch (error) {
         console.error("Error fetching completed list request data", error);
       } finally {
@@ -47,15 +62,18 @@ const CompletedListRequest = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
       name: "name",
       label: "Full Name",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
@@ -70,7 +88,7 @@ const CompletedListRequest = () => {
       name: "course_request",
       label: "Request Type",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -94,12 +112,11 @@ const CompletedListRequest = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -116,7 +133,7 @@ const CompletedListRequest = () => {
           Request Completed List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link to="/add-request" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Request
         </Link>
       </div>

@@ -8,12 +8,64 @@ import BASE_URL from "../../../base/BaseUrl";
 import { CiSquarePlus } from "react-icons/ci";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
+import Edit from "@mui/icons-material/Edit";
+import moment from "moment";
+import ClearIcon from "@mui/icons-material/Clear";
+import { Tooltip } from "@mui/material";
+import DoneIcon from "@mui/icons-material/Done";
+import { toast } from "react-toastify";
 
 const PendingListRequest = () => {
   const [pendingRListData, setPendingRListData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+
+  const [shouldRefetch, setShouldRefetch] = useState(false);
+
+
+  const updateData = (e, value) => {
+    const data = {
+      course_request_status: "Approved",
+    };
+    axios({
+      url: BASE_URL + "/api/panel-update-request/" + value,
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.status == 200) {
+        toast.success("Data Update Sucessfully");
+        setShouldRefetch(true);
+      } else {
+        toast.error("Error in Updating");
+      }
+    });
+  };
+
+  const updateDataCancel = (e, value) => {
+    const data = {
+      course_request_status: "Cancel",
+    };
+    axios({
+      url: BASE_URL + "/api/panel-update-request/" + value,
+      method: "PUT",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.status == 200) {
+        toast.success("Data Update Sucessfully");
+        setShouldRefetch(true);
+      } else {
+        toast.error("Error in Updating");
+      }
+    });
+  };
+
   useEffect(() => {
     const fetchPendingRData = async () => {
       try {
@@ -32,7 +84,20 @@ const PendingListRequest = () => {
           }
         );
 
-        setPendingRListData(response.data?.urequest);
+        const res = response.data?.urequest;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["course_request_date"]).format("DD-MM-YYYY"),
+            item["name"],
+            item["course_opted"],
+            item["course_request"],
+            item["course_request_remarks"],
+            item["course_request_status"],
+            item["id"],
+          ]);
+          console.log(tempRows, "tempRows");
+          setPendingRListData(response.data?.urequest);
+        }
       } catch (error) {
         console.error("Error fetching pending list request data", error);
       } finally {
@@ -41,7 +106,7 @@ const PendingListRequest = () => {
     };
     fetchPendingRData();
     setLoading(false);
-  }, []);
+  }, [shouldRefetch]);
 
   const columns = [
     {
@@ -49,15 +114,18 @@ const PendingListRequest = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
       name: "name",
       label: "Full Name",
       options: {
-        filter: true,
-        sort: true,
+        filter: false,
+        sort: false,
       },
     },
     {
@@ -72,7 +140,7 @@ const PendingListRequest = () => {
       name: "course_request",
       label: "Request Type",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -99,17 +167,21 @@ const PendingListRequest = () => {
       options: {
         filter: false,
         sort: false,
-        customBodyRender: (id) => {
+        customBodyRender: (value) => {
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
-                title="edit country list"
-                className="h-5 w-5 cursor-pointer"
-              />
-              <MdOutlineRemoveRedEye
-                title="edit country list"
-                className="h-5 w-5 cursor-pointer"
-              />
+              <Tooltip title="Approved" placement="top">
+                <DoneIcon
+                  onClick={(e) => updateData(e, value)}
+                  className="h-5 w-5 cursor-pointer"
+                />
+              </Tooltip>
+              <Tooltip title="Cancel" placement="top">
+                <ClearIcon
+                  onClick={(e) => updateDataCancel(e, value)}
+                  className="h-5 w-5 cursor-pointer"
+                />
+              </Tooltip>
             </div>
           );
         },
@@ -119,12 +191,11 @@ const PendingListRequest = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -141,7 +212,10 @@ const PendingListRequest = () => {
           Request Pending List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link
+          to="/add-request"
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        >
           + Add Request
         </Link>
       </div>

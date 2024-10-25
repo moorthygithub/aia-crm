@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
-import { CiSquarePlus } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 
 const CoursesList = () => {
   const [coursesListData, setCoursesListData] = useState(null);
@@ -55,7 +55,7 @@ const CoursesList = () => {
       label: "Duration",
       options: {
         filter: true,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -76,7 +76,8 @@ const CoursesList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
+              <MdEdit
+                onClick={() => navigate(`/add-courses/${id}`)}
                 title="edit courses list"
                 className="h-5 w-5 cursor-pointer"
               />
@@ -89,12 +90,10 @@ const CoursesList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -110,7 +109,7 @@ const CoursesList = () => {
           Courses List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link to='/add-courses' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Courses
         </Link>
       </div>

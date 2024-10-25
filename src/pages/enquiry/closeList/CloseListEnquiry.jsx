@@ -2,18 +2,20 @@ import React, { useContext, useEffect, useState } from "react";
 import Layout from "../../../layout/Layout";
 import EnquiryFilter from "../../../components/EnquiryFilter";
 import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
-import { CiSquarePlus } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
+import moment from "moment";
 
 const CloseListEnquiry = () => {
   const [closeListData, setCloseListData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
+  const location = useLocation();
   useEffect(() => {
     const fetchCloseData = async () => {
       try {
@@ -49,7 +51,7 @@ const CloseListEnquiry = () => {
       label: "Enquiry No",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -58,14 +60,20 @@ const CloseListEnquiry = () => {
       options: {
         filter: true,
         sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
       name: "enquiry_follow_date",
       label: "Followup Date",
       options: {
-        filter: false,
-        sort: false,
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
@@ -98,7 +106,7 @@ const CloseListEnquiry = () => {
       label: "Courses",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -106,7 +114,7 @@ const CloseListEnquiry = () => {
       label: "Status",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
 
@@ -119,12 +127,14 @@ const CloseListEnquiry = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
-                title="edit country list"
+              <MdEdit
+                title="edit"
+                onClick={(e) => handleOpenButtonLink(e,`${id}`)}
                 className="h-5 w-5 cursor-pointer"
               />
               <MdOutlineRemoveRedEye
-                title="edit country list"
+               onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
+                title="view"
                 className="h-5 w-5 cursor-pointer"
               />
             </div>
@@ -136,12 +146,11 @@ const CloseListEnquiry = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -150,6 +159,24 @@ const CloseListEnquiry = () => {
       };
     },
   };
+  const handleOpenButton = (e) => {
+    e.preventDefault(); 
+    localStorage.setItem("enquiry_page",location.pathname);
+    navigate('/add-enquiry');
+  };
+
+  const handleOpenButtonLink = (e,value) => {
+    e.preventDefault(); 
+    localStorage.setItem("enquiry_page",location.pathname);
+    navigate(`/edit-enquiry/${value}`);
+  };
+
+  const handleOpenButtonLinkView = (e,value) => {
+    e.preventDefault(); 
+    localStorage.setItem("enquiry_page",location.pathname);
+    navigate(`/view-enquiry/${value}`);
+  };
+
   return (
     <Layout>
       <EnquiryFilter />
@@ -158,9 +185,9 @@ const CloseListEnquiry = () => {
           Enquiry Close List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <button onClick={handleOpenButton} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Enquiry
-        </Link>
+        </button>
       </div>
       <div className="mt-5">
         <MUIDataTable

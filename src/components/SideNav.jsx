@@ -5,7 +5,21 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import image from "../assets/logo.png";
+import { MdDashboard } from "react-icons/md";
+import { FaFlag } from "react-icons/fa";
+import { MdClass } from "react-icons/md";
+import { FaUserGroup } from "react-icons/fa6";
+import { IoMdPersonAdd } from "react-icons/io";
+import { TbTruckDelivery } from "react-icons/tb";
+import { FaTruckMoving } from "react-icons/fa6";
+
+import { FaCodePullRequest } from "react-icons/fa6";
+import { GrTasks } from "react-icons/gr";
+import { MdNotificationsActive } from "react-icons/md";
+import { PiDownloadSimpleBold } from "react-icons/pi";
+
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
   const { pathname } = useLocation();
@@ -14,53 +28,47 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavType = "dark";
 
   const sidenavTypes = {
-    dark: "bg-gradient-to-br from-gray-800 to-gray-900 shadow-lg shadow-blue-900",
-    white: "bg-white shadow-sm",
+    dark: "bg-gradient-to-br from-gray-800 to-gray-900 ",
+    white: "bg-white",
     transparent: "bg-transparent",
   };
 
   // close sidebar when clicking outside
 
-  useEffect(() => {
-    function handClickOutside(e) {
-      if (sidenavRef.current && !sidenavRef.current.contains(e.target)) {
-        setOpenSideNav(false);
-      }
-    }
+  // useEffect(() => {
+  //   function handClickOutside(e) {
+  //     if (sidenavRef.current && !sidenavRef.current.contains(e.target)) {
+  //       setOpenSideNav(false);
+  //     }
+  //   }
 
-    document.addEventListener("mousedown", handClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handClickOutside);
-    };
-  }, [setOpenSideNav]);
+  //   document.addEventListener("mousedown", handClickOutside);
+  //   return () => {
+  //     document.removeEventListener("mousedown", handClickOutside);
+  //   };
+  // }, [setOpenSideNav]);
 
   // Close sidebar on route change
-  useEffect(() => {
-    setOpenSideNav(false);
-  }, [pathname, setOpenSideNav]);
+  // useEffect(() => {
+  //   setOpenSideNav(false);
+  // }, [pathname, setOpenSideNav]);
+
+
 
   return (
+ 
     <aside
       ref={sidenavRef}
       className={`${sidenavTypes[sidenavType]} ${
         openSideNav ? "translate-x-0" : "-translate-x-80"
-      } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-[272px] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100`}
+      } fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-[272px] rounded-xl transition-transform duration-300 xl:translate-x-0 border border-blue-gray-100 overflow-y-auto`}
     >
+     
       <div className={`relative`}>
         <Link to="/home" className="flex items-center justify-center p-4">
-          <div className="flex items-center">
-            <img
-              src="https://www.ag-solutions.in/assets/images/logo.png"
-              alt="Logo"
-              className="h-12 w-auto"
-            />
-            <div className="ml-3 logo-text">
-              <div className="logo-title text-white text-lg font-bold">
-                <span className="font-black">AG</span> Solution
-              </div>
-              <div className="logo-sub-title text-gray-400 text-sm">
-                Single Click Solution
-              </div>
+          <div className="flex items-center text-white mt-4">
+            <div className="bg-white p-2 rounded-md">
+              <img src={image} alt="Logo" className="h-12 w-auto" />
             </div>
           </div>
         </Link>
@@ -86,7 +94,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <HomeIcon className="w-5 h-5 text-inherit" />
+                  <MdDashboard className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -107,7 +115,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <FaFlag className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -127,7 +135,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <MdClass className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -147,7 +155,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <FaUserGroup className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -167,7 +175,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <IoMdPersonAdd className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -188,7 +196,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <FaTruckMoving className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -220,7 +228,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/request-pending">
+            <NavLink to="/class-followup-count">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
@@ -233,14 +241,14 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                     color="inherit"
                     className="font-medium capitalize"
                   >
-                    Request
+                    Class Follow Up
                   </Typography>
                 </Button>
               )}
             </NavLink>
           </li>
           <li>
-            <NavLink to="/task-completed">
+            <NavLink to="/request-pending">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
@@ -248,7 +256,27 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <FaCodePullRequest className="w-5 h-5 text-inherit" />
+                  <Typography
+                    color="inherit"
+                    className="font-medium capitalize"
+                  >
+                    Request
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/task-pending">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="white"
+                  className="flex items-center gap-4 px-4 capitalize"
+                  fullWidth
+                >
+                  <GrTasks className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -268,7 +296,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <MdNotificationsActive className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -280,7 +308,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/download-enquiry">
+            <NavLink to="/enquiry">
               {({ isActive }) => (
                 <Button
                   variant={isActive ? "gradient" : "text"}
@@ -288,7 +316,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                   className="flex items-center gap-4 px-4 capitalize"
                   fullWidth
                 >
-                  <TableCellsIcon className="w-5 h-5 text-inherit" />
+                  <PiDownloadSimpleBold className="w-5 h-5 text-inherit" />
                   <Typography
                     color="inherit"
                     className="font-medium capitalize"
@@ -299,11 +327,15 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
               )}
             </NavLink>
           </li>
+          
 
           {/* Add more hardcoded routes here as needed */}
         </ul>
       </div>
     </aside>
+
+  
+
   );
 };
 export default SideNav;

@@ -3,7 +3,7 @@ import Layout from "../../layout/Layout";
 import { ContextPanel } from "../../utils/ContextPanel";
 import { Link, useNavigate } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
-import { CiSquarePlus } from "react-icons/ci";
+import { MdEdit } from "react-icons/md";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 
@@ -46,8 +46,8 @@ const CountryList = () => {
       name: "country_name",
       label: "Country",
       options: {
-        filter: false,
-        sort: false,
+        filter: true,
+        sort: true,
       },
     },
     {
@@ -62,8 +62,8 @@ const CountryList = () => {
       name: "country_status",
       label: "Status",
       options: {
-        filter: false,
-        sort: false,
+        filter: true,
+        sort: true,
       },
     },
 
@@ -74,12 +74,16 @@ const CountryList = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
+         
           return (
             <div className="flex items-center space-x-2">
-              <CiSquarePlus
-                title="edit country list"
+            
+              <MdEdit
+               onClick={() => navigate(`/edit-country/${id}`)}
+                title="edit"
                 className="h-5 w-5 cursor-pointer"
               />
+              
             </div>
           );
         },
@@ -89,12 +93,10 @@ const CountryList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {

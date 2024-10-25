@@ -23,7 +23,7 @@ import Logout from "./Logout";
 import { useState } from "react";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 
-const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
+const DashboardNavbar = ({ openSideNav, openSidebar, setOpenSideNav , setOpenSidebar}) => {
   const { pathname } = useLocation();
 
   const [openModal, setOpenModal] = useState(false);
@@ -35,9 +35,9 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
 
   const breadcrumbs = [
     { name: "Home", link: "/home" },
-    ...pathSegments.map((segment, index) => ({
+    ...pathSegments.slice(0, 1).map((segment, index) => ({
       name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/${pathSegments.slice(0, index + 1).join("/")}`,
+      link: `/home/${segment}`,  
     })),
   ];
 
@@ -55,7 +55,7 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
       color={fixedNavbar ? "white" : "transparent"}
       className={`rounded-xl transition-all ${
         fixedNavbar
-          ? "sticky top-4 z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700  shadow-lg  shadow-blue-900"
+          ? "sticky top-4 z-40 py-3 bg-gradient-to-br from-gray-800 text-white to-gray-700 "
           : "px-0 py-1"
       }`}
       fullWidth
@@ -69,20 +69,20 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
             }`}
           >
             {breadcrumbs.map((breadcrumb, index) => (
-              <Link key={index} to={breadcrumb.link}>
+              <Link key={index}>
                 <Typography
                   variant="small"
                   color="white"
-                  className="font-normal opacity-50 transition-all hover:text-blue-500 hover:opacity-100"
+                  className="font-normal  transition-all text-white hover:text-blue-500 hover:opacity-100"
                 >
                   {breadcrumb.name}
                 </Typography>
               </Link>
             ))}
           </Breadcrumbs>
-          <Typography variant="h6" color="white">
+          {/* <Typography variant="h6" color="white">
             {pageTitle}
-          </Typography>
+          </Typography> */}
         </div>
         <div className="flex items-center">
           {/* Search and other elements can be added here */}
@@ -91,8 +91,34 @@ const DashboardNavbar = ({ openSideNav, setOpenSideNav }) => {
           <IconButton
             variant="text"
             color="white"
-            className="grid xl:hidden"
-            onClick={() => setOpenSideNav(!openSideNav)}
+            className="grid "
+            // onClick={() => setOpenSideNav(!openSideNav) }
+            // onClick={() => {
+            //   setOpenSideNav(!openSideNav);
+            //   console.log( openSideNav, 'clicking');
+            // }}
+            // onClick={() => {
+            //   setOpenSidebar(!openSidebar)
+            //   setOpenSideNav((prevState) => {
+            //     console.log(!prevState, 'clicking'); 
+            //     return !prevState; 
+            //   });
+            // }}
+            
+            onClick={() => {
+              const screenWidth = window.innerWidth;
+            
+              if (screenWidth >= 1024) {
+                // For big screens (e.g., desktops, tablets in landscape)
+                setOpenSidebar(!openSidebar);
+              } else {
+                // For small screens (e.g., mobile, tablets in portrait)
+                setOpenSideNav((prevState) => {
+                  console.log(!prevState, 'clicking');
+                  return !prevState;
+                });
+              }
+            }}
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>

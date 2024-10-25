@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
+import moment from "moment";
 
 const NotificationList = () => {
   const [notificationListData, setCNotificationListData] = useState(null);
@@ -29,7 +30,20 @@ const NotificationList = () => {
           }
         );
 
-        setCNotificationListData(response.data?.notification);
+        const res = response.data?.notification;
+        if (Array.isArray(res)) {
+          const tempRows = res.map((item) => [
+            moment(item["notification_date"]).format("DD-MM-YYYY"),
+
+            item["notification_course"],
+            item["notification_heading"],
+            item["notification_description"],
+          ]);
+          console.log(tempRows, "tempRows");
+          setCNotificationListData(response.data?.notification);
+        }
+
+        // setCNotificationListData(response.data?.notification);
       } catch (error) {
         console.error("Error fetching notification data", error);
       } finally {
@@ -46,7 +60,10 @@ const NotificationList = () => {
       label: "Date",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
       },
     },
     {
@@ -54,7 +71,7 @@ const NotificationList = () => {
       label: "Notification",
       options: {
         filter: true,
-        sort: true,
+        sort: false,
       },
     },
     {
@@ -77,12 +94,12 @@ const NotificationList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    rowsPerPage: 5,
-    rowsPerPageOptions: [5, 10, 25],
+    
     responsive: "standard",
     viewColumns: true,
-    download: false,
-    print: false,
+    download: true,
+    filter: false,
+    print: true,
     setRowProps: (rowData) => {
       return {
         style: {
@@ -98,7 +115,7 @@ const NotificationList = () => {
           Notification List
         </h3>
 
-        <Link className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        <Link to="/add-notification" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Notification
         </Link>
       </div>

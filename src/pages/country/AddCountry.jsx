@@ -1,127 +1,142 @@
-import React, { useState } from "react";
-import Layout from "../../layout/Layout";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Button, Input } from "@material-tailwind/react";
-import { MdArrowBack, MdSend } from "react-icons/md";
-import { toast } from "react-toastify";
+import { MdKeyboardBackspace } from "react-icons/md";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
+import Layout from "../../layout/Layout";
+import Fields from "../../components/common/TextField/TextField";
+import { toast } from "react-toastify";
 
 const AddCountry = () => {
-  const [country, setCountry] = useState({
+  const navigate = useNavigate();
+
+  const [student, setCountry] = useState({
     country_name: "",
     country_code: "",
   });
-  const navigate = useNavigate();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-  // Validation function
+
+  useEffect(() => {
+    const isLoggedIn = localStorage.getItem("id");
+    if (!isLoggedIn) {
+      navigate("/");
+      return;
+    }
+  }, []);
 
   const onInputChange = (e) => {
     setCountry({
-      ...country,
+      ...student,
       [e.target.name]: e.target.value,
     });
   };
 
   const onSubmit = async (e) => {
     e.preventDefault();
-    const form = document.getElementById("addIndiv");
+    const form = e.target;
     if (!form.checkValidity()) {
-      toast.error("Fill all required");
-    } else {
-      setIsButtonDisabled(true);
-      let data = {
-        country_name: country.country_name,
-        country_code: country.country_code,
-      };
-      const token = localStorage.getItem("token");
+      form.reportValidity();
+      return;
+    }
+    setIsButtonDisabled(true);
+    const formData = {
+      country_name: student.country_name,
+      country_code: student.country_code,
+    };
+    try {
       const response = await axios.post(
         `${BASE_URL}/api/panel-create-country`,
-        data,
+        formData,
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "multipart/form-data",
           },
         }
       );
 
-      if (response.data.code == "200") {
-        toast.success("Branch Create succesfull");
-
-        setCountry({
-          country_name: "",
-          country_code: "",
-        });
-        navigate("/country");
+    
+      if (response.data.code == 200) {
+        toast.success("Data Updated Successfully");
+        navigate('/country');
       } else {
-        toast.error("duplicate entry");
+        if (response.data.code == 401) {
+          toast.error("Country Duplicate Entry");
+        } else if (response.data.code == 402) {
+          toast.error("Country Duplicate Entry");
+        } else {
+          toast.error("An unknown error occurred");
+        }
       }
+    } catch (error) {
+      console.error("Error updating vendor:", error);
+      toast.error("Error  updating Country");
+      
+    } finally {
+      setIsButtonDisabled(false);
     }
   };
+
   return (
     <Layout>
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Add Country
-        </h3>
-      </div>
-      <div className="w-full mt-5 mx-auto p-8 bg-white shadow-lg rounded-xl">
-        <form id="addIndiv" autoComplete="off" onSubmit={onSubmit}>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            {/* Service Field */}
-            <div className="form-group">
-              <Input
-                label="Country"
-                type="text"
-                name="country_name"
-                value={country.country_name}
-                onChange={onInputChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none   transition-all duration-300 shadow-sm"
-              />
-            </div>
-
-            {/* Service Commission Field */}
-            <div className="form-group">
-              <Input
-                label="Country Code"
-                type="tel"
-                name="country_code"
-                value={country.country_code}
-                onChange={onInputChange}
-                required
-                className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none  transition-all duration-300 shadow-sm"
-              />
-            </div>
-          </div>
-
-          {/* Buttons */}
-          <div className="flex justify-center space-x-4">
-            {/* Submit Button */}
-
-            <Button
-              type="submit"
-              className="mr-2 mb-2 bg-black"
-              disabled={isButtonDisabled}
-            >
-              <div className="flex gap-1">
-                <MdSend className="w-4 h-4" />
-                <span>{isButtonDisabled ? "Submiting..." : "Submit"}</span>
+      <div>
+        {/* Title */}
+        <div className="flex mb-4 mt-6">
+          <Link to="/country">
+            <MdKeyboardBackspace className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
+          </Link>
+          <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
+            Add Country
+          </h1>
+        </div>
+        <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
+          <form onSubmit={onSubmit} autoComplete="off">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+              {/* Country */}
+              <div className="form-group">
+                <Fields
+                  required={true}
+                  types="text"
+                  title="Country"
+                  type="textField"
+                  autoComplete="Name"
+                  name="country_name"
+                  value={student.country_name}
+                  onChange={onInputChange}
+                />
               </div>
-            </Button>
 
-            {/* Back Button */}
-            <Link to="/country">
-              <Button className="mr-2 mb-2 bg-black">
-                <div className="flex gap-1">
-                  <MdArrowBack className="w-4 h-4" />
-                  <span>Back</span>
-                </div>
-              </Button>
-            </Link>
-          </div>
-        </form>
+              {/* Country Code */}
+              <div>
+                <Fields
+                  required={true}
+                  types="text"
+                  title="Country Code"
+                  type="textField"
+                  name="country_code"
+                  value={student.country_code}
+                  onChange={onInputChange}
+                />
+              </div>
+            </div>
+            <div className="mt-4 text-center">
+              <button
+                type="submit"
+                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                disabled={isButtonDisabled}
+              >
+                
+                {isButtonDisabled ? 'Submiting...' : 'Submit'}
+              </button>
+              <Link to="/country">
+                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
+                  Back
+                </button>
+              </Link>
+            </div>
+          </form>
+        </div>
       </div>
     </Layout>
   );
