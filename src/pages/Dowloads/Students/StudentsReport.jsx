@@ -37,6 +37,7 @@ function StudentEnquiryReport() {
       student_date_to: localStorage.getItem("student_date_to"),
       student_uid: localStorage.getItem("student_uid"),
       student_course: localStorage.getItem("student_course"),
+      student_status: localStorage.getItem("student_status"),
     };
 
     setIsButtonDisabled(true);
@@ -72,6 +73,7 @@ function StudentEnquiryReport() {
       student_date_to: localStorage.getItem("student_date_to"),
       student_uid: localStorage.getItem("student_uid"),
       student_course: localStorage.getItem("student_course"),
+      student_status: localStorage.getItem("student_status"),
     };
     //GET REPORT
     axios({

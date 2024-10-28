@@ -36,6 +36,7 @@ function DeliveryEnquiryReport() {
       delivery_date_from: localStorage.getItem("delivery_date_from"),
       delivery_date_to: localStorage.getItem("delivery_date_to"),
       student_uid: localStorage.getItem("student_uid"),
+      delivery_status: localStorage.getItem("delivery_status"),
     };
 
     setIsButtonDisabled(true);
@@ -70,6 +71,7 @@ function DeliveryEnquiryReport() {
       delivery_date_from: localStorage.getItem("delivery_date_from"),
       delivery_date_to: localStorage.getItem("delivery_date_to"),
       student_uid: localStorage.getItem("student_uid"),
+      delivery_status: localStorage.getItem("delivery_status"),
     };
     //GET REPORT
     axios({

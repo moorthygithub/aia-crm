@@ -37,6 +37,7 @@ function ExamEnquiryReport() {
       exam_date_from: localStorage.getItem("exam_date_from"),
       exam_date_to: localStorage.getItem("exam_date_to"),
       student_uid: localStorage.getItem("student_uid"),
+      exam_status: localStorage.getItem("exam_status"),
     };
 
     setIsButtonDisabled(true);
@@ -71,6 +72,7 @@ function ExamEnquiryReport() {
       exam_date_from: localStorage.getItem("exam_date_from"),
       exam_date_to: localStorage.getItem("exam_date_to"),
       student_uid: localStorage.getItem("student_uid"),
+      exam_status: localStorage.getItem("exam_status"),
     };
     //GET REPORT
     axios({
@@ -206,7 +208,7 @@ function ExamEnquiryReport() {
                             variant="small"
                             className="font-normal text-gray-600"
                           >
-                            {dataSumm.status}
+                            {dataSumm.exam_status}
                           </Typography>
                         </td>
                       </tr>

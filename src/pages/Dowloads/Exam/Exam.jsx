@@ -26,7 +26,14 @@ function Exam() {
     exam_date_from: firstdate,
     exam_date_to: today,
     student_uid: "",
+    exam_status: "",
   });
+
+  const status = [
+    { value: "Pending", label: "Pending" },
+    { value: "Qualified", label: "Qualified" },
+    { value: "Not Qualified", label: "Not Qualified" },
+  ];
 
   const onInputChange = (e) => {
     setExamDownload({
@@ -55,6 +62,7 @@ function Exam() {
       exam_date_from: examDownload.exam_date_from,
       exam_date_to: examDownload.exam_date_to,
       student_uid: examDownload.student_uid,
+      exam_status: examDownload.exam_status,
     };
 
     var isValid = document.getElementById("dowRecp").checkValidity();
@@ -93,6 +101,7 @@ function Exam() {
     localStorage.setItem("exam_date_from", examDownload.exam_date_from);
     localStorage.setItem("exam_date_to", examDownload.exam_date_to);
     localStorage.setItem("student_uid", examDownload.student_uid);
+    localStorage.setItem("exam_status", examDownload.exam_status);
     navigate("/examreport");
   };
 
@@ -123,7 +132,7 @@ function Exam() {
         </h3>
 
         <form id="dowRecp" autoComplete="off">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div className="w-full">
               <Input
                 type="date"
@@ -162,7 +171,19 @@ function Exam() {
                 name="student_uid"
               />
             </div>
-
+            <div className="w-full">
+              <Dropdown
+                label="Status"
+                className="required"
+                options={status}
+                onChange={(value) =>
+                  setExamDownload({
+                    ...examDownload,
+                    exam_status: value,
+                  })
+                }
+              />
+            </div>
             <div className="w-77">
               <Button
                 color="blue"

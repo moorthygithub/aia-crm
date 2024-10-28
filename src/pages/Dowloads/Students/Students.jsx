@@ -36,7 +36,13 @@ function Student() {
     student_date_to: todayback,
     student_uid: "",
     student_course: "",
+    student_status: "",
   });
+
+  const status = [
+    { value: "Active", label: "Active" },
+    { value: "Inactive", label: "Inactive" },
+  ];
 
   const onInputChange = (e) => {
     setStudentDownload({
@@ -66,6 +72,7 @@ function Student() {
       student_date_to: downloadStudent.student_date_to,
       student_uid: downloadStudent.student_uid,
       student_course: downloadStudent.student_course,
+      student_status: downloadStudent.student_status,
     };
     var v = document.getElementById("dowRecp").checkValidity();
     var v = document.getElementById("dowRecp").reportValidity();
@@ -110,6 +117,7 @@ function Student() {
     localStorage.setItem("student_uid", downloadStudent.student_uid);
     localStorage.setItem("student_date_to", downloadStudent.student_date_to);
     localStorage.setItem("student_course", downloadStudent.student_course);
+    localStorage.setItem("student_status", downloadStudent.student_status);
     navigate("/studentreport");
   };
   //FETCHCOURSE
@@ -211,7 +219,20 @@ function Student() {
                 }}
               />
             </div>
-
+            
+            <div className="w-full">
+              <Dropdown
+                label="Status"
+                className="required"
+                options={status}
+                onChange={(value) =>
+                  setStudentDownload({
+                    ...downloadStudent,
+                    student_status: value,
+                  })
+                }
+              />
+            </div>
             <div className="w-77">
               <Button
                 color="blue"

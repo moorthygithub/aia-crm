@@ -36,7 +36,14 @@ function Delivery() {
     delivery_date_from: firstdate,
     delivery_date_to: todayback,
     student_uid: "",
+    delivery_status: "",
   });
+
+  const status = [
+    { value: "Pending", label: "Pending" },
+    { value: "Delivered", label: "Delivered" },
+    { value: "Returned", label: "Returned" },
+  ];
 
   const onInputChange = (e) => {
     setDeliveryDownload({
@@ -65,6 +72,7 @@ function Delivery() {
       delivery_date_from: downloadDelivery.delivery_date_from,
       delivery_date_to: downloadDelivery.delivery_date_to,
       student_uid: downloadDelivery.student_uid,
+      delivery_status: downloadDelivery.delivery_status,
     };
     var v = document.getElementById("dowRecp").checkValidity();
     var v = document.getElementById("dowRecp").reportValidity();
@@ -105,6 +113,7 @@ function Delivery() {
     );
     localStorage.setItem("student_uid", downloadDelivery.student_uid);
     localStorage.setItem("delivery_date_to", downloadDelivery.delivery_date_to);
+    localStorage.setItem("delivery_status", downloadDelivery.delivery_status);
     navigate("/deliveryreport");
   };
 
@@ -136,7 +145,7 @@ function Delivery() {
         </h3>
 
         <form id="dowRecp" autoComplete="off">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             <div className="w-full">
               <Input
                 type="date"
@@ -175,7 +184,19 @@ function Delivery() {
                 name="student_uid"
               />
             </div>
-
+            <div className="w-full">
+              <Dropdown
+                label="Status"
+                className="required"
+                options={status}
+                onChange={(value) =>
+                  setDeliveryDownload({
+                    ...downloadDelivery,
+                    delivery_status: value,
+                  })
+                }
+              />
+            </div>
             <div className="w-77">
               <Button
                 color="blue"
