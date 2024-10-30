@@ -59,6 +59,10 @@ const source = [
     label: "Adv",
   },
   {
+    value: "Website",
+    label: "Website",
+  },
+  {
     value: "Social Media",
     label: "Social Media",
   },
@@ -334,7 +338,7 @@ const EnquiryNow = () => {
                   />
                 </div>
               
-              {booking.enquiry_source == "Other" && (
+              {(booking.enquiry_source == "Other"  || booking.enquiry_source == "Social Media") && (
                   <div>
                     <Input
                       type="text"

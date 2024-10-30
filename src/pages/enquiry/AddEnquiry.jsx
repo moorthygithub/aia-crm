@@ -61,6 +61,10 @@ const source = [
     label: "Adv",
   },
   {
+    value: "Website",
+    label: "Website",
+  },
+  {
     value: "Social Media",
     label: "Social Media",
   },
@@ -373,7 +377,7 @@ const AddEnquiry = () => {
                   options={source}
                 />
               </div>
-              {enquiry.enquiry_source == "Other" && (
+              {(enquiry.enquiry_source == "Other" || enquiry.enquiry_source == "Social Media" ) && (
                   <div>
                     <Input
                       type="text"
