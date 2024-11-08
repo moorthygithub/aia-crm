@@ -16,8 +16,8 @@ const status = [
       label: "Month",
     },
     {
-      value: "Day",
-      label: "Day",
+      value: "Weekly",
+      label: "Weekly",
     },
   ];
 
