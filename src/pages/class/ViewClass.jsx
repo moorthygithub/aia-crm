@@ -341,17 +341,17 @@ const ViewClass = () => {
               options={options}
             />
 
-            <div className="flex justify-center mt-6">
-              <Button
+            <div className="flex justify-center mt-6 gap-2">
+              <button
                 onClick={sendclassEmail}
-                className="mr-4 bg-gradient-to-r from-yellow-500 to-teal-400 text-white flex items-center"
+                className="btn flex btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
                 disabled={isButtonDisabled}
               >
-                <CiMail className="mr-2" />{" "}
+                <CiMail className="mr-2 mt-1" />{" "}
                 {isButtonDisabled ? "Sending..." : "Send Email to Not Attend"}
-              </Button>
+              </button>
               <Link to="/class">
-                <Button color="green">Back</Button>
+                <button className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">Back</button>
               </Link>
             </div>
           </form>

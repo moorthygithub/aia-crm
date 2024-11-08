@@ -94,6 +94,7 @@ const CoursesList = () => {
     viewColumns: true,
     download: true,
     print: true,
+   
     setRowProps: (rowData) => {
       return {
         style: {

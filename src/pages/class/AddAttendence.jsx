@@ -34,7 +34,40 @@ const AddAttendence = () => {
       });
   }, [id]);
 
-  const columns = ["UID No", "Full Name", "Mobile", "Email"];
+
+  const columns = [
+    {
+      name: "user_uid",
+      label: "UID No",
+      options: {
+        filter: false,
+        sort: true,
+      },
+    },
+    {
+      name: "name",
+      label: "Full Name",
+      options: {
+        filter: true,
+        sort: false,
+      },
+    },
+    {
+      name: "mobile",
+      label: "Mobile",
+      options: {
+        display: false,
+      },
+    },
+    {
+      name: "email",
+      label: "Email",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+  ];
 
   const options = {
     filterType: "dropdown",
@@ -63,7 +96,6 @@ const AddAttendence = () => {
     },
     customToolbarSelect: () => {},
   };
-
   const onSubmit = (e) => {
     var schoolIdsSelected = localStorage.getItem("selectedUserIds");
 
@@ -146,24 +178,22 @@ const AddAttendence = () => {
 
             <MUIDataTable
               title={"Student List"}
-              data={students.map((item) => {
-                return [item.user_uid, item.name, item.mobile, item.email];
-              })}
+              data={students ? students : []}
               columns={columns}
               options={options}
             />
 
-            <div className="flex justify-center mt-6">
-              <Button
+            <div className="flex justify-center mt-6 gap-2">
+              <button
                 type="submit"
                 onClick={onSubmit}
-                className="mr-4 bg-gradient-to-r from-yellow-500 to-teal-400 text-white flex items-center"
+                className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
                 disabled={isButtonDisabled}
               >
                 {isButtonDisabled ? "Submiting..." : "Submit"}
-              </Button>
+              </button>
               <Link to="/class">
-                <Button color="green">Back</Button>
+                <button className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">Back</button>
               </Link>
             </div>
           </form>

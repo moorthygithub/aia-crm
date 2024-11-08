@@ -32,6 +32,17 @@ const status = [
   },
 ];
 
+const status1 = [
+  {
+    value: "Pending",
+    label: "Pending",
+  },
+  {
+    value: "Inspection",
+    label: "Submit",
+  },
+];
+
 const EditTask = () => {
   const navigate = useNavigate();
   const { id } = useParams();
@@ -250,7 +261,11 @@ const EditTask = () => {
                   name="task_status"
                   value={enquiry.task_status}
                   onChange={(e) => onInputChange(e)}
-                  options={status}
+                  options={
+                    localStorage.getItem("user_type_id") == "4"
+                      ? status
+                      : status1
+                  }
                 />
               </div>
             </div>

@@ -44,8 +44,6 @@ const CompletedListTask = () => {
           console.log(tempRows, "tempRows");
           setCompletedTListData(response.data?.taskmanager);
         }
-
-     
       } catch (error) {
         console.error("Error fetching completed list task manager data", error);
       } finally {
@@ -107,7 +105,7 @@ const CompletedListTask = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
@@ -128,10 +126,20 @@ const CompletedListTask = () => {
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Task Manager Completed List
         </h3>
-
-        <Link to='/add-task' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
-          + Add Task
-        </Link>
+        <div >
+          <Link
+            to="/add-task"
+            className="btn mr-2 btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          >
+            + Add Task
+          </Link>
+          <Link
+            to="/add-repetitive"
+            className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          >
+            + Add Repetitive
+          </Link>
+        </div>
       </div>
       <div className="mt-5">
         <MUIDataTable
