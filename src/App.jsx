@@ -60,7 +60,7 @@ import ViewStudentEquiry from "./pages/student/ViewEquiry";
 import EditStudentCourse from "./pages/student/EditCourse";
 import ViewCourse from "./pages/student/ViewCourse";
 import EditStudentDelivery from "./pages/student/EditDelivery";
-import ViewDelivery from "./pages/student/ViewDElivery";
+import ViewDelivery from "./pages/student/ViewDelivery";
 import EditExam from "./pages/student/EditExam";
 import ViewExam from "./pages/student/ViewExam";
 import EditResult from "./pages/student/EditResult";
