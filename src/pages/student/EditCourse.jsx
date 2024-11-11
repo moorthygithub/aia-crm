@@ -194,6 +194,7 @@ const EditStudentCourse = () => {
     course_wc: "",
     course_lr: "",
     course_remarks: "",
+    course_expiry_new_date: "",
   });
 
   useEffect(() => {
@@ -253,6 +254,7 @@ const EditStudentCourse = () => {
       course_wc: student.course_wc,
       course_lr: student.course_lr,
       course_remarks: student.course_remarks,
+      course_expiry_new_date: student.course_expiry_new_date,
     };
     try {
       const response = await axios.put(
@@ -458,6 +460,20 @@ const EditStudentCourse = () => {
                   options={course_status}
                 />
               </div>
+              { student.course_status == 'Extended' &&
+                <div>
+                  <Input
+                  label="Expiry Date"
+                  required
+                  type="date"
+                  name="course_expiry_new_date"
+                  value={student.course_expiry_new_date}
+                  onChange={(e) => onInputChange(e)}
+                  className="w-full border border-gray-300 rounded-md p-2"
+                />
+                
+              </div>
+              }
             </div>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
             <div className="md:col-span-3">

@@ -85,6 +85,8 @@ import CompletedFollowUp from "./pages/classFollowup/CompletedFollowUp";
 import EditClassFollowUp from "./pages/classFollowup/EditClassFollowUp";
 import ViewCompleted from "./pages/classFollowup/ViewCompleted";
 import ClassFollowUpCount from "./pages/classFollowup/ClassFollowUpCount";
+import RepetitiveList from "./pages/taskManager/repetitive/RepetitiveList";
+import AddRepetitive from "./pages/taskManager/repetitive/AddRepetitive";
 
 
 const App = () => {
@@ -155,8 +157,10 @@ const App = () => {
         <Route path="/request-completed" element={<CompletedListRequest />} />
         <Route path="/edit-request/:id" element={<EditRequest />} />
         {/* task Manager  */}
-        <Route path="/task-pending" element={<PendingListTask />} />
         <Route path="/task-inspection" element={<InspectionListTask />} />
+        <Route path="/repetitive-list" element={<RepetitiveList />} />
+        <Route path="/add-repetitive" element={<AddRepetitive />} />
+        <Route path="/task-pending" element={<PendingListTask />} />
         <Route path="/task-completed" element={<CompletedListTask />} />
         <Route path="/add-task" element={<AddTask />} />
         <Route path="/edit-task/:id" element={<EditTask />} />

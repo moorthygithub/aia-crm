@@ -72,6 +72,8 @@ const AppProvider = ({ children }) => {
           "/edit-delivery",
           "/deliverd-delivery",
           "/view-student-delivery",
+          "/repetitive-list",
+          "/add-repetitive",
           "/class",
           "/class-followup",
           "/class-completed-followup",
