@@ -96,6 +96,17 @@ const wel_call = [
   },
 ];
 
+const delivery_c = [
+  {
+    value: "Pending",
+    label: "Pending",
+  },
+  {
+    value: "Added",
+    label: "Added",
+  },
+];
+
 const lr = [
   {
     value: "Shared",
@@ -195,6 +206,7 @@ const EditStudentCourse = () => {
     course_lr: "",
     course_remarks: "",
     course_expiry_new_date: "",
+    delivery_c_status: "",
   });
 
   useEffect(() => {
@@ -255,6 +267,7 @@ const EditStudentCourse = () => {
       course_lr: student.course_lr,
       course_remarks: student.course_remarks,
       course_expiry_new_date: student.course_expiry_new_date,
+      delivery_c_status: student.delivery_c_status,
     };
     try {
       const response = await axios.put(
@@ -474,6 +487,17 @@ const EditStudentCourse = () => {
                 
               </div>
               }
+              <div>
+                <Fields
+                  title="Delivery Status"
+                  type="whatsappDropdown"
+                  autoComplete="Name"
+                  name="delivery_c_status"
+                 value={student.delivery_c_status}
+                 onChange={(e) => onInputChange(e)}
+                  options={delivery_c}
+                />
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
             <div className="md:col-span-3">
