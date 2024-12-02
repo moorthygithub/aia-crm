@@ -61,7 +61,7 @@ const EditClassFollowUp = () => {
         setStudent(res.data.studentData);
         setFollowUpData(res.data.studentData);
         setAttendClass(res.data?.attend);
-        setNotAttendClass(res.data?.attend);
+        setNotAttendClass(res.data?.notattend);
         setTableData(res.data?.studentFollowUp);
       } catch (error) {
         console.error("Error fetching services:", error);
