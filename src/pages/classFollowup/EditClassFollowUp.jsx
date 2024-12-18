@@ -293,7 +293,7 @@ const EditClassFollowUp = () => {
                 <CardBody>
                   <div className="grid md:grid-cols-4 grid-cols-1 md:h-fit h-full w-full gap-4">
                     {" "}
-                    <div>
+                    {/* <div>
                       <Input
                         required
                         type="date"
@@ -304,9 +304,9 @@ const EditClassFollowUp = () => {
                         onChange={onInputChange}
                       />
                     </div>
+                     */}
                     
-                    
-                    <div className="col-span-2">
+                    <div className="col-span-3">
                       <Input
                         required
                         type="text"
