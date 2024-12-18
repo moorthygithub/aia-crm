@@ -252,15 +252,15 @@ const EditClassFollowUp = () => {
               <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
                 <thead>
                   <tr className="bg-gray-100 text-gray-600 uppercase text-sm leading-normal">
-                    <th className="py-3  text-center">Create Date</th>
-                    <th className="py-3 text-center">Next Date</th>
+                    {/* <th className="py-3  text-center">Create Date</th> */}
+                    <th className="py-3 text-center">Follow Up Date</th>
                     <th className="py-3 px-12 text-center" colSpan={2}>Remarks</th>
                   </tr>
                 </thead>
                 {tableData?.map((dataSumm, key) => (
                   <tbody key={key} className="text-gray-600 text-sm font-light">
                     <tr className="border-b border-gray-600 hover:bg-gray-100">
-                      <td className="py-3 text-center">
+                      {/* <td className="py-3 text-center">
                         <span>
                           {dataSumm.follow_up_create_date == null
                             ? ""
@@ -268,7 +268,7 @@ const EditClassFollowUp = () => {
                                 "DD-MM-YYYY"
                               )}
                         </span>
-                      </td>
+                      </td> */}
                       <td className="py-3  text-center">
                         <span>
                           {dataSumm.follow_up_next_date == null
@@ -294,28 +294,18 @@ const EditClassFollowUp = () => {
                   <div className="grid md:grid-cols-4 grid-cols-1 md:h-fit h-full w-full gap-4">
                     {" "}
                     <div>
-                      <Fields
-                        required={true}
-                        title="Status"
-                        type="whatsappDropdown"
-                        autoComplete="Name"
-                        name="class_follow_status"
-                        value={followUpData.class_follow_status}
-                        onChange={onInputChange}
-                        options={status}
-                      />
-                    </div>
-                    <div>
                       <Input
                         required
                         type="date"
-                        label="Follow Up Next Date"
+                        label="Follow Up Date"
                         autoComplete="Name"
                         name="follow_up_next_date"
                         value={followUpData.follow_up_next_date}
                         onChange={onInputChange}
                       />
                     </div>
+                    
+                    
                     <div className="col-span-2">
                       <Input
                         required
@@ -325,6 +315,18 @@ const EditClassFollowUp = () => {
                         name="follow_up_remarks"
                         value={followUpData.follow_up_remarks}
                         onChange={onInputChange}
+                      />
+                    </div>
+                    <div>
+                      <Fields
+                        required={true}
+                        title="Status"
+                        type="whatsappDropdown"
+                        autoComplete="Name"
+                        name="class_follow_status"
+                        value={followUpData.class_follow_status}
+                        onChange={onInputChange}
+                        options={status}
                       />
                     </div>
                   </div>
