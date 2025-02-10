@@ -12,6 +12,11 @@ import moment from "moment";
 import { Clear, Done } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import { toast } from "react-toastify";
+import {
+  RequestApprovedCancel,
+  RequestApprovedCompleted,
+  RequestApprovedCreate,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 const ApprovedListRequest = () => {
   const [approvedRListData, setApprovedRListData] = useState(null);
@@ -19,9 +24,7 @@ const ApprovedListRequest = () => {
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
 
-
   const [shouldRefetch, setShouldRefetch] = useState(false);
-
 
   const updateData = (e, value) => {
     const data = {
@@ -35,7 +38,7 @@ const ApprovedListRequest = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }).then((res) => {
-      console.log("clicking")
+      console.log("clicking");
       if (res.status == 200) {
         toast.success("Data Update Sucessfully");
         setShouldRefetch(true);
@@ -173,17 +176,17 @@ const ApprovedListRequest = () => {
           return (
             <div className="flex items-center space-x-2">
               <Tooltip title="Completed" placement="top">
-              <Done 
-              onClick={(e) => updateData(e, value)}
-                className="h-5 w-5 cursor-pointer"
-              />
-              </Tooltip> 
+                <RequestApprovedCompleted
+                  onClick={(e) => updateData(e, value)}
+                  className="h-5 w-5 cursor-pointer"
+                />
+              </Tooltip>
               <Tooltip title="Cancel" placement="top">
-              <Clear
-                onClick={(e) => updateDataCancel(e, value)}
-                className="h-5 w-5 cursor-pointer"
-              />
-               </Tooltip> 
+                <RequestApprovedCancel
+                  onClick={(e) => updateDataCancel(e, value)}
+                  className="h-5 w-5 cursor-pointer"
+                />
+              </Tooltip>
             </div>
           );
         },
@@ -193,7 +196,7 @@ const ApprovedListRequest = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
@@ -214,9 +217,13 @@ const ApprovedListRequest = () => {
           Request Approved List
         </h3>
 
-        <Link to="/add-request" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        {/* <Link to="/add-request" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Request
-        </Link>
+        </Link> */}
+        <RequestApprovedCreate
+          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          onClick={() => navigate("/add-request")}
+        ></RequestApprovedCreate>
       </div>
       <div className="mt-5">
         <MUIDataTable

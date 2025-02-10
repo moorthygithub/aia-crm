@@ -12,6 +12,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import { DownloadDeliveryDownload, DownloadDeliveryView } from "../../../components/buttonIndex/ButtonComponents";
 
 function Delivery() {
   const navigate = useNavigate();
@@ -197,7 +198,7 @@ function Delivery() {
                 }
               />
             </div>
-            <div className="w-77">
+            {/* <div className="w-77">
               <Button
                 color="blue"
                 fullWidth
@@ -212,7 +213,23 @@ function Delivery() {
               <Button color="blue" fullWidth onClick={onReportView}>
                 View
               </Button>
-            </div>
+            </div> */}
+          </div>
+          <div className="flex justify-center m-3">
+            <DownloadDeliveryDownload
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onSubmit}
+              disabled={isButtonDisabled}
+            >
+              {isButtonDisabled ? "Downloading..." : "Download"}
+            </DownloadDeliveryDownload>
+
+            <DownloadDeliveryView
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onReportView}
+            >
+              View
+            </DownloadDeliveryView>
           </div>
         </form>
       </Card>

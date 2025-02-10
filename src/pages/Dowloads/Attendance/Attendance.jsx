@@ -13,6 +13,12 @@ import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DownloadCommon from "../../../pages/download/delivery/DeliveryDownload";
 import Dropdown from "../../../components/common/DropDown";
+import {
+  DownloadAttendanceDownloadAttend,
+  DownloadAttendanceDownloadNotAttend,
+  DownloadAttendanceViewAttend,
+  DownloadAttendanceViewNotAttend,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 function Attendance() {
   const navigate = useNavigate();
@@ -121,7 +127,7 @@ function Attendance() {
         },
       })
         .then((res) => {
-          console.log(res , "res")
+          console.log(res, "res");
           const url = window.URL.createObjectURL(new Blob([res.data]));
           const link = document.createElement("a");
           link.href = url;
@@ -250,7 +256,7 @@ function Attendance() {
                 }}
               />
             </div>
-            <div className="w-full">
+            {/* <div className="w-full">
               <Button
                 color="blue"
                 fullWidth
@@ -265,8 +271,8 @@ function Attendance() {
               <Button color="blue" fullWidth onClick={onReportView}>
                 View Attend
               </Button>
-            </div>
-
+            </div> */}
+            {/* 
             <div className="w-full">
               <Button
                 color="blue"
@@ -282,7 +288,29 @@ function Attendance() {
               <Button color="blue" fullWidth onClick={onReportView1}>
                 View Not Attend
               </Button>
-            </div>
+            </div> */}
+          </div>
+          <div className="flex justify-center m-3">
+            <DownloadAttendanceDownloadAttend
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onSubmit}
+              disabled={isButtonDisabled}
+            >
+              {isButtonDisabled ? "Downloading..." : "Download"}
+            </DownloadAttendanceDownloadAttend>
+
+            <DownloadAttendanceViewAttend
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onReportView}
+            ></DownloadAttendanceViewAttend>
+            <DownloadAttendanceDownloadNotAttend
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-40 mx-2"
+              onClick={onSubmit1}
+            ></DownloadAttendanceDownloadNotAttend>
+            <DownloadAttendanceViewNotAttend
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onReportView1}
+            ></DownloadAttendanceViewNotAttend>
           </div>
         </form>
       </Card>

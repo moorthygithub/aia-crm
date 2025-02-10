@@ -13,6 +13,15 @@ import VisibilityIcon from "@mui/icons-material/Visibility";
 import Edit from "@mui/icons-material/Edit";
 import PermPhoneMsgIcon from "@mui/icons-material/PermPhoneMsg";
 import { toast } from "react-toastify";
+import {
+  ClassAddAttendance,
+  ClassCreate,
+  ClassEdit,
+  ClassMail,
+  ClassSendNotification,
+  ClassView,
+  ClassWhatsapp,
+} from "../../components/buttonIndex/ButtonComponents";
 
 const ClassList = () => {
   const [classListData, setClassListData] = useState(null);
@@ -147,7 +156,7 @@ const ClassList = () => {
       class_id: value,
     };
     axios({
-      url: BASE_URL+"/api/panel-create-class-notification",
+      url: BASE_URL + "/api/panel-create-class-notification",
       method: "POST",
       data,
       headers: {
@@ -155,7 +164,7 @@ const ClassList = () => {
       },
     }).then((res) => {
       if (res.status == "200") {
-        console.log("clicking")
+        console.log("clicking");
         toast.success("Notification Sent Sucessfully");
       } else {
         toast.error("Notification Not Sent Sucessfully");
@@ -225,7 +234,7 @@ const ClassList = () => {
             <div className="flex items-center space-x-2">
               {status == "Inactive" && (
                 <Tooltip title="View" placement="top">
-                  <VisibilityIcon
+                  <ClassView
                     onClick={() => navigate(`/view-class/${id}`)}
                     className="h-5 w-5 cursor-pointer"
                   />
@@ -233,7 +242,7 @@ const ClassList = () => {
               )}
               {status == "Active" && (
                 <Tooltip title="Update Status" placement="top">
-                  <Edit
+                  <ClassEdit
                     onClick={(e) => updateData(e, id)}
                     className="h-5 w-5 cursor-pointer"
                   />
@@ -241,7 +250,7 @@ const ClassList = () => {
               )}
               {status == "Active" && (
                 <Tooltip title="Send Email" placement="top">
-                  <Email
+                  <ClassMail
                     onClick={(e) => sendclassEmail(e, id)}
                     className="h-5 w-5 cursor-pointer"
                   />
@@ -249,15 +258,15 @@ const ClassList = () => {
               )}
               {status == "Active" && (
                 <Tooltip title="Send Whatsapp" placement="top">
-                  <WhatsApp
+                  <ClassWhatsapp
                     onClick={(e) => classwhatsApp(e, id)}
-                    className="h-5 w-5 cursor-pointer"
+                    className="cursor-pointer"
                   />
                 </Tooltip>
               )}
               {status == "Active" && (
                 <Tooltip title="Mobile Notification" placement="top">
-                  <PermPhoneMsgIcon
+                  <ClassSendNotification
                     onClick={(e) => mobilenotification(e, id)}
                     className="h-5 w-5 cursor-pointer"
                   />
@@ -266,7 +275,7 @@ const ClassList = () => {
               {status == "Active" && (
                 <Tooltip title="Add Attendence" placement="top">
                   <Link to={`/add-attendence/${id}`}>
-                    <GroupAdd className="h-5 w-5 cursor-pointer" />
+                    <ClassAddAttendance className="h-5 w-5 cursor-pointer" />
                   </Link>
                 </Tooltip>
               )}
@@ -285,13 +294,6 @@ const ClassList = () => {
     download: true,
     filter: false,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   return (
     <Layout>
@@ -300,12 +302,16 @@ const ClassList = () => {
           Class List
         </h3>
 
-        <Link
+        {/* <Link
           to="/add-class"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Class
-        </Link>
+        </Link> */}
+        <ClassCreate
+          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          onClick={() => navigate("/add-class")}
+        ></ClassCreate>
       </div>
       <div className="mt-5">
         <MUIDataTable

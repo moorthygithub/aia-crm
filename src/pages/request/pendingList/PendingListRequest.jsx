@@ -14,6 +14,11 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { Tooltip } from "@mui/material";
 import DoneIcon from "@mui/icons-material/Done";
 import { toast } from "react-toastify";
+import {
+  RequestPendingCancel,
+  RequestPendingCompleted,
+  RequestPendingCreate,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 const PendingListRequest = () => {
   const [pendingRListData, setPendingRListData] = useState(null);
@@ -22,7 +27,6 @@ const PendingListRequest = () => {
   const navigate = useNavigate();
 
   const [shouldRefetch, setShouldRefetch] = useState(false);
-
 
   const updateData = (e, value) => {
     const data = {
@@ -171,13 +175,13 @@ const PendingListRequest = () => {
           return (
             <div className="flex items-center space-x-2">
               <Tooltip title="Approved" placement="top">
-                <DoneIcon
+                <RequestPendingCompleted
                   onClick={(e) => updateData(e, value)}
                   className="h-5 w-5 cursor-pointer"
                 />
               </Tooltip>
               <Tooltip title="Cancel" placement="top">
-                <ClearIcon
+                <RequestPendingCancel
                   onClick={(e) => updateDataCancel(e, value)}
                   className="h-5 w-5 cursor-pointer"
                 />
@@ -191,7 +195,7 @@ const PendingListRequest = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
@@ -212,12 +216,16 @@ const PendingListRequest = () => {
           Request Pending List
         </h3>
 
-        <Link
+        {/* <Link
           to="/add-request"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Request
-        </Link>
+        </Link> */}
+        <RequestPendingCreate
+          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          onClick={() => navigate("/add-request")}
+        ></RequestPendingCreate>
       </div>
       <div className="mt-5">
         <MUIDataTable

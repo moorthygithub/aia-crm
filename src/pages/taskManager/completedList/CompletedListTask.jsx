@@ -7,6 +7,10 @@ import axios from "axios";
 import BASE_URL from "../../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import {
+  TaskManagerCompletedCreateRepetitive,
+  TaskManagerCompletedCreateTask,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 const CompletedListTask = () => {
   const [completedTListData, setCompletedTListData] = useState(null);
@@ -126,8 +130,8 @@ const CompletedListTask = () => {
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Task Manager Completed List
         </h3>
-        <div >
-          <Link
+        <div>
+          {/* <Link
             to="/add-task"
             className="btn mr-2 btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
           >
@@ -138,7 +142,15 @@ const CompletedListTask = () => {
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
           >
             + Add Repetitive
-          </Link>
+          </Link> */}
+          <TaskManagerCompletedCreateTask
+            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            onClick={() => navigate("/add-task")}
+          ></TaskManagerCompletedCreateTask>
+          <TaskManagerCompletedCreateRepetitive
+            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            onClick={() => navigate("/add-repetitive")}
+          ></TaskManagerCompletedCreateRepetitive>
         </div>
       </div>
       <div className="mt-5">
