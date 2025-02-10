@@ -19,7 +19,15 @@ import {
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { DeliveryDeliverdCreate, DeliveryDeliverdEdit, DeliveryDeliverdView } from "../../../components/buttonIndex/ButtonComponents";
+import {
+  DeliveryDeliverdCreate,
+  DeliveryDeliverdEdit,
+  DeliveryDeliverdView,
+} from "../../../components/buttonIndex/ButtonComponents";
+import {
+  ButtonCreate,
+  IconsBackground,
+} from "../../../components/common/ButtonCss";
 
 const DeliveredListDelivery = () => {
   const [deliveredDListData, setDeliveredDListData] = useState(null);
@@ -243,7 +251,6 @@ const DeliveredListDelivery = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
-         
           return (
             <div className="flex items-center space-x-2">
               {/* <MdEdit
@@ -252,11 +259,8 @@ const DeliveredListDelivery = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <DeliveryDeliverdEdit
-              
-              onClick={() => navigate(`/edit-delivery/${id}`)}
-             
-              className="h-5 w-5 cursor-pointer"
-              
+                onClick={() => navigate(`/edit-delivery/${id}`)}
+                className="h-5 w-5 cursor-pointer"
               />
               {/* <MdOutlineRemoveRedEye
                
@@ -265,9 +269,8 @@ const DeliveredListDelivery = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <DeliveryDeliverdView
-               onClick={() =>handleClickOpen(id)}
-         
-               className="h-5 w-5 cursor-pointer"
+                onClick={() => handleClickOpen(id)}
+                className="h-5 w-5 cursor-pointer"
               />
             </div>
           );
@@ -306,9 +309,8 @@ const DeliveredListDelivery = () => {
             + Add Delivery
           </Link> */}
           <DeliveryDeliverdCreate
-          
-           onClick={() => navigate(`/add-delivery`)}
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+            onClick={() => navigate(`/add-delivery`)}
+            className={ButtonCreate}
           />
         </div>
         <div className="mt-5">
@@ -333,10 +335,7 @@ const DeliveredListDelivery = () => {
               </h1>
               <div className="flex">
                 <Tooltip title="On Conversion to Registered">
-                  <button
-                    onClick={whatsApp}
-                    className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
-                  >
+                  <button onClick={whatsApp} className={IconsBackground}>
                     <WhatsAppIcon />
                   </button>
                 </Tooltip>
