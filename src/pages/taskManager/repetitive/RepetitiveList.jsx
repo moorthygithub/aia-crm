@@ -9,6 +9,10 @@ import { MdEdit } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
 import { toast } from "react-toastify";
+import {
+  TaskManagerRepetitiveCreate,
+  TaskManagerRepetitiveEdit,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 const RepetitiveList = () => {
   const [repetitiveListData, setRepetitiveListData] = useState(null);
@@ -60,7 +64,7 @@ const RepetitiveList = () => {
 
   const onUpdate = async (e, id) => {
     const formData = {
-        task_for: ""
+      task_for: "",
     };
     try {
       const response = await axios.put(
@@ -142,9 +146,8 @@ const RepetitiveList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              <TaskManagerRepetitiveEdit
                 onClick={(e) => onUpdate(e, id)}
-                title="Update Status"
                 className="h-5 w-5 cursor-pointer"
               />
             </div>
@@ -178,12 +181,16 @@ const RepetitiveList = () => {
           Repetitive List
         </h3>
 
-        <Link
+        {/* <Link
           to="/add-repetitive"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Repetitive
-        </Link>
+        </Link> */}
+        <TaskManagerRepetitiveCreate
+          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          onClick={() => navigate("/add-repetitive")}
+        ></TaskManagerRepetitiveCreate>
       </div>
       <div className="mt-5">
         <MUIDataTable

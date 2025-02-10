@@ -12,6 +12,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import {
+  DownloadEnquiryDownload,
+  DownloadEnquiryView,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 function Enquiry() {
   const navigate = useNavigate();
@@ -202,22 +206,22 @@ function Enquiry() {
                 }
               />
             </div>
-            <div className="w-77">
-              <Button
-                color="blue"
-                fullWidth
-                onClick={onSubmit}
-                disabled={isButtonDisabled}
-              >
-                {isButtonDisabled ? "Downloading..." : "Download"}
-              </Button>
-            </div>
+          </div>
+          <div className="flex justify-center m-3">
+            <DownloadEnquiryDownload
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onSubmit}
+              disabled={isButtonDisabled}
+            >
+              {isButtonDisabled ? "Downloading..." : "Download"}
+            </DownloadEnquiryDownload>
 
-            <div className="w-full">
-              <Button color="blue" fullWidth onClick={onReportView}>
-                View
-              </Button>
-            </div>
+            <DownloadEnquiryView
+              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              onClick={onReportView}
+            >
+              View
+            </DownloadEnquiryView>
           </div>
         </form>
       </Card>

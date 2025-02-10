@@ -8,6 +8,11 @@ import BASE_URL from "../../../base/BaseUrl";
 import { MdEdit } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import {
+  TaskManagerPendingCreateRepetitive,
+  TaskManagerPendingCreateTask,
+  TaskManagerPendingEdit,
+} from "../../../components/buttonIndex/ButtonComponents";
 
 const PendingListTask = () => {
   const [pendingTListData, setPendingTListData] = useState(null);
@@ -31,7 +36,7 @@ const PendingListTask = () => {
             },
           }
         );
-        
+
         let res = response.data?.taskmanager;
         if (Array.isArray(res)) {
           const tempRows = res.map((item) => [
@@ -46,8 +51,6 @@ const PendingListTask = () => {
           console.log(tempRows, "tempRows");
           setPendingTListData(response.data?.taskmanager);
         }
-
-
       } catch (error) {
         console.error("Error fetching pending list task manager data", error);
       } finally {
@@ -115,7 +118,7 @@ const PendingListTask = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              <TaskManagerPendingEdit
                 onClick={() => navigate(`/edit-task/${id}`)}
                 title="Edit"
                 className="h-5 w-5 cursor-pointer"
@@ -129,19 +132,12 @@ const PendingListTask = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
     filter: false,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   return (
     <Layout>
@@ -150,18 +146,29 @@ const PendingListTask = () => {
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Task Manager Pending List
         </h3>
-<div>
-
-        <Link to="/add-task" className="mr-2 btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
-          + Add Task
-        </Link>
-        <Link
+        <div>
+          {/* <Link
+            to="/add-task"
+            className="mr-2 btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          >
+            + Add Task
+          </Link>
+          <Link
             to="/add-repetitive"
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
           >
             + Add Repetitive
-          </Link>
-</div>
+          </Link> */}
+
+          <TaskManagerPendingCreateTask
+            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            onClick={() => navigate("/add-task")}
+          ></TaskManagerPendingCreateTask>
+          <TaskManagerPendingCreateRepetitive
+            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            onClick={() => navigate("/add-repetitive")}
+          ></TaskManagerPendingCreateRepetitive>
+        </div>
       </div>
       <div className="mt-5">
         <MUIDataTable

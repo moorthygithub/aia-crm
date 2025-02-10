@@ -1,299 +1,1077 @@
-import React, { useState, useEffect, useContext } from "react";
-import { useNavigate } from "react-router-dom";
-import { Plus } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
-import { ContextPanel } from "@/lib/ContextPanel";
-import { Button } from "@/components/ui/button";
-import { ButtonConfig } from "@/config/ButtonConfig";
-import { useToast } from "@/hooks/use-toast";
-import Page from "../dashboard/page";
-import BASE_URL from "@/config/BaseUrl";
-
-const CreatePage = () => {
-  const [selectedPage, setSelectedPage] = useState("");
-  const [selectedUrl, setSelectedUrl] = useState("");
-  const [selectedItems, setSelectedItems] = useState([]);
-  const [userIds, setUserIds] = useState("1,2,3,4");
-  const [status, setStatus] = useState("Active");
-  const [availablePages, setAvailablePages] = useState([]);
-  const navigate = useNavigate();
-  const { fetchPagePermission } = useContext(ContextPanel);
-  const { toast } = useToast();
-
-  const getAllPages = () => {
-    const pages = [];
-    
-    const extractPages = (items) => {
-      items.forEach(item => {
-        if (item.url && item.url !== "#") {
-          pages.push({
-            title: item.title || item.name,
-            url: item.url
-          });
-        }
-        if (item.items) {
-          extractPages(item.items);
-        }
-      });
-    };
-
-
-    const sidebarData = {
-        navMain: [
-          { title: "Dashboard", url: "/home" },
-          { title: "Country", url: "/country" },
-          { title: "Courses", url: "/courses" },
-          { title: "Enquiry", url: "/openList-enquiry" },
-          { title: "Student", url: "/student" },
-          { title: "Delivery", url: "/pending-delivery" },
-          { title: "Class", url: "/class" },
-          { title: "Class Follow Up", url: "/class-followup-count" },
-          { title: "Request", url: "/request-pending" },
-          { title: "Task Manager", url: "/task-pending" },
-          { title: "Notification", url: "/notification" },
-          { title: "Download", url: "/enquiry" },
-          { title: "User Management", url: "/userManagement" },
-        ],
-      };
-      
-
-    // Extract pages from all sections
-    extractPages(sidebarData.navMain);
-   
-
-    return pages;
-  };
-
-  useEffect(() => {
-    const existingControls = JSON.parse(localStorage.getItem("pageControl") || "[]");
-    const allPages = getAllPages();
-
-    const filteredPages = allPages.filter(page => 
-      !existingControls.some(control => 
-        control.page === page.title || 
-        control.url === page.url.replace("/", "")
-      )
-    );
-
-    setAvailablePages(["All", ...filteredPages.map(page => page.title)]);
-  }, []);
-
-  const handlePageChange = (e) => {
-    const page = e.target.value;
-    setSelectedPage(page);
-
-    if (page === "All") {
-      const existingControls = JSON.parse(localStorage.getItem("pageControl") || "[]");
-      const allPages = getAllPages();
-
-      const filteredPages = allPages.filter(menuItem => 
-        !existingControls.some(control => 
-          control.page === menuItem.title || 
-          control.url === menuItem.url.replace("/", "")
-        )
-      );
-
-      setSelectedItems(filteredPages);
-      setSelectedUrl("");
-    } else {
-      const item = getAllPages().find(i => i.title === page);
-      if (item) {
-        setSelectedUrl(item.url.replace("/", ""));
-        setSelectedItems([item]);
-      }
-    }
-  };
-
-  const createMutation = useMutation({
-    mutationFn: async (data) => {
-      const token = localStorage.getItem("token");
-      const response = await fetch(`${BASE_URL}/api/panel-create-usercontrol-new`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error(`Error: ${response.status} ${response.statusText}`);
-      }
-
-      return response.json();
-    },
-    onSuccess: async () => {
-      await fetchPagePermission();
-      toast({
-        title: "Success",
-        description: "Page control created successfully!",
-      });
-      navigate("/userManagement");
-    },
-    onError: (error) => {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSubmit = () => {
-    let payloadData;
-
-    if (selectedPage === "All") {
-      payloadData = selectedItems.map(item => ({
-        page: item.title,
-        url: item.url.replace("/", ""),
-        userIds,
-        status,
-      }));
-    } else {
-      payloadData = [{
-        page: selectedPage,
-        url: selectedUrl,
-        userIds,
-        status,
-      }];
-    }
-
-    createMutation.mutate({ usercontrol_data: payloadData });
-  };
-
-  return (
-    <Page>
-      <div className="p-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <h2 className="text-2xl font-semibold mb-6">Create Page Control</h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Page
-              </label>
-              <select
-                value={selectedPage}
-                onChange={handlePageChange}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              >
-                <option value="">Select Page</option>
-                {availablePages.map(page => (
-                  <option key={page} value={page}>
-                    {page}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                URL
-              </label>
-              <input
-                type="text"
-                value={selectedUrl}
-                readOnly
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                User IDs
-              </label>
-              <input
-                type="text"
-                value={userIds}
-                onChange={(e) => setUserIds(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md"
-              />
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
-                Status
-              </label>
-              <input
-                type="text"
-                value={status}
-                readOnly
-                className="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-50"
-              />
-            </div>
-          </div>
-
-          {selectedItems.length > 0 && (
-            <div className="mt-8">
-              <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200">
-                  <thead>
-                    <tr className="bg-gray-50">
-                      <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Page
-                      </th>
-                      <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        URL
-                      </th>
-                      <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        User IDs
-                      </th>
-                      <th className="px-6 py-3 border-b text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                        Status
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {selectedItems.map((item, index) => (
-                      <tr key={index} className="hover:bg-gray-50">
-                        <td className="px-6 py-4 whitespace-nowrap border-b">
-                          {item.title}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap border-b">
-                          {item.url.replace("/", "")}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap border-b">
-                          {userIds}
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap border-b">
-                          {status}
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          )}
-
-          <div className="mt-6">
-            <Button
-              onClick={handleSubmit}
-              disabled={!selectedPage || createMutation.isLoading}
-              className={`${ButtonConfig.backgroundColor} ${ButtonConfig.hoverBackgroundColor} ${ButtonConfig.textColor}`}
-            >
-              <Plus className="w-4 h-4 mr-2" />
-              Create
-            </Button>
-
-            {createMutation.isLoading && (
-              <div className="mt-4 text-blue-600">Creating...</div>
-            )}
-            {createMutation.isError && (
-              <div className="mt-4 text-red-600">
-                Error: {createMutation.error.message}
-              </div>
-            )}
-            {createMutation.isSuccess && (
-              <div className="mt-4 text-green-600">
-                Successfully created page control!
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </Page>
-  );
-};
-
-export default CreatePage;
+// import {
+//     Check,
+//     Edit,
+//     Eye,
+//     MessageSquareShare,
+//     Plus,
+//     PlusCircle,
+//     Trash,
+//     Truck,
+//     UserPlus,
+//     View,
+//     X,
+//   } from "lucide-react";
+//   import React from "react";
+//   import { checkPermission } from "./checkPermission";
+//   import { WhatsApp } from "@mui/icons-material";
+  
+//   const getStaticPermissions = () => {
+//     const buttonPermissions = localStorage.getItem("buttonControl");
+//     try {
+//       return buttonPermissions ? JSON.parse(buttonPermissions) : [];
+//     } catch (error) {
+//       console.error(
+//         "Error parsing StaticPermission data from localStorage",
+//         error
+//       );
+//       return [];
+//     }
+//   };
+  
+//   /*-------------------------Country---------------- */
+//   // export const VechilesEdit = ({ onClick, className }) => {
+//   //   const userId = localStorage.getItem("id") || "";
+//   //   const staticPermissions = getStaticPermissions();
+//   //   if (!checkPermission(userId, "VechilesEdit", staticPermissions)) {
+//   //     return null;
+//   //   }
+  
+//   //   return (
+//   //     <button onClick={onClick} className={className} title="Edit Vehicles">
+//   //       <Edit className="h-4 w-4 text-blue-500" />
+//   //     </button>
+//   //   );
+//   // };
+//   // VechilesEdit.page = "Vehicles";
+//   // export const VechilesView = ({ onClick, className }) => {
+//   //   const userId = localStorage.getItem("id") || "";
+//   //   const staticPermissions = getStaticPermissions();
+//   //   if (!checkPermission(userId, "VechilesView", staticPermissions)) {
+//   //     return null;
+//   //   }
+  
+//   //   return (
+//   //     <button onClick={onClick} className={className} title="Side View">
+//   //       <Eye className="h-4 w-4 text-blue-500" />
+//   //     </button>
+//   //   );
+//   // };
+//   // VechilesView.page = "Vehicles";
+  
+//   export const CountryCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "CountryCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Country
+//       </button>
+//     );
+//   };
+//   CountryCreate.page = "Country";
+  
+//   export const CountryEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "CountryEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit Country">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   CountryEdit.page = "Country";
+  
+//   /*----------------------------------Courses----------------- */
+  
+//   export const CoursesCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "CoursesCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Courses
+//       </button>
+//     );
+//   };
+//   CoursesCreate.page = "Courses";
+  
+//   export const CoursesEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "CoursesEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit Courses">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   CoursesEdit.page = "Courses";
+  
+//   /*-----------------------------Enquiry------------------------------ */
+  
+//   export const EnquiryOpenCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "EnquiryOpenCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Enquiry
+//       </button>
+//     );
+//   };
+//   EnquiryOpenCreate.page = "Enquiry";
+  
+//   export const EnquiryOverDueCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "EnquiryOverDueCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Enquiry
+//       </button>
+//     );
+//   };
+//   EnquiryOverDueCreate.page = "Enquiry";
+//   export const EnquiryCloseCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "EnquiryCloseCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Enquiry
+//       </button>
+//     );
+//   };
+//   EnquiryCloseCreate.page = "Enquiry";
+  
+//   export const EnquiryOverDueEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "EnquiryOverDueEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit OverDue">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   EnquiryOverDueEdit.page = "Enquiry";
+  
+//   export const EnquiryOverDueView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "EnquiryOverDueView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="View OverDue">
+//         <Eye className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   EnquiryOverDueView.page = "Enquiry";
+  
+//   /*------------------------------------Student--------------------- */
+  
+//   export const StudentView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "StudentView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="View Student">
+//         <Eye className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   StudentView.page = "Student";
+  
+//   /*---------------------------------Delivery-------------------------- */
+  
+//   export const DeliveryPendingCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryPendingCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Delivery
+//       </button>
+//     );
+//   };
+//   DeliveryPendingCreate.page = "Delivery";
+  
+//   export const DeliveryPendingEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryPendingEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit Pending">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   DeliveryPendingEdit.page = "Delivery";
+  
+//   export const DeliveryPendingView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryPendingView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="View Pending">
+//         <Eye className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   DeliveryPendingView.page = "Delivery";
+  
+//   export const DeliveryDeliverdCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryDeliverdCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Delivery
+//       </button>
+//     );
+//   };
+//   DeliveryDeliverdCreate.page = "Delivery";
+  
+//   export const DeliveryDeliverdEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryDeliverdEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit Deliverd">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   DeliveryDeliverdEdit.page = "Delivery";
+  
+//   export const DeliveryDeliverdView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DeliveryDeliverdView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="View Deliverd">
+//         <Eye className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   DeliveryDeliverdView.page = "Delivery";
+//   //Class
+//   export const ClassCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Class
+//       </button>
+//     );
+//   };
+//   ClassCreate.page = "Class";
+  
+//   //edit
+//   export const ClassEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit">
+//         <Edit className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   ClassEdit.page = "Class";
+//   //mail
+  
+//   export const ClassMail = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassMail", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Send Mail">
+//         <Mail className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   ClassMail.page = "Class";
+//   ClassWhatsapp;
+//   export const ClassWhatsapp = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassWhatsapp", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Whatsapp">
+//         <WhatsApp className="h-4 w-4" />
+//       </button>
+//     );
+//   };
+  
+//   ClassWhatsapp.page = "Class";
+//   //ClassSendNotification
+  
+//   export const ClassSendNotification = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassSendNotification", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Send Notification">
+//         <MessageSquareShare className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   ClassSendNotification.page = "Class";
+//   //ClassAddAttendance
+  
+//   export const ClassAddAttendance = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassAddAttendance", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="AddAttendance">
+//         <UserPlus className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   ClassAddAttendance.page = "Class";
+  
+//   //////////////////////////CLASS FOLLOW UP--------------------
+//   export const ClassFollowUpCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "ClassFollowUpCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Follow Up
+//       </button>
+//     );
+//   };
+//   ClassFollowUpCreate.page = "Class Follow Up";
+//   // //////////////////////////Request--------------------
+//   export const RequestPendingCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestPendingCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Request
+//       </button>
+//     );
+//   };
+//   RequestPendingCreate.page = "Request";
+//   // //////////////////////////Request approved--------------------
+//   export const RequestApprovedCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestApprovedCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Request
+//       </button>
+//     );
+//   };
+//   RequestApprovedCreate.page = "Request";
+  
+//   export const RequestApprovedCompleted = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestApprovedCompleted", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="ApprovedCompleted">
+//         <Check className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestApprovedCompleted.page = "Request";
+  
+//   export const RequestApprovedCancel = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestApprovedCancel", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="ApprovedCancel">
+//         <X className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestApprovedCancel.page = "Request";
+//   // //////////////////////////Request Pending--------------------
+//   export const RequestCompletedCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestCompletedCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Request
+//       </button>
+//     );
+//   };
+//   RequestCompletedCreate.page = "Request";
+  
+//   export const RequestPendingEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestPendingEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit">
+//         <Edit className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestPendingEdit.page = "Request";
+//   export const RequestPendingView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestPendingView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="View">
+//         <View className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestPendingView.page = "Request";
+//   export const RequestPendingCompleted = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestPendingCompleted", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="ApprovedCompleted">
+//         <Check className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestPendingCompleted.page = "Request";
+  
+//   export const RequestPendingCancel = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "RequestPendingCancel", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="ApprovedCancel">
+//         <X className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   RequestPendingCancel.page = "Request";
+  
+//   //Task Manager
+//   //////////////////////////Request Pending--------------------
+//   // Repetative
+//   export const TaskManagerRepetitiveCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(userId, "TaskManagerRepetitiveCreate", staticPermissions)
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+//       </button>
+//     );
+//   };
+//   TaskManagerRepetitiveCreate.page = "Task Manager";
+  
+//   export const TaskManagerRepetitiveEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(userId, "TaskManagerRepetitiveEdit", staticPermissions)
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit">
+//         <Edit className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   TaskManagerRepetitiveEdit.page = "Task Manager";
+//   // // Pending
+//   export const TaskManagerPendingCreateRepetitive = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "TaskManagerPendingCreateRepetitive",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+//       </button>
+//     );
+//   };
+//   TaskManagerPendingCreateRepetitive.page = "Task Manager";
+//   export const TaskManagerPendingCreateTask = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(userId, "TaskManagerPendingCreateTask", staticPermissions)
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Task
+//       </button>
+//     );
+//   };
+//   TaskManagerPendingCreateTask.page = "Task Manager";
+  
+//   export const TaskManagerPendingEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "TaskManagerPendingEdit", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit">
+//         <Edit className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   TaskManagerPendingEdit.page = "Task Manager";
+//   // // // Inspection
+//   export const TaskManagerInspectionCreateRepetitive = ({
+//     onClick,
+//     className,
+//   }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "TaskManagerInspectionCreateRepetitive",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+//       </button>
+//     );
+//   };
+//   TaskManagerInspectionCreateRepetitive.page = "Task Manager";
+//   export const TaskManagerInspectionCreateTask = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "TaskManagerInspectionCreateTask",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Task
+//       </button>
+//     );
+//   };
+//   TaskManagerInspectionCreateTask.page = "Task Manager";
+  
+//   export const TaskManagerInspectionEdit = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(userId, "TaskManagerInspectionEdit", staticPermissions)
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className} title="Edit">
+//         <Edit className="h-4 w-4 " />
+//       </button>
+//     );
+//   };
+  
+//   TaskManagerInspectionEdit.page = "Task Manager";
+//   //// // // Completed
+//   export const TaskManagerCompletedCreateRepetitive = ({
+//     onClick,
+//     className,
+//   }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "TaskManagerCompletedCreateRepetitive",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+//       </button>
+//     );
+//   };
+//   TaskManagerCompletedCreateRepetitive.page = "Task Manager";
+//   export const TaskManagerCompletedCreateTask = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "TaskManagerCompletedCreateTask",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Task
+//       </button>
+//     );
+//   };
+//   TaskManagerCompletedCreateTask.page = "Task Manager";
+//   //Notification
+//   export const NotificationCreate = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "NotificationCreate", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         {/* <Plus className="h-4 w-4 " /> */}+ Notification
+//       </button>
+//     );
+//   };
+//   NotificationCreate.page = "Notification";
+//   //Download-enquiry
+//   export const DownloadEnquiryDownload = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadEnquiryDownload", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download
+//       </button>
+//     );
+//   };
+//   DownloadEnquiryDownload.page = "Download";
+//   view;
+//   export const DownloadEnquiryView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadEnquiryView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View
+//       </button>
+//     );
+//   };
+//   DownloadEnquiryView.page = "Download";
+//   // //Download-Student
+//   export const DownloadStudentDownload = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadStudentDownload", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download
+//       </button>
+//     );
+//   };
+//   DownloadStudentDownload.page = "Download";
+//   view;
+//   export const DownloadStudentView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadStudentView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View
+//       </button>
+//     );
+//   };
+//   DownloadStudentView.page = "Download";
+//   //DElivery Download
+//   export const DownloadDeliveryDownload = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadDeliveryDownload", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download
+//       </button>
+//     );
+//   };
+//   DownloadDeliveryDownload.page = "Download";
+//   view;
+//   export const DownloadDeliveryView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadDeliveryView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View
+//       </button>
+//     );
+//   };
+//   DownloadDeliveryView.page = "Download";
+//   // //DElivery Download
+//   export const DownloadExamDownload = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadExamDownload", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download
+//       </button>
+//     );
+//   };
+//   DownloadExamDownload.page = "Download";
+//   view;
+//   export const DownloadExamView = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (!checkPermission(userId, "DownloadExamView", staticPermissions)) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View
+//       </button>
+//     );
+//   };
+//   DownloadExamView.page = "Download";
+//   // //DElivery Attendance
+//   export const DownloadAttendanceDownloadAttend = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "DownloadAttendanceDownloadAttend",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download Attend
+//       </button>
+//     );
+//   };
+//   DownloadAttendanceDownloadAttend.page = "Download";
+//   view;
+//   export const DownloadAttendanceViewAttend = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(userId, "DownloadAttendanceViewAttend", staticPermissions)
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View Attend
+//       </button>
+//     );
+//   };
+//   DownloadAttendanceViewAttend.page = "Download";
+  
+//   export const DownloadAttendanceDownloadNotAttend = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "DownloadAttendanceDownloadNotAttend",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         Download Not Attend
+//       </button>
+//     );
+//   };
+//   DownloadAttendanceDownloadNotAttend.page = "Download";
+//   view;
+//   export const DownloadAttendanceViewNotAttend = ({ onClick, className }) => {
+//     const userId = localStorage.getItem("id") || "";
+//     const staticPermissions = getStaticPermissions();
+//     if (
+//       !checkPermission(
+//         userId,
+//         "DownloadAttendanceViewNotAttend",
+//         staticPermissions
+//       )
+//     ) {
+//       return null;
+//     }
+  
+//     return (
+//       <button onClick={onClick} className={className}>
+//         View Not Attend
+//       </button>
+//     );
+//   };
+//   DownloadAttendanceViewNotAttend.page = "Download";
+//   /*-----------------------------------Morrthy------------------ */
+  
+//   export default {
+//     CountryCreate,
+//     CountryEdit,
+//     CoursesCreate,
+//     CoursesEdit,
+//     EnquiryOpenCreate,
+//     EnquiryOverDueCreate,
+//     EnquiryCloseCreate,
+//     EnquiryOverDueEdit,
+//     EnquiryOverDueView,
+//     StudentView,
+//     DeliveryPendingCreate,
+//     DeliveryPendingEdit,
+//     DeliveryPendingView,
+  
+//     DeliveryDeliverdCreate,
+  
+//     DeliveryDeliverdEdit,
+  
+//     DeliveryDeliverdView,
+  
+//     /*-----------------------------------Morrthy------------------ */
+//     ClassCreate,
+  
+//     ClassEdit,
+  
+//     ClassMail,
+  
+//     ClassWhatsapp,
+  
+//     ClassSendNotification,
+  
+//     ClassAddAttendance,
+//     RequestPendingCreate,
+  
+//     RequestApprovedCreate,
+  
+//     RequestApprovedCompleted,
+  
+//     RequestApprovedCancel,
+  
+//     RequestCompletedCreate,
+  
+//     RequestPendingEdit,
+  
+//     RequestPendingView,
+  
+//     RequestPendingCompleted,
+  
+//     RequestPendingCancel,
+//     TaskManagerRepetitiveCreate,
+  
+//     TaskManagerRepetitiveEdit,
+  
+//     TaskManagerPendingCreateRepetitive,
+  
+//     TaskManagerPendingCreateTask,
+  
+//     TaskManagerPendingEdit,
+  
+//     TaskManagerInspectionCreateRepetitive,
+  
+//     TaskManagerInspectionCreateTask,
+  
+//     TaskManagerInspectionEdit,
+  
+//     TaskManagerCompletedCreateRepetitive,
+  
+//     TaskManagerCompletedCreateTask,
+//     NotificationCreate,
+//     DownloadEnquiryDownload,
+  
+//     DownloadEnquiryView,
+  
+//     DownloadStudentDownload,
+  
+//     DownloadStudentView,
+  
+//     DownloadDeliveryDownload,
+//     DownloadDeliveryView,
+  
+//     DownloadExamDownload,
+  
+//     DownloadExamView,
+  
+//     DownloadAttendanceDownloadAttend,
+  
+//     DownloadAttendanceViewAttend,
+  
+//     DownloadAttendanceDownloadNotAttend,
+  
+//     DownloadAttendanceViewNotAttend,
+//   };
+  

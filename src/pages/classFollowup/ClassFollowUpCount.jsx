@@ -9,6 +9,7 @@ import { Edit, HighlightOff } from "@mui/icons-material";
 import { Card, CardContent, Dialog, Tooltip } from "@mui/material";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ClassFollowUpCreate } from "../../components/buttonIndex/ButtonComponents";
 
 const ClassFollowUpCount = () => {
   const dateyear = ["2024-25"];
@@ -129,10 +130,9 @@ const ClassFollowUpCount = () => {
     }
   };
 
-
   const handleClick = (data, index) => {
-    localStorage.setItem("class_follow_date",data.class_follow_date);
-    localStorage.setItem("class_follow_course",data.class_follow_course);
+    localStorage.setItem("class_follow_date", data.class_follow_date);
+    localStorage.setItem("class_follow_course", data.class_follow_course);
     navigate("/class-followup", { state: { selectedData: data } });
   };
 
@@ -143,39 +143,46 @@ const ClassFollowUpCount = () => {
           <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
             Class Follow Up Count
           </h3>
-          <button
+          {/* <button
             onClick={handleClickOpen}
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
           >
             Create FollowUp
-          </button>
+          </button> */}
+          <ClassFollowUpCreate
+            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            onClick={handleClickOpen}
+          ></ClassFollowUpCreate>
         </div>
       </div>
 
       <div className="mt-5 grid grid-cols-1 md:grid-cols-6 gap-4">
         {cardData &&
           cardData.map((data, index) => (
-            <div onClick={() => handleClick(data,index)} key={index} className="cursor-pointer">
-                <div className="bg-white shadow-lg rounded-lg p-3 hover:shadow-2xl transition-shadow duration-300 ease-in-out">
-                  <div className="text-center">
-                    <p className="text-lg font-bold text-gray-800">
-                      {moment(data.class_follow_date).format("DD-MM-YYYY")}
-                    </p>
-                  </div>
-                  <div className="border-t border-gray-200 my-2"></div>
-                  <div className="text-center">
-                    <p className="text-md font-medium text-gray-700">
-                      {data.class_follow_course}
-                    </p>
-                  </div>
-                  <div className="border-t border-gray-200 my-2"></div>
-                  <div className="text-center">
-                    <p className="text-3xl font-semibold text-indigo-600">
-                      <CountUp start={0} end={data.total} />
-                    </p>
-                  </div>
+            <div
+              onClick={() => handleClick(data, index)}
+              key={index}
+              className="cursor-pointer"
+            >
+              <div className="bg-white shadow-lg rounded-lg p-3 hover:shadow-2xl transition-shadow duration-300 ease-in-out">
+                <div className="text-center">
+                  <p className="text-lg font-bold text-gray-800">
+                    {moment(data.class_follow_date).format("DD-MM-YYYY")}
+                  </p>
                 </div>
-             
+                <div className="border-t border-gray-200 my-2"></div>
+                <div className="text-center">
+                  <p className="text-md font-medium text-gray-700">
+                    {data.class_follow_course}
+                  </p>
+                </div>
+                <div className="border-t border-gray-200 my-2"></div>
+                <div className="text-center">
+                  <p className="text-3xl font-semibold text-indigo-600">
+                    <CountUp start={0} end={data.total} />
+                  </p>
+                </div>
+              </div>
             </div>
           ))}
       </div>

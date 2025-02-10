@@ -6,6 +6,7 @@ import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import { NotificationCreate } from "../../components/buttonIndex/ButtonComponents";
 
 const NotificationList = () => {
   const [notificationListData, setCNotificationListData] = useState(null);
@@ -94,7 +95,7 @@ const NotificationList = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
@@ -114,10 +115,17 @@ const NotificationList = () => {
         <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
           Notification List
         </h3>
-
-        <Link to="/add-notification" className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        {/* 
+        <Link
+          to="/add-notification"
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        >
           + Add Notification
-        </Link>
+        </Link> */}
+        <NotificationCreate
+          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          onClick={() => navigate("/add-notification")}
+        ></NotificationCreate>
       </div>
       <div className="mt-5">
         <MUIDataTable
