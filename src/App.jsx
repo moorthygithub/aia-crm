@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "./pages/dashboard/Home";
 import SignIn from "./pages/auth/SignIn";
 import SIgnUp from "./pages/auth/SIgnUp";
@@ -87,11 +88,16 @@ import ViewCompleted from "./pages/classFollowup/ViewCompleted";
 import ClassFollowUpCount from "./pages/classFollowup/ClassFollowUpCount";
 import RepetitiveList from "./pages/taskManager/repetitive/RepetitiveList";
 import AddRepetitive from "./pages/taskManager/repetitive/AddRepetitive";
-
+import UserPage from "./pages/userManagement/UserPage";
+import ManagementDashboard from "./pages/userManagement/ManagementDashboard";
+import CreatePage from "./pages/userManagement/CreatePage";
+import CreateButton from "./pages/userManagement/CreateButton";
+const queryClient = new QueryClient();
 
 const App = () => {
   return (
     <>
+       <QueryClientProvider client={queryClient}>
       <ToastContainer />
       <Routes>
         <Route path="/" element={<SignIn />} />
@@ -238,11 +244,31 @@ const App = () => {
           path="/notattend"
           element={<ProtectedRoute element={<NotAttendanceReport />} />}
         />
-        {/* <Route
-          path="*"
-          element={<ProtectedRoute element={<Navigate to="/" />} />}
-        /> */}
+        <Route
+          path="/userManagement"
+          element={<UserPage />}
+        />
+        <Route
+          path="/management-dashboard/:id"
+          element={<ManagementDashboard />}
+        />
+        <Route
+          path="/page-management"
+          element={<CreatePage />}
+        />
+        <Route
+          path="/button-management"
+          element={<CreateButton />}
+        />
+
+
+
+
+
+
+
       </Routes>
+      </QueryClientProvider>
     </>
   );
 };

@@ -9,6 +9,7 @@ import MUIDataTable from "mui-datatables";
 import moment from "moment";
 import { CircularProgress } from "@mui/material";
 import { toast } from "react-toastify";
+import { StudentView } from "../../components/buttonIndex/ButtonComponents";
 
 const StudentList = () => {
   const [studentListData, setStudentListData] = useState(null);
@@ -130,10 +131,16 @@ const StudentList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdOutlineRemoveRedEye
+              {/* <MdOutlineRemoveRedEye
               onClick={() => navigate(`/view-student/${id}`)}
                 title="view "
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <StudentView
+                       onClick={() => navigate(`/view-student/${id}`)}
+                  
+                       className="h-5 w-5 cursor-pointer"
+              
               />
             </div>
           );

@@ -6,6 +6,7 @@ import MUIDataTable from "mui-datatables";
 import { MdEdit } from "react-icons/md";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
+import { CountryCreate ,CountryEdit} from "../../components/buttonIndex/ButtonComponents";
 
 const CountryList = () => {
   const [countryListData, setCountryListData] = useState(null);
@@ -74,16 +75,19 @@ const CountryList = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
-         
           return (
             <div className="flex items-center space-x-2">
-            
-              <MdEdit
-               onClick={() => navigate(`/edit-country/${id}`)}
+              {/* <MdEdit
+                onClick={() => navigate(`/edit-country/${id}`)}
                 title="edit"
                 className="h-5 w-5 cursor-pointer"
-              />
+              /> */}
+              <CountryEdit
+                   onClick={() => navigate(`/edit-country/${id}`)}
+                
+                   className="h-5 w-5 cursor-pointer"
               
+              />
             </div>
           );
         },
@@ -112,12 +116,18 @@ const CountryList = () => {
           Country List
         </h3>
 
-        <Link
+        {/* <Link
           to="/add-country"
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Country
-        </Link>
+        </Link> */}
+        <CountryCreate
+        
+          onClick={() => navigate(`/add-country`)}
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        
+        />
       </div>
       <div className="mt-5">
         <MUIDataTable

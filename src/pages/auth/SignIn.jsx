@@ -20,7 +20,8 @@ const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
+  const { isPanelUp, fetchPagePermission, fetchPermissions } =
+    useContext(ContextPanel);
   const navigate = useNavigate();
 
   const handleSumbit = async (e) => {
@@ -44,15 +45,19 @@ const SignIn = () => {
       if (res.status === 200 && res.data?.msg === "success.") {
         const token = res.data.UserInfo?.token;
         const user_type = res.data.UserInfo?.user.user_type;
+        const allUser = res.data?.userN;
         const id = res.data.UserInfo?.user.user_type;
         const username = res.data.UserInfo?.user.name;
-        console.log(username , "username")
-        localStorage.setItem("user_type_id", user_type);
-        localStorage.setItem("id", id);
-        localStorage.setItem("username", username);
         if (token) {
-          // Store the token in localStorage
+          localStorage.setItem("allUsers", JSON.stringify(allUser));
           localStorage.setItem("token", token);
+          localStorage.setItem("user_type_id", user_type);
+          localStorage.setItem("id", id);
+          localStorage.setItem("username", username);
+
+          await fetchPermissions();
+          await fetchPagePermission();
+
           navigate("/home");
           toast.success("User Logged In Successfully");
         } else {
@@ -170,10 +175,7 @@ const SignIn = () => {
                   variant="small"
                   className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500 "
                 >
-                  <Link
-                    to="/enquiry-now"
-                    className="text-gray-900 ml-1"
-                  >
+                  <Link to="/enquiry-now" className="text-gray-900 ml-1">
                     Enquiry Now
                   </Link>
                 </Typography>
@@ -181,10 +183,7 @@ const SignIn = () => {
                   variant="small"
                   className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500"
                 >
-                  <Link
-                    to="/forget-password"
-                    className="text-gray-900 ml-1"
-                  >
+                  <Link to="/forget-password" className="text-gray-900 ml-1">
                     Forgot Password
                   </Link>
                 </Typography>

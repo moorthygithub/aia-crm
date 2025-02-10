@@ -9,6 +9,7 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import { EnquiryOverDueCreate, EnquiryOverDueEdit, EnquiryOverDueView } from "../../../components/buttonIndex/ButtonComponents";
 
 const OverdueListEnquiry = () => {
   const [overdueListData, setOverdueListData] = useState(null);
@@ -143,15 +144,27 @@ const OverdueListEnquiry = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              {/* <MdEdit
                 onClick={(e) => handleOpenButtonLink(e, `${id}`)}
                 title="edit"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryOverDueEdit
+                  onClick={(e) => handleOpenButtonLink(e, `${id}`)}
+                
+                  className="h-5 w-5 cursor-pointer"
+              
               />
-              <MdOutlineRemoveRedEye
+              {/* <MdOutlineRemoveRedEye
                 onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
                 title="view"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryOverDueView
+                onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
+              
+                className="h-5 w-5 cursor-pointer"
+              
               />
             </div>
           );
@@ -201,12 +214,16 @@ const OverdueListEnquiry = () => {
           Enquiry Overude List
         </h3>
 
-        <button
+        {/* <button
           onClick={handleOpenButton}
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Enquiry
-        </button>
+        </button> */}
+        <EnquiryOverDueCreate
+         onClick={handleOpenButton}
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        />
       </div>
       <div className="mt-5">
         <MUIDataTable
