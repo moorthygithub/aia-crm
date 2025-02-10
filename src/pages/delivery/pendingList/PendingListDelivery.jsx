@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { DeliveryPendingCreate, DeliveryPendingEdit, DeliveryPendingView } from "../../../components/buttonIndex/ButtonComponents";
+import { DeliveryPendingCreate, DeliveryPendingEdit, DeliveryPendingView, DeliveryPenViewWhatsapp } from "../../../components/buttonIndex/ButtonComponents";
 
 const PendingListDelivery = () => {
   const [pendingDListData, setPendingDListData] = useState(null);
@@ -329,12 +329,21 @@ const PendingListDelivery = () => {
               </h1>
               <div className="flex">
                 <Tooltip title="On Conversion to Registered">
-                  <button
+                  {/* <button
                     onClick={whatsApp}
                     className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
                   >
-                    <WhatsAppIcon />
-                  </button>
+                    <WhatsAppIcon
+                      onClick={whatsApp}
+                    className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
+                    
+                    />
+                  </button> */}
+                  <DeliveryPenViewWhatsapp
+                     onClick={whatsApp}
+                    className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
+                  
+                  />
                 </Tooltip>
                 <Tooltip title="Close">
                   <button

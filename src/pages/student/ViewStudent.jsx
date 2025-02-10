@@ -19,6 +19,7 @@ import FollowUpTable from "../../components/common/table/FollowUpTable";
 import ClassFollowUpTable from "../../components/common/table/ClassFollowUpTable";
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
+import { StudentViewAdCourse, StudentViewAdDelivery, StudentViewAdExam, StudentViewEdStudent, StudentViewVieEnquiry } from "../../components/buttonIndex/ButtonComponents";
 
 const ViewStudent = () => {
   const { id } = useParams();
@@ -277,12 +278,17 @@ const ViewStudent = () => {
               </h1>
             </div>
             <div className="mb-4 mt-6  flex md:flex-row flex-col md:gap-0 gap-2">
-              <Link
+              {/* <Link
                 to={`/edit-student/${student.id}`}
                 className="bg-[#FFB70F] md:ml-0 ml-3 flex text-black px-4 py-2 rounded-md"
               >
                 Edit Student
-              </Link>
+              </Link> */}
+              <StudentViewEdStudent
+               className="bg-[#FFB70F] md:ml-0 ml-3 flex text-black px-4 py-2 rounded-md"
+               onClick={()=>navigate(`/edit-student/${student.id}`)}
+              
+              />
               {student.whatsapp_count == 0 && (
                 <button
                   onClick={whatsApp}
@@ -291,24 +297,38 @@ const ViewStudent = () => {
                   <FaWhatsapp className="mt-1 mr-2" /> WhatsApp
                 </button>
               )}
-              <Link
+              {/* <Link
                 to={`/add-student-course/${student.user_uid}`}
                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
               >
                 Add Course
-              </Link>
-              <Link
+              </Link> */}
+
+              <StudentViewAdCourse
+              onClick={()=>navigate(`/add-student-course/${student.user_uid}`)}
+                className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+              />
+              {/* <Link
                 to={`/add-student-delivery/${student.user_uid}`}
                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
               >
                 Add Delivery
-              </Link>
-              <Link
+              </Link> */}
+              <StudentViewAdDelivery
+                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+                 onClick={()=>navigate(`/add-student-delivery/${student.user_uid}`)}
+              />
+              {/* <Link
                 to={`/add-exam/${student.user_uid}`}
                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
               >
                 Add Exam
-              </Link>
+              </Link> */}
+              <StudentViewAdExam
+                onClick={()=>navigate(`/add-exam/${student.user_uid}`)}
+                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+              
+              />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4">
@@ -369,12 +389,17 @@ const ViewStudent = () => {
                     </div>
                   </div>
                   <div className="flex justify-center ">
-                    <Link
+                    {/* <Link
                       to={`/view-student-enquiry/${student.user_uid}`}
                       className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
                     >
                       View Enquiry
-                    </Link>
+                    </Link> */}
+                    <StudentViewVieEnquiry
+                     className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
+                    
+                     onClick={()=>navigate(`/view-student-enquiry/${student.user_uid}`)}
+                    />
                   </div>
                 </CardBody>
               </Card>

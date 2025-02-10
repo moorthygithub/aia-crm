@@ -2,6 +2,7 @@ import { Edit, Visibility } from "@mui/icons-material";
 import { Tooltip } from "@mui/material";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { StdViewExamEdit, StdViewExamView } from "../../buttonIndex/ButtonComponents";
 
 const ExamTable = (props) => {
   return (
@@ -38,16 +39,23 @@ const ExamTable = (props) => {
               <td class="py-3 px-6 text-center">
                 <span>
                   {" "}
-                  <Tooltip title="Edit Exam" placement="top">
+                  {/* <Tooltip title="Edit Exam" placement="top">
                     <Link to={`/edit-exam/${dataSumm.id}`}>
                       <Edit /> 
                     </Link>
-                  </Tooltip>
-                  <Tooltip title="View Exam" placement="top">
+                  </Tooltip> */}
+                  <StdViewExamEdit
+                    onClick={()=>navigate(`/edit-exam/${dataSumm.id}`)}
+                  />
+                  {/* <Tooltip title="View Exam" placement="top">
                     <Link to={`/view-exam/${dataSumm.id}`}>
                       <Visibility /> 
                     </Link>
-                  </Tooltip>
+                  </Tooltip> */}
+                  <StdViewExamView
+                   onClick={()=>navigate(`/view-exam/${dataSumm.id}`)}
+                  
+                  />
                 </span>
               </td>
             </tr>

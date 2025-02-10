@@ -9,7 +9,7 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
-import { EnquiryCloseCreate } from "../../../components/buttonIndex/ButtonComponents";
+import { EnquiryCloseCreate, EnquiryCloseEdit, EnquiryCloseView } from "../../../components/buttonIndex/ButtonComponents";
 
 const CloseListEnquiry = () => {
   const [closeListData, setCloseListData] = useState(null);
@@ -128,15 +128,27 @@ const CloseListEnquiry = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              {/* <MdEdit
                 title="edit"
                 onClick={(e) => handleOpenButtonLink(e,`${id}`)}
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryCloseEdit
+             
+               onClick={(e) => handleOpenButtonLink(e,`${id}`)}
+               className="h-5 w-5 cursor-pointer"
+              
               />
-              <MdOutlineRemoveRedEye
+              {/* <MdOutlineRemoveRedEye
                onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
                 title="view"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryCloseView
+              
+              onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
+             
+              className="h-5 w-5 cursor-pointer"
               />
             </div>
           );

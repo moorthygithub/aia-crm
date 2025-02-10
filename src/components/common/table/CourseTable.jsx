@@ -1,10 +1,12 @@
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Tooltip } from "@mui/material";
 import EditIcon from '@mui/icons-material/Edit';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { StdViewCourseEdit, StdViewCourseView } from "../../buttonIndex/ButtonComponents";
 
 const CourseTable = (props) => {
+  const navigate = useNavigate()
   return (
     <div>
       <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
@@ -48,14 +50,22 @@ const CourseTable = (props) => {
               <td class="py-3 px-6 text-center">
                 <span>
                   <Tooltip title="Edit Course" placement="top">
-                    <Link to={`/edit-student-course/${dataSumm.id}`}>
+                    {/* <Link to={`/edit-student-course/${dataSumm.id}`}>
                      <EditIcon />  
-                    </Link>
+                    </Link> */}
+                    <StdViewCourseEdit
+                      onClick={()=>navigate(`/edit-student-course/${dataSumm.id}`)}
+                    
+                    />
                   </Tooltip>
                   <Tooltip  title="View Course" placement="top">
-                    <Link to={`/view-course/${dataSumm.id}`}>
+                    {/* <Link to={`/view-course/${dataSumm.id}`}>
                       <VisibilityIcon /> 
-                    </Link>
+                    </Link> */}
+                      <StdViewCourseView
+                      onClick={()=>navigate(`/view-course/${dataSumm.id}`)}
+                      />
+
                   </Tooltip>
                 </span>
               </td>

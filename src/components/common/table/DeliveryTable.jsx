@@ -2,6 +2,7 @@ import { Edit, Visibility, WhatsApp } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { StdViewDeliveryEdit, StdViewDeliveryView, StdViewDeliveryWhatsapp } from "../../buttonIndex/ButtonComponents";
 
 const DeliveryTable = (props) => {
   return (
@@ -58,22 +59,35 @@ const DeliveryTable = (props) => {
               </td>
               <td class="py-3 px-6 text-center">
                 <div class="flex item-center justify-center">
-                  <Tooltip title="Edit Delivery" placement="top">
+                  {/* <Tooltip title="Edit Delivery" placement="top">
                     <Link to={`/edit-student-delivery/${dataSumm.id}`}>
                       <Edit />
                     </Link>
-                  </Tooltip>
-                  <Tooltip title="View Delivery" placement="top">
+                  </Tooltip> */}
+                  <StdViewDeliveryEdit
+                   onClick={()=>navigate(`/edit-student-delivery/${dataSumm.id}`)}
+                  
+                  />
+                  {/* <Tooltip title="View Delivery" placement="top">
                     <Link to={`/view-delivery/${dataSumm.id}`}>
                       <Visibility />
                     </Link>
-                  </Tooltip>
-                  <Tooltip title="Send Whatsapp" placement="top">
+                  </Tooltip> */}
+                  <StdViewDeliveryView
+                   onClick={()=>navigate(`/view-delivery/${dataSumm.id}`)}
+                  
+                  />
+                  {/* <Tooltip title="Send Whatsapp" placement="top">
                     <WhatsApp
                       style={{ cursor: "pointer" }}
                       onClick={(e) => props.deliverywhatsApp(e, dataSumm.id)}
                     />
-                  </Tooltip>
+                  </Tooltip> */}
+
+                  <StdViewDeliveryWhatsapp
+                       onClick={(e) => props.deliverywhatsApp(e, dataSumm.id)}
+                  
+                  />
                 </div>
               </td>
             </tr>

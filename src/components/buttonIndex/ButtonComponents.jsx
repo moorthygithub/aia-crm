@@ -11,6 +11,7 @@ import {
 import React from "react";
 import { checkPermission } from "./checkPermission";
 import { FaWhatsapp } from "react-icons/fa";
+import { MdEmail } from "react-icons/md";
 
 const getStaticPermissions = () => {
   const buttonPermissions = localStorage.getItem("buttonControl");
@@ -135,6 +136,70 @@ export const EnquiryOpenCreate = ({ onClick, className }) => {
   );
 };
 EnquiryOpenCreate.page = "Enquiry";
+export const EnquiryViewSendMail = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryViewSendMail", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+       <MdEmail className="mt-1 h-4 w-4 mr-2" />Send Mail
+    </button>
+  );
+};
+EnquiryViewSendMail.page = "Enquiry";
+export const EnquiryViewWhatsapp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryViewWhatsapp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      <FaWhatsapp className="h-4 w-4 mt-1 mr-2 " /> Whatsapp
+    </button>
+  );
+};
+EnquiryViewWhatsapp.page = "Enquiry";
+
+
+export const EnquiryOpenEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryOpenEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-4 w-4" />
+    </button>
+  );
+};
+
+EnquiryOpenEdit.page = "Enquiry";
+
+export const EnquiryOpenView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryOpenView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View ">
+      <Eye className="h-4 w-4 " />
+    </button>
+  );
+};
+
+EnquiryOpenView.page = "Enquiry";
+
+
+
 
 export const EnquiryOverDueCreate = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -164,6 +229,39 @@ export const EnquiryCloseCreate = ({ onClick, className }) => {
   );
 };
 EnquiryCloseCreate.page = "Enquiry";
+
+
+export const EnquiryCloseEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryCloseEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-4 w-4" />
+    </button>
+  );
+};
+
+EnquiryCloseEdit.page = "Enquiry";
+
+export const EnquiryCloseView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "EnquiryCloseView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View ">
+      <Eye className="h-4 w-4 " />
+    </button>
+  );
+};
+
+EnquiryCloseView.page = "Enquiry";
 
 export const EnquiryOverDueEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -215,6 +313,272 @@ export const StudentView = ({ onClick, className }) => {
 
 StudentView.page = "Student";
 
+export const StudentViewEdStudent = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StudentViewEdStudent", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */}Edit Student
+    </button>
+  );
+};
+StudentViewEdStudent.page = "Student";
+export const StudentViewAdCourse = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StudentViewAdCourse", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */}Add Courses
+    </button>
+  );
+};
+StudentViewAdCourse.page = "Student";
+export const StudentViewAdDelivery = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StudentViewAdDelivery", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */}Add Delivery
+    </button>
+  );
+};
+StudentViewAdDelivery.page = "Student";
+export const StudentViewAdExam = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StudentViewAdExam", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */}Add Exam
+    </button>
+  );
+};
+StudentViewAdExam.page = "Student";
+export const StudentViewVieEnquiry = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StudentViewVieEnquiry", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */}View Enquiry
+    </button>
+  );
+};
+StudentViewVieEnquiry.page = "Student";
+
+
+
+export const StdViewCourseEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewCourseEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-5 w-5" />
+    </button>
+  );
+};
+
+StdViewCourseEdit.page = "Student";
+
+export const StdViewCourseView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewCourseView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View">
+      <Eye className="h-5 w-5 " />
+    </button>
+  );
+};
+
+StdViewCourseView.page = "Student";
+
+
+
+
+
+
+
+
+
+
+
+export const StdViewDeliveryEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewDeliveryEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-5 w-5" />
+    </button>
+  );
+};
+
+StdViewDeliveryEdit.page = "Student";
+
+export const StdViewDeliveryView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewDeliveryView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View">
+      <Eye className="h-5 w-5  " />
+    </button>
+  );
+};
+
+StdViewDeliveryView.page = "Student";
+export const StdViewDeliveryWhatsapp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewDeliveryWhatsapp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Whatsapp">
+      <FaWhatsapp className="h-5 w-5  " />
+    </button>
+  );
+};
+
+StdViewDeliveryWhatsapp.page = "Student";
+
+
+
+
+
+
+
+export const StdViewExamEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewExamEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-5 w-5" />
+    </button>
+  );
+};
+
+StdViewExamEdit.page = "Student";
+
+export const StdViewExamView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewExamView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View">
+      <Eye className="h-5 w-5 " />
+    </button>
+  );
+};
+
+StdViewExamView.page = "Student";
+
+
+
+
+
+export const StdViewResultEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewResultEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit ">
+      <Edit className="h-5 w-5" />
+    </button>
+  );
+};
+
+StdViewResultEdit.page = "Student";
+
+export const StdViewResultView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewResultView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="View">
+      <Eye className="h-5 w-5 " />
+    </button>
+  );
+};
+
+StdViewResultView.page = "Student";
+export const StdViewResultWhatsapp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewResultWhatsapp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Whatsapp">
+      <FaWhatsapp className="h-5 w-5 " />
+    </button>
+  );
+};
+
+StdViewResultWhatsapp.page = "Student";
+export const StdViewResultMail = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "StdViewResultMail", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Mail">
+      <Mail className="h-5 w-5 " />
+    </button>
+  );
+};
+
+StdViewResultMail.page = "Student";
+
 /*---------------------------------Delivery-------------------------- */
 
 export const DeliveryPendingCreate = ({ onClick, className }) => {
@@ -248,6 +612,36 @@ export const DeliveryPendingEdit = ({ onClick, className }) => {
 
 DeliveryPendingEdit.page = "Delivery";
 
+export const DeliveryPenViewWhatsapp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "DeliveryPenViewWhatsapp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="On Conversion to Registered">
+      <FaWhatsapp className="h-5 w-5 " />
+    </button>
+  );
+};
+
+DeliveryPenViewWhatsapp.page = "Delivery";
+export const DeliveryDeliViewWhatsapp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "DeliveryDeliViewWhatsapp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="On Conversion to Registered">
+      <FaWhatsapp className="h-5 w-5 " />
+    </button>
+  );
+};
+
+DeliveryDeliViewWhatsapp.page = "Delivery";
 export const DeliveryPendingView = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -1001,6 +1395,10 @@ export default {
   CoursesEdit,
   EnquiryOpenCreate,
   EnquiryOverDueCreate,
+  EnquiryOpenEdit,
+  EnquiryOpenView,
+  EnquiryCloseEdit,
+  EnquiryCloseView,
   EnquiryCloseCreate,
   EnquiryOverDueEdit,
   EnquiryOverDueView,
@@ -1014,6 +1412,40 @@ export default {
   DeliveryDeliverdEdit,
 
   DeliveryDeliverdView,
+
+
+  StudentViewEdStudent,
+  StudentViewAdCourse,
+  StudentViewAdDelivery,
+  StudentViewAdExam,
+  StudentViewVieEnquiry,
+  DeliveryPenViewWhatsapp,
+  DeliveryDeliViewWhatsapp,
+
+
+
+
+  StdViewCourseEdit,
+  StdViewCourseView,
+
+  StdViewDeliveryEdit,
+  StdViewDeliveryView,
+  StdViewDeliveryWhatsapp,
+
+  StdViewExamEdit,
+  StdViewExamView,
+
+  StdViewResultEdit,
+  StdViewResultView,
+  StdViewResultWhatsapp,
+  StdViewResultMail,
+
+  EnquiryViewWhatsapp,
+  
+
+
+
+
 
   /*-----------------------------------Morrthy------------------ */
   ClassCreate,

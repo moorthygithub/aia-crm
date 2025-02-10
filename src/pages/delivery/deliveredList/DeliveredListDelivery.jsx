@@ -19,7 +19,7 @@ import {
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
-import { DeliveryDeliverdCreate, DeliveryDeliverdEdit, DeliveryDeliverdView } from "../../../components/buttonIndex/ButtonComponents";
+import { DeliveryDeliverdCreate, DeliveryDeliverdEdit, DeliveryDeliverdView, DeliveryPenViewWhatsapp } from "../../../components/buttonIndex/ButtonComponents";
 
 const DeliveredListDelivery = () => {
   const [deliveredDListData, setDeliveredDListData] = useState(null);
@@ -333,12 +333,17 @@ const DeliveredListDelivery = () => {
               </h1>
               <div className="flex">
                 <Tooltip title="On Conversion to Registered">
-                  <button
+                  {/* <button
                     onClick={whatsApp}
                     className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
                   >
                     <WhatsAppIcon />
-                  </button>
+                   
+                  </button> */}
+                  <DeliveryPenViewWhatsapp
+                    onClick={whatsApp}
+                    className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
+                    />
                 </Tooltip>
                 <Tooltip title="Close">
                   <button

@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { MdEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa6";
+import { EnquiryViewSendMail, EnquiryViewWhatsapp } from "../../components/buttonIndex/ButtonComponents";
 
 const ViewEnquiry = () => {
   const { id } = useParams();
@@ -195,14 +196,18 @@ const ViewEnquiry = () => {
               </h1>
             </div>
             <div className="mb-4 mt-6 md:w-[30%] w-full flex">
-              <button
+              {/* <button
                 onClick={sendEmail}
                 className="bg-[#FFB70F] flex text-black px-4 py-2 rounded-md"
               >
                 <MdEmail className="mt-1 mr-2" />
-                Send Email
-              </button>
-              <button
+                Send Email 
+              </button> */}
+              <EnquiryViewSendMail
+                 onClick={sendEmail}
+                className="bg-[#FFB70F] flex text-black px-4 py-2 rounded-md"
+              />
+              {/* <button
                 onClick={
                   enquiry.enquiry_status == "New Enquiry"
                     ? whatsApp1
@@ -214,7 +219,20 @@ const ViewEnquiry = () => {
                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
               >
                 <FaWhatsapp className="mt-1 mr-2" /> WhatsApp
-              </button>
+              </button> */}
+              <EnquiryViewWhatsapp
+              
+              onClick={
+                enquiry.enquiry_status == "New Enquiry"
+                  ? whatsApp1
+                  : enquiry.enquiry_status == "Postponed" ||
+                    enquiry.enquiry_status == "In Process"
+                  ? whatsApp2
+                  : ""
+              }
+              className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+              
+              />
             </div>
           </div>
           <div className="grid grid-cols-1 gap-4">
