@@ -9,6 +9,7 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import { EnquiryCloseCreate } from "../../../components/buttonIndex/ButtonComponents";
 
 const CloseListEnquiry = () => {
   const [closeListData, setCloseListData] = useState(null);
@@ -185,9 +186,13 @@ const CloseListEnquiry = () => {
           Enquiry Close List
         </h3>
 
-        <button onClick={handleOpenButton} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        {/* <button onClick={handleOpenButton} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Enquiry
-        </button>
+        </button> */}
+        <EnquiryCloseCreate
+        
+        onClick={handleOpenButton} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        />
       </div>
       <div className="mt-5">
         <MUIDataTable

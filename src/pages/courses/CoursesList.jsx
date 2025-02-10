@@ -6,6 +6,7 @@ import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import { MdEdit } from "react-icons/md";
+import { CoursesCreate, CoursesEdit } from "../../components/buttonIndex/ButtonComponents";
 
 const CoursesList = () => {
   const [coursesListData, setCoursesListData] = useState(null);
@@ -76,10 +77,17 @@ const CoursesList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              {/* <MdEdit
                 onClick={() => navigate(`/add-courses/${id}`)}
                 title="edit courses list"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <CoursesEdit
+              
+              onClick={() => navigate(`/add-courses/${id}`)}
+             
+                className="h-5 w-5 cursor-pointer"
+              
               />
             </div>
           );
@@ -110,9 +118,14 @@ const CoursesList = () => {
           Courses List
         </h3>
 
-        <Link to='/add-courses' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+        {/* <Link to='/add-courses' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Courses
-        </Link>
+        </Link> */}
+
+        <CoursesCreate
+          onClick={() => navigate(`/add-courses`)}
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        />
       </div>
       <div className="mt-5">
         <MUIDataTable
