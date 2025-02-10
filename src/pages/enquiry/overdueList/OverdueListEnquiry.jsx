@@ -9,7 +9,12 @@ import { MdEdit } from "react-icons/md";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import moment from "moment";
-import { EnquiryOverDueCreate, EnquiryOverDueEdit, EnquiryOverDueView } from "../../../components/buttonIndex/ButtonComponents";
+import {
+  EnquiryOverDueCreate,
+  EnquiryOverDueEdit,
+  EnquiryOverDueView,
+} from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const OverdueListEnquiry = () => {
   const [overdueListData, setOverdueListData] = useState(null);
@@ -150,10 +155,8 @@ const OverdueListEnquiry = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <EnquiryOverDueEdit
-                  onClick={(e) => handleOpenButtonLink(e, `${id}`)}
-                
-                  className="h-5 w-5 cursor-pointer"
-              
+                onClick={(e) => handleOpenButtonLink(e, `${id}`)}
+                className="h-5 w-5 cursor-pointer"
               />
               {/* <MdOutlineRemoveRedEye
                 onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
@@ -162,9 +165,7 @@ const OverdueListEnquiry = () => {
               /> */}
               <EnquiryOverDueView
                 onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
-              
                 className="h-5 w-5 cursor-pointer"
-              
               />
             </div>
           );
@@ -180,13 +181,6 @@ const OverdueListEnquiry = () => {
     viewColumns: true,
     download: true,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
 
   const handleOpenButton = (e) => {
@@ -221,8 +215,8 @@ const OverdueListEnquiry = () => {
           + Add Enquiry
         </button> */}
         <EnquiryOverDueCreate
-         onClick={handleOpenButton}
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          onClick={handleOpenButton}
+          className={ButtonCreate}
         />
       </div>
       <div className="mt-5">

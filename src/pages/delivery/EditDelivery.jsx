@@ -8,6 +8,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const ss = [
   {
@@ -145,7 +146,6 @@ const EditDelivery = () => {
     }
   };
 
-
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -213,9 +213,7 @@ const EditDelivery = () => {
               {/* UID */}
               <div>
                 <label className="block text-gray-700 ">UID</label>
-                <span className="mt-1 text-black">
-                  {student.user_uid} 
-                </span>
+                <span className="mt-1 text-black">{student.user_uid}</span>
               </div>
               {/* Mode */}
               <div>
@@ -314,7 +312,7 @@ const EditDelivery = () => {
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
               <div className="col-span-5">
                 <Fields
-                required={true}
+                  required={true}
                   types="text"
                   title="Tracking URL"
                   type="textField"
@@ -328,16 +326,14 @@ const EditDelivery = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
                 {isButtonDisabled ? "Updating..." : "Update"}
               </button>
 
               <Link to="/pending-delivery">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
+                <button className={ButtonBack}>Back</button>
               </Link>
             </div>
           </form>

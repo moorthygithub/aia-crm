@@ -12,12 +12,16 @@ import { toast } from "react-toastify";
 import { Button } from "@mui/material";
 import { MdEmail } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa6";
+import {
+  ButtonBack,
+  ButtonCreate,
+  ButtonIcons,
+} from "../../components/common/ButtonCss";
 
 const ViewEnquiry = () => {
   const { id } = useParams();
 
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [enquiry, setEnquiry] = useState({
@@ -174,7 +178,7 @@ const ViewEnquiry = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -191,14 +195,11 @@ const ViewEnquiry = () => {
               />
 
               <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-                View Enquiry
+                View Enquiry 
               </h1>
             </div>
             <div className="mb-4 mt-6 md:w-[30%] w-full flex">
-              <button
-                onClick={sendEmail}
-                className="bg-[#FFB70F] flex text-black px-4 py-2 rounded-md"
-              >
+              <button onClick={sendEmail} className={ButtonIcons}>
                 <MdEmail className="mt-1 mr-2" />
                 Send Email
               </button>
@@ -211,7 +212,7 @@ const ViewEnquiry = () => {
                     ? whatsApp2
                     : ""
                 }
-                className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+                className={ButtonIcons}
               >
                 <FaWhatsapp className="mt-1 mr-2" /> WhatsApp
               </button>
@@ -286,10 +287,7 @@ const ViewEnquiry = () => {
                     </div>
                   </div>
                   <div className="flex justify-center mt-4">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>

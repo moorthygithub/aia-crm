@@ -8,6 +8,7 @@ import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
 import EnquiryFilter from "../../components/EnquiryFilter";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const title = [
   {
@@ -219,19 +220,20 @@ const AddEnquiry = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(localStorage.getItem("enquiry_page"));
   };
 
   return (
     <Layout>
-      
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-          
-            <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-      
+          <MdKeyboardBackspace
+            onClick={handleBackButton}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
             Add Enquiry
           </h1>
@@ -281,16 +283,15 @@ const AddEnquiry = () => {
 
                 {/* Email */}
                 <div>
-                     <Fields
-                  
-                  types="email"
-                  title="Email"
-                  type="textField"
-                  autoComplete="Name"
-                  name="enquiry_email"
-                  value={enquiry.enquiry_email}
-                  onChange={(e) => onInputChange(e)}
-                />
+                  <Fields
+                    types="email"
+                    title="Email"
+                    type="textField"
+                    autoComplete="Name"
+                    name="enquiry_email"
+                    value={enquiry.enquiry_email}
+                    onChange={(e) => onInputChange(e)}
+                  />
                 </div>
               </div>
             </div>
@@ -312,7 +313,7 @@ const AddEnquiry = () => {
 
               {/* City  */}
               <div>
-                 <Fields
+                <Fields
                   required={true}
                   title="City"
                   type="textField"
@@ -353,17 +354,17 @@ const AddEnquiry = () => {
                 />
               </div>
               {enquiry.enquiry_course == "Other" && (
-                  <div>
-                    <Input
-                      type="text"
-                      required
-                      label="Course Other"
-                      name="enquiry_course_other"
-                      value={enquiry.enquiry_course_other}
-                      onChange={(e) => onInputChange(e)}
-                    />
-                  </div>
-                )}
+                <div>
+                  <Input
+                    type="text"
+                    required
+                    label="Course Other"
+                    name="enquiry_course_other"
+                    value={enquiry.enquiry_course_other}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+              )}
 
               {/* Source  */}
               <div>
@@ -377,33 +378,32 @@ const AddEnquiry = () => {
                   options={source}
                 />
               </div>
-              {(enquiry.enquiry_source == "Other" || enquiry.enquiry_source == "Social Media" ) && (
-                  <div>
-                    <Input
-                      type="text"
-                      required
-                      label="Source Other"
-                      name="enquiry_source_other"
-                      value={enquiry.enquiry_source_other}
-                      onChange={(e) => onInputChange(e)}
-                    />
-                  </div>
-                )}
+              {(enquiry.enquiry_source == "Other" ||
+                enquiry.enquiry_source == "Social Media") && (
+                <div>
+                  <Input
+                    type="text"
+                    required
+                    label="Source Other"
+                    name="enquiry_source_other"
+                    value={enquiry.enquiry_source_other}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+              )}
             </div>
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
-                {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-              
-                <button onClick={handleBackButton} className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-            
+
+              <button onClick={handleBackButton} className={ButtonBack}>
+                Back
+              </button>
             </div>
           </form>
         </div>

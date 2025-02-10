@@ -7,6 +7,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const AddDelivery = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const AddDelivery = () => {
   });
 
   const [useruid, setUserUID] = useState([]);
-  console.log(useruid , "useruid")
+  console.log(useruid, "useruid");
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
     if (!isLoggedIn) {
@@ -130,7 +131,7 @@ const AddDelivery = () => {
 
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
-        navigate('/pending-delivery');
+        navigate("/pending-delivery");
       } else {
         if (response.data.code == 401) {
           toast.error("Delivery Duplicate Entry");
@@ -147,7 +148,6 @@ const AddDelivery = () => {
       setIsButtonDisabled(false);
     }
   };
-
 
   return (
     <Layout>
@@ -230,7 +230,7 @@ const AddDelivery = () => {
                 />
               </div>
             </div>
-             {/* <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
+            {/* <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
              <div className="col-span-5">
                 <Fields
                   types="text"
@@ -246,18 +246,14 @@ const AddDelivery = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
-                {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-               <Link to='/pending-delivery'>
-                <button  className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-                </Link>
-            
+              <Link to="/pending-delivery">
+                <button className={ButtonBack}>Back</button>
+              </Link>
             </div>
           </form>
         </div>

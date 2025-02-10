@@ -10,6 +10,7 @@ import BASE_URL from "../../base/BaseUrl";
 import moment from "moment";
 import { toast } from "react-toastify";
 import Student from "../Dowloads/Students/Students";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const status = [
   {
@@ -38,7 +39,6 @@ const EditEnquiry = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-
 
   console.log(id, "id");
 
@@ -80,24 +80,22 @@ const EditEnquiry = () => {
     fetchData();
   }, []);
 
-//   const onInputChange = (e) => {
-//     setEnquiry({
-//       ...enquiry,
-//       [e.target.name]: e.target.value,
-//     });
-//   };
+  //   const onInputChange = (e) => {
+  //     setEnquiry({
+  //       ...enquiry,
+  //       [e.target.name]: e.target.value,
+  //     });
+  //   };
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
-  
-  
+
     // Update state with the new value
     setEnquiry({
       ...enquiry,
       [name]: value,
     });
   };
-  
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -108,11 +106,11 @@ const EditEnquiry = () => {
     }
     setIsButtonDisabled(true);
     const formData = {
-        enquiry_remarks: enquiry.enquiry_remarks,
-        enquiry_follow_date: enquiry.enquiry_follow_date,
-        enquiry_status: enquiry.enquiry_status,
+      enquiry_remarks: enquiry.enquiry_remarks,
+      enquiry_follow_date: enquiry.enquiry_follow_date,
+      enquiry_status: enquiry.enquiry_status,
     };
-    console.log("debug", formData)
+    console.log("debug", formData);
     try {
       const response = await axios.put(
         `${BASE_URL}/api/panel-update-enquiry/${id}`,
@@ -120,7 +118,6 @@ const EditEnquiry = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-
           },
         }
       );
@@ -145,12 +142,12 @@ const EditEnquiry = () => {
     }
   };
 
-  const handleEdit =()=>{
-     navigate(`/edit-personal/${id}`)
-  }
+  const handleEdit = () => {
+    navigate(`/edit-personal/${id}`);
+  };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(localStorage.getItem("enquiry_page"));
   };
 
@@ -160,8 +157,11 @@ const EditEnquiry = () => {
         <div>
           {/* Title */}
           <div className="flex mb-4 mt-6">
-              <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-          
+            <MdKeyboardBackspace
+              onClick={handleBackButton}
+              className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+            />
+
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
               Edit Enquiry
             </h1>
@@ -170,7 +170,7 @@ const EditEnquiry = () => {
             <div className="col-span-2">
               <Card className="mt-4">
                 <CardBody>
-                  <CommonCard data={enquiry}/>
+                  <CommonCard data={enquiry} />
                 </CardBody>
               </Card>
             </div>
@@ -197,7 +197,8 @@ const EditEnquiry = () => {
                       type="date"
                       name="enquiry_follow_date"
                       value={enquiry.enquiry_follow_date}
-                      onChange={(e) => onInputChange(e)} />
+                      onChange={(e) => onInputChange(e)}
+                    />
                   </div>
                   <div>
                     <Input
@@ -212,16 +213,11 @@ const EditEnquiry = () => {
                   </div>
                 </div>
                 <div className="mt-4 text-center">
-                  <button
-                     onClick={handleEdit}
-                    className="bg-[#FFB70F] text-white px-4 py-2 rounded-md mr-2"
-                    // disabled={isButtonDisabled}
-                  >
+                  <button onClick={handleEdit} className={ButtonCreate}>
                     Edit Personal
                   </button>
-                  <button onClick={onSubmit} className="bg-[#5D92F4] text-white px-4 py-2 rounded-md">
-                 
-                    {isButtonDisabled ? 'Updating...' : 'Update'}
+                  <button onClick={onSubmit} className={ButtonCreate}>
+                    {isButtonDisabled ? "Updating..." : "Update"}
                   </button>
                 </div>
               </form>
@@ -274,14 +270,10 @@ const EditEnquiry = () => {
                             <span>{dataSumm.follow_up_time}</span>
                           </td>
                           <td class="py-3 px-6 text-center">
-                            <span >
-                              {dataSumm.follow_up_type}
-                            </span>
+                            <span>{dataSumm.follow_up_type}</span>
                           </td>
                           <td class="py-3 px-6 text-center">
-                            <span >
-                              {dataSumm.follow_up_sub_type}
-                            </span>
+                            <span>{dataSumm.follow_up_sub_type}</span>
                           </td>
                         </tr>
                       ))}
