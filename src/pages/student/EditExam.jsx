@@ -8,6 +8,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const subject = [
   {
@@ -157,7 +158,7 @@ const EditExam = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -224,16 +225,16 @@ const EditExam = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-               {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
 
               <button
-               type="button"
-               onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                type="button"
+                onClick={handleBackButton}
+                className={ButtonBack}
               >
                 Back
               </button>

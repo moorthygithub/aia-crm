@@ -8,6 +8,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const ss = [
   {
@@ -52,7 +53,7 @@ const EditStudentDelivery = () => {
     delivery_tracking_url: "",
   });
 
-  console.log(student , "student");
+  console.log(student, "student");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -81,7 +82,6 @@ const EditStudentDelivery = () => {
 
     fetchdeliverymodeData();
   }, []);
-
 
   useEffect(() => {
     const fetchdeliverymodeDataURL = async () => {
@@ -198,7 +198,7 @@ const EditStudentDelivery = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -266,7 +266,6 @@ const EditStudentDelivery = () => {
                 <Input
                   required
                   label="Tracking Number"
-                  
                   name="delivery_tracking_number"
                   value={student.delivery_tracking_number}
                   onChange={(e) => onInputChange(e)}
@@ -307,7 +306,7 @@ const EditStudentDelivery = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-6">
-             <div className="col-span-5">
+              <div className="col-span-5">
                 <Fields
                   required={true}
                   types="text"
@@ -319,22 +318,21 @@ const EditStudentDelivery = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
-             </div>
+            </div>
 
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
-                
               >
-              {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
 
               <button
                 type="button"
                 onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                className={ButtonBack}
               >
                 Back
               </button>

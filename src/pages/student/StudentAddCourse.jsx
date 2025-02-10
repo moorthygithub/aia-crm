@@ -9,6 +9,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const course_validity = [
   {
@@ -99,7 +100,7 @@ const StudentAddCourse = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -172,10 +173,7 @@ const StudentAddCourse = () => {
               {/* UID */}
               <div>
                 <label className="block text-gray-700 ">UID</label>
-                <span className="mt-1 text-black">
-                 
-                  {id}
-                </span>
+                <span className="mt-1 text-black">{id}</span>
               </div>
               <div>
                 <Fields
@@ -241,7 +239,6 @@ const StudentAddCourse = () => {
               </div>
               <div className="md:col-span-3">
                 <Fields
-                 
                   title="Receiving Bank Name"
                   type="textField"
                   autoComplete="Name"
@@ -252,9 +249,8 @@ const StudentAddCourse = () => {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
-            <div className="md:col-span-3">
+              <div className="md:col-span-3">
                 <Input
-                  
                   label="Remarks"
                   type="text"
                   name="course_remarks"
@@ -266,16 +262,13 @@ const StudentAddCourse = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
                 {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
 
-              <button
-                onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
-              >
+              <button onClick={handleBackButton} className={ButtonBack}>
                 Back
               </button>
             </div>

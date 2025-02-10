@@ -4,6 +4,7 @@ import {
   Eye,
   Mail,
   MessageSquareShare,
+  User,
   UserPlus,
   View,
   X,
@@ -145,7 +146,8 @@ export const EnquiryViewSendMail = ({ onClick, className }) => {
 
   return (
     <button onClick={onClick} className={className}>
-       <MdEmail className="mt-1 h-4 w-4 mr-2" />Send Mail
+      <MdEmail className="mt-1 h-4 w-4 mr-2" />
+      Send Mail
     </button>
   );
 };
@@ -164,7 +166,6 @@ export const EnquiryViewWhatsapp = ({ onClick, className }) => {
   );
 };
 EnquiryViewWhatsapp.page = "Enquiry";
-
 
 export const EnquiryOpenEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -198,9 +199,6 @@ export const EnquiryOpenView = ({ onClick, className }) => {
 
 EnquiryOpenView.page = "Enquiry";
 
-
-
-
 export const EnquiryOverDueCreate = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -229,7 +227,6 @@ export const EnquiryCloseCreate = ({ onClick, className }) => {
   );
 };
 EnquiryCloseCreate.page = "Enquiry";
-
 
 export const EnquiryCloseEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -384,8 +381,6 @@ export const StudentViewVieEnquiry = ({ onClick, className }) => {
 };
 StudentViewVieEnquiry.page = "Student";
 
-
-
 export const StdViewCourseEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -417,16 +412,6 @@ export const StdViewCourseView = ({ onClick, className }) => {
 };
 
 StdViewCourseView.page = "Student";
-
-
-
-
-
-
-
-
-
-
 
 export const StdViewDeliveryEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -475,12 +460,6 @@ export const StdViewDeliveryWhatsapp = ({ onClick, className }) => {
 
 StdViewDeliveryWhatsapp.page = "Student";
 
-
-
-
-
-
-
 export const StdViewExamEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -512,10 +491,6 @@ export const StdViewExamView = ({ onClick, className }) => {
 };
 
 StdViewExamView.page = "Student";
-
-
-
-
 
 export const StdViewResultEdit = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -620,7 +595,11 @@ export const DeliveryPenViewWhatsapp = ({ onClick, className }) => {
   }
 
   return (
-    <button onClick={onClick} className={className} title="On Conversion to Registered">
+    <button
+      onClick={onClick}
+      className={className}
+      title="On Conversion to Registered"
+    >
       <FaWhatsapp className="h-5 w-5 " />
     </button>
   );
@@ -635,7 +614,11 @@ export const DeliveryDeliViewWhatsapp = ({ onClick, className }) => {
   }
 
   return (
-    <button onClick={onClick} className={className} title="On Conversion to Registered">
+    <button
+      onClick={onClick}
+      className={className}
+      title="On Conversion to Registered"
+    >
       <FaWhatsapp className="h-5 w-5 " />
     </button>
   );
@@ -819,6 +802,69 @@ export const ClassAddAttendance = ({ onClick, className }) => {
 };
 
 ClassAddAttendance.page = "Class";
+//class iside view
+export const ClassViewSendEmailNotAttend = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (
+    !checkPermission(userId, "ClassViewSendEmailNotAttend", staticPermissions)
+  ) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      <Mail className="h-4 w-4 mr-2" /> Send Email to Not Attend
+    </button>
+  );
+};
+
+ClassViewSendEmailNotAttend.page = "Class";
+export const ClassViewAddtoAttend = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "ClassViewAddtoAttend", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="AddtoAttend">
+      <User className="h-4 w-4 " />
+    </button>
+  );
+};
+
+ClassViewAddtoAttend.page = "Class";
+export const ClassViewAddtoNotAttend = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "ClassViewAddtoNotAttend", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="AddtoNotAttend">
+      <UserPlus className="h-4 w-4 " />
+    </button>
+  );
+};
+
+ClassViewAddtoNotAttend.page = "Class";
+export const ClassViewMissedCalls = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "ClassViewMissedCalls", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="MissedCalls">
+      <FaWhatsapp className="h-4 w-4 " />
+    </button>
+  );
+};
+
+ClassViewMissedCalls.page = "Class";
 
 //////////////////////////CLASS FOLLOW UP--------------------
 export const ClassFollowUpCreate = ({ onClick, className }) => {
@@ -1413,7 +1459,6 @@ export default {
 
   DeliveryDeliverdView,
 
-
   StudentViewEdStudent,
   StudentViewAdCourse,
   StudentViewAdDelivery,
@@ -1421,9 +1466,6 @@ export default {
   StudentViewVieEnquiry,
   DeliveryPenViewWhatsapp,
   DeliveryDeliViewWhatsapp,
-
-
-
 
   StdViewCourseEdit,
   StdViewCourseView,
@@ -1441,11 +1483,6 @@ export default {
   StdViewResultMail,
 
   EnquiryViewWhatsapp,
-  
-
-
-
-
 
   /*-----------------------------------Morrthy------------------ */
   ClassCreate,
@@ -1459,6 +1496,10 @@ export default {
   ClassSendNotification,
 
   ClassAddAttendance,
+  ClassViewMissedCalls,
+  ClassViewAddtoNotAttend,
+  ClassViewAddtoAttend,
+  ClassViewSendEmailNotAttend,
   ClassFollowUpCreate,
   RequestPendingCreate,
 

@@ -1,10 +1,11 @@
 import { Edit, Visibility, WhatsApp } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import moment from "moment";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { StdViewDeliveryEdit, StdViewDeliveryView, StdViewDeliveryWhatsapp } from "../../buttonIndex/ButtonComponents";
 
 const DeliveryTable = (props) => {
+  const navigate = useNavigate()
   return (
     <div>
       <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">

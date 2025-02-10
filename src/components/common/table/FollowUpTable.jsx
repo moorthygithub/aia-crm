@@ -1,6 +1,8 @@
 import moment from "moment";
+import { useNavigate } from "react-router-dom";
 
 const FollowUpTable = (props) => {
+  const navigate = useNavigate()
   return (
     <div>
       <table class="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">

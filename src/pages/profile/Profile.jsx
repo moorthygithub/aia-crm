@@ -10,10 +10,10 @@ import Layout from "../../layout/Layout";
 import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const Profile = () => {
-
   const navigate = useNavigate();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [admin, setStudentDetails] = useState({
@@ -21,7 +21,6 @@ const Profile = () => {
     number: "",
     email: "",
   });
-
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -43,9 +42,9 @@ const Profile = () => {
           }
         );
         setStudentDetails({
-           full_name : response.data.user.name,
-           number : response.data.user.mobile,
-           email : response.data.user.email,
+          full_name: response.data.user.name,
+          number: response.data.user.mobile,
+          email: response.data.user.email,
         });
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -122,11 +121,10 @@ const Profile = () => {
               className="px-8 pt-6 pb-8 gap-3 w-full grid md:grid-cols-3 grid-cols-1"
             >
               <div className="mb-4">
-               
                 <Input
-                label="Full Name"
-                 disabled
-                 required
+                  label="Full Name"
+                  disabled
+                  required
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   id="full_name"
                   name="full_name"
@@ -142,8 +140,8 @@ const Profile = () => {
 
               <div className="mb-4">
                 <Input
-                 label="Mobile No"
-                 required
+                  label="Mobile No"
+                  required
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   id="number"
                   name="number"
@@ -155,8 +153,8 @@ const Profile = () => {
               </div>
               <div className="mb-4">
                 <Input
-                 label="Email"
-                 required
+                  label="Email"
+                  required
                   className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500"
                   id="email"
                   name="email"
@@ -168,12 +166,8 @@ const Profile = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <button
-                  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-                  type="submit"
-                >
-                  
-                  {isButtonDisabled ? 'Updating...' : 'Update Profile'}
+                <button className={ButtonCreate} type="submit">
+                  {isButtonDisabled ? "Updating..." : "Update Profile"}
                 </button>
               </div>
             </form>

@@ -16,6 +16,7 @@ import RequestTable from "../../components/common/table/RequestTable";
 import FollowUpTable from "../../components/common/table/FollowUpTable";
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
+import { ButtonBack } from "../../components/common/ButtonCss";
 
 const ViewExam = () => {
   const { id } = useParams();
@@ -53,7 +54,7 @@ const ViewExam = () => {
   }, []);
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -86,7 +87,7 @@ const ViewExam = () => {
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                        Register for exam : {student.exam_status}
+                          Register for exam : {student.exam_status}
                         </strong>
                       </Typography>
                       <Typography className="text-black">
@@ -94,21 +95,16 @@ const ViewExam = () => {
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                        Exam Date :{" "}
+                          Exam Date :{" "}
                           {student.exam_date == null
                             ? ""
-                            : moment(student.exam_date).format(
-                                "DD-MM-YYYY"
-                              )}
+                            : moment(student.exam_date).format("DD-MM-YYYY")}
                         </strong>
                       </Typography>
                     </div>
                   </div>
                   <div className="flex justify-center mt-6">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-6  py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>

@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const StudentAddDelivery = () => {
   const navigate = useNavigate();
 
-   const {id} = useParams();
+  const { id } = useParams();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [deliverymode, setDeliveryMode] = useState([]);
   const [student, setStudentDelivery] = useState({
@@ -80,7 +81,7 @@ const StudentAddDelivery = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -93,14 +94,14 @@ const StudentAddDelivery = () => {
     }
     setIsButtonDisabled(true);
     const formData = {
-        user_uid: student.user_uid,
-        delivery_no_of_books: student.delivery_no_of_books,
-        delivery_slip_shared: student.delivery_slip_shared,
-        delivery_mode: student.delivery_mode,
-        delivery_tracking_number: student.delivery_tracking_number,
-        delivery_shipping_date: student.delivery_shipping_date,
-        delivery_status: student.delivery_status,
-        delivery_tracking_url: student.delivery_tracking_url,
+      user_uid: student.user_uid,
+      delivery_no_of_books: student.delivery_no_of_books,
+      delivery_slip_shared: student.delivery_slip_shared,
+      delivery_mode: student.delivery_mode,
+      delivery_tracking_number: student.delivery_tracking_number,
+      delivery_shipping_date: student.delivery_shipping_date,
+      delivery_status: student.delivery_status,
+      delivery_tracking_url: student.delivery_tracking_url,
     };
     try {
       const response = await axios.post(
@@ -109,7 +110,6 @@ const StudentAddDelivery = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    
           },
         }
       );
@@ -134,16 +134,16 @@ const StudentAddDelivery = () => {
     }
   };
 
-
-
   return (
     <Layout>
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-        
-            <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-       
+          <MdKeyboardBackspace
+            onClick={handleBackButton}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
             Add Delivery
           </h1>
@@ -156,7 +156,7 @@ const StudentAddDelivery = () => {
                 <label className="block text-gray-700 ">UID</label>
                 <span className="mt-1 text-black">
                   {/* {student.user_uid} */}
-                  {id} 
+                  {id}
                 </span>
               </div>
               <div>
@@ -191,8 +191,8 @@ const StudentAddDelivery = () => {
                   required
                   autoComplete="Name"
                   name="delivery_shipping_date"
-                    value={student.delivery_shipping_date}
-                    onChange={(e) => onInputChange(e)}
+                  value={student.delivery_shipping_date}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
               <div>
@@ -202,8 +202,8 @@ const StudentAddDelivery = () => {
                   required
                   autoComplete="Name"
                   name="delivery_tracking_number"
-                    value={student.delivery_tracking_number}
-                    onChange={(e) => onInputChange(e)}
+                  value={student.delivery_tracking_number}
+                  onChange={(e) => onInputChange(e)}
                 />
               </div>
             </div>
@@ -223,16 +223,13 @@ const StudentAddDelivery = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-             {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
 
-              <button
-                onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
-              >
+              <button onClick={handleBackButton} className={ButtonBack}>
                 Back
               </button>
             </div>

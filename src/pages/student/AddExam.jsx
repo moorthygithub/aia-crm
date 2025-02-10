@@ -8,64 +8,61 @@ import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
-
-
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const subject = [
-    {
-      value: "M1",
-      label: "M1",
-    },
-    {
-      value: "M2",
-      label: "M2",
-    },
-    {
-        value: "M3",
-        label: "M3",
-      },
-      {
-        value: "M4",
-        label: "M4",
-      },
-      {
-        value: "CAMS",
-        label: "CAMS",
-      },
-      {
-        value: "CIAC",
-        label: "CIAC",
-      },
-      {
-        value: "CIAP1",
-        label: "CIAP1",
-      },
-      {
-        value: "CIAP2",
-        label: "CIAP2",
-      },
-      {
-        value: "CIAP3",
-        label: "CIAP3",
-      },
-      {
-        value: "Other",
-        label: "Other",
-      },
+  {
+    value: "M1",
+    label: "M1",
+  },
+  {
+    value: "M2",
+    label: "M2",
+  },
+  {
+    value: "M3",
+    label: "M3",
+  },
+  {
+    value: "M4",
+    label: "M4",
+  },
+  {
+    value: "CAMS",
+    label: "CAMS",
+  },
+  {
+    value: "CIAC",
+    label: "CIAC",
+  },
+  {
+    value: "CIAP1",
+    label: "CIAP1",
+  },
+  {
+    value: "CIAP2",
+    label: "CIAP2",
+  },
+  {
+    value: "CIAP3",
+    label: "CIAP3",
+  },
+  {
+    value: "Other",
+    label: "Other",
+  },
 ];
 
 const AddExam = () => {
   const navigate = useNavigate();
 
-    const {id} = useParams();
-    const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-    const [student, setStudentExam] = useState({
-        user_uid: id,
-        exam_subject: "",
-        exam_date: "",
-    })
-
-
+  const { id } = useParams();
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [student, setStudentExam] = useState({
+    user_uid: id,
+    exam_subject: "",
+    exam_date: "",
+  });
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -75,14 +72,12 @@ const AddExam = () => {
     }
   }, []);
 
-
-
   const onInputChange = (e) => {
     setStudentExam({
-    ...student,
-    [e.target.name]: e.target.value,
-    });  
-};
+      ...student,
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -104,7 +99,6 @@ const AddExam = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-    
           },
         }
       );
@@ -129,9 +123,8 @@ const AddExam = () => {
     }
   };
 
-
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -140,22 +133,22 @@ const AddExam = () => {
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-         
-            <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-        
+          <MdKeyboardBackspace
+            onClick={handleBackButton}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-          Add Exam
+            Add Exam
           </h1>
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form onSubmit={onSubmit} autoComplete="off">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4">
-                   {/* UID */}
-            <div>
+              {/* UID */}
+              <div>
                 <label className="block text-gray-700 ">UID</label>
-                <span className="mt-1 text-black">
-                  {id}
-                </span>
+                <span className="mt-1 text-black">{id}</span>
               </div>
               {/* Subject */}
               <div>
@@ -172,7 +165,7 @@ const AddExam = () => {
               </div>
 
               {/* Heading */}
-              <div >
+              <div>
                 <Input
                   required
                   label="Exam Date"
@@ -186,16 +179,15 @@ const AddExam = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-               {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-             
-                <button onClick={handleBackButton} className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-             
+
+              <button onClick={handleBackButton} className={ButtonBack}>
+                Back
+              </button>
             </div>
           </form>
         </div>
