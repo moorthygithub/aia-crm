@@ -18,6 +18,12 @@ import {
   ButtonCreate,
   ButtonIcons,
 } from "../../components/common/ButtonCss";
+import {
+  ClassViewAddtoAttend,
+  ClassViewAddtoNotAttend,
+  ClassViewMissedCalls,
+  ClassViewSendEmailNotAttend,
+} from "../../components/buttonIndex/ButtonComponents";
 
 const ViewClass = () => {
   const navigate = useNavigate();
@@ -174,10 +180,8 @@ const ViewClass = () => {
         customBodyRender: (value) => (
           <Tooltip content="Add to Not Attend" placement="top">
             <div>
-              <IoPerson
-                className="cursor-pointer text-blue-500"
+              <ClassViewAddtoNotAttend
                 onClick={(e) => updateDataSub(e, value)}
-                size={20}
               />
             </div>
           </Tooltip>
@@ -226,20 +230,14 @@ const ViewClass = () => {
           <div className="flex space-x-2">
             <Tooltip content="Add to Attend" placement="top">
               <div>
-                <IoMdPersonAdd
-                  className="cursor-pointer text-blue-500"
+                <ClassViewAddtoAttend
                   onClick={(e) => updateDataAdd(e, value)}
-                  size={20}
                 />
               </div>
             </Tooltip>
             <Tooltip content="Missed Class" placement="top">
               <div>
-                <FaWhatsapp
-                  className="cursor-pointer text-blue-500"
-                  onClick={(e) => whatsApp1(e, value)}
-                  size={20}
-                />
+                <ClassViewMissedCalls onClick={(e) => whatsApp1(e, value)} />
               </div>
             </Tooltip>
           </div>
@@ -347,14 +345,13 @@ const ViewClass = () => {
             />
 
             <div className="flex justify-center mt-6 gap-2">
-              <button
+              <ClassViewSendEmailNotAttend
                 onClick={sendclassEmail}
                 className={`${ButtonIcons} w-[13rem]`}
                 disabled={isButtonDisabled}
               >
-                <CiMail className="mr-2 mt-1" />{" "}
                 {isButtonDisabled ? "Sending..." : "Send Email to Not Attend"}
-              </button>
+              </ClassViewSendEmailNotAttend>
               <Link to="/class">
                 <button className={ButtonBack}>Back</button>
               </Link>

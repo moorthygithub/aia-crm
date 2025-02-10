@@ -16,6 +16,7 @@ import RequestTable from "../../components/common/table/RequestTable";
 import FollowUpTable from "../../components/common/table/FollowUpTable";
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
+import { ButtonBack } from "../../components/common/ButtonCss";
 
 const ViewCourse = () => {
   const { id } = useParams();
@@ -25,9 +26,6 @@ const ViewCourse = () => {
   console.log(id, "id");
 
   const [student, setStudentCourse] = useState({});
-
-
-
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -58,12 +56,10 @@ const ViewCourse = () => {
     fetchData();
   }, []);
 
-
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
-
 
   return (
     <Layout>
@@ -93,15 +89,20 @@ const ViewCourse = () => {
                         <strong>UID : {student.user_uid} </strong>
                       </Typography>
                       <Typography className="text-black">
+                        <strong>Course : {student.course_opted}</strong>
+                      </Typography>
+                      <Typography className="text-black">
                         <strong>
-                        Course : {student.course_opted}
+                          Validity of the Course : {student.course_validity}
                         </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Validity of the Course : {student.course_validity}</strong>
-                      </Typography>
-                      <Typography className="text-black">
-                        <strong>Course Expiry Date :   {moment(student.course_expiry_date).format("DD-MM-YYYY")} </strong>
+                        <strong>
+                          Course Expiry Date :{" "}
+                          {moment(student.course_expiry_date).format(
+                            "DD-MM-YYYY"
+                          )}{" "}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Course Status : {student.course_status}</strong>
@@ -113,17 +114,17 @@ const ViewCourse = () => {
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                        Mode of Payment : {student.course_mode_payment}{" "}
+                          Mode of Payment : {student.course_mode_payment}{" "}
                         </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                        Receiving Bank Name : {student.course_received_bank}
+                          Receiving Bank Name : {student.course_received_bank}
                         </strong>{" "}
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                        Video Lectures Issue Status : {student.course_vlis}
+                          Video Lectures Issue Status : {student.course_vlis}
                         </strong>{" "}
                       </Typography>
                       <Typography className="text-black">
@@ -135,23 +136,22 @@ const ViewCourse = () => {
                         <strong>PQ Issue Status : {student.course_pqis}</strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Welcome Letter Status : {student.course_wls}</strong>{" "}
+                        <strong>
+                          Welcome Letter Status : {student.course_wls}
+                        </strong>{" "}
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Add to the WA Group : {student.course_awag}</strong>
+                        <strong>
+                          Add to the WA Group : {student.course_awag}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Welcome Call : {student.course_wc}</strong>
                       </Typography>
-                     
-                   
                     </div>
                   </div>
                   <div className="flex justify-center mt-8">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-6  py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>

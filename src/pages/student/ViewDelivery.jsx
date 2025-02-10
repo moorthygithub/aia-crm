@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import moment from "moment";
+import { ButtonBack } from "../../components/common/ButtonCss";
 
 const ViewDelivery = () => {
   const { id } = useParams();
@@ -43,7 +44,7 @@ const ViewDelivery = () => {
   }, []);
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -101,15 +102,14 @@ const ViewDelivery = () => {
                         <strong>Status : {student.delivery_status}</strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Tracking URL : {student.delivery_tracking_url}</strong>
+                        <strong>
+                          Tracking URL : {student.delivery_tracking_url}
+                        </strong>
                       </Typography>
                     </div>
                   </div>
                   <div className="flex justify-center mt-24">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-6  py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>

@@ -8,13 +8,12 @@ import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import moment from "moment";
 import FollowUp from "../../components/common/table/FollowUp";
+import { ButtonBack } from "../../components/common/ButtonCss";
 
 const ViewResult = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-
-
 
   const [student, setStudentExam] = useState({});
 
@@ -48,7 +47,7 @@ const ViewResult = () => {
   }, []);
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -80,64 +79,81 @@ const ViewResult = () => {
                         <strong>UID : {student.user_uid} </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>
-                        Course :
-                        {student.course_opted}
-                        </strong>
+                        <strong>Course :{student.course_opted}</strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Result of Exam : {student.exam_status}</strong>
                       </Typography>
-                    
-                        <Typography className="text-black">
-                          <strong>
-                          Congratulation Call : {student.exam_congratulation_call}
-                          </strong>
-                        </Typography>
-                   
-                      <Typography className="text-black">
-                        <strong>Wishes on Group :{student.exam_wishes_on_group}</strong>
-                      </Typography>
-                    </div>
-                    <div className="space-y-2">
 
                       <Typography className="text-black">
-                        <strong>Add to Alumnus : {student.exam_add_to_alumnus}</strong>
+                        <strong>
+                          Congratulation Call :{" "}
+                          {student.exam_congratulation_call}
+                        </strong>
                       </Typography>
 
                       <Typography className="text-black">
-                        <strong>LinkedIn Obtained : {student.exam_linkedIn_obtained}</strong>
-                      </Typography>
-                      <Typography className="text-black">
-                        <strong>Certificate Status : {student.exam_certificate_status} </strong>
-                      </Typography>
-                      <Typography className="text-black">
-                        <strong>Social Media Post : {student.exam_social_media_post}</strong>{" "}
-                      </Typography>
-                      <Typography className="text-black">
-                        <strong>Google Review : {student.exam_google_review}</strong>{" "}
+                        <strong>
+                          Wishes on Group :{student.exam_wishes_on_group}
+                        </strong>
                       </Typography>
                     </div>
                     <div className="space-y-2">
                       <Typography className="text-black">
-                        <strong>Remove Access of PQ : {student.exam_remove_access_of_pq} </strong>
+                        <strong>
+                          Add to Alumnus : {student.exam_add_to_alumnus}
+                        </strong>
+                      </Typography>
+
+                      <Typography className="text-black">
+                        <strong>
+                          LinkedIn Obtained : {student.exam_linkedIn_obtained}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Remove Access of VL : {student.exam_remove_access_of_vl}</strong>{" "}
+                        <strong>
+                          Certificate Status : {student.exam_certificate_status}{" "}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Remove from Study Group : {student.exam_remove_from_study_group}</strong>
+                        <strong>
+                          Social Media Post : {student.exam_social_media_post}
+                        </strong>{" "}
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Interview Status : {student.exam_interview_status}</strong>
+                        <strong>
+                          Google Review : {student.exam_google_review}
+                        </strong>{" "}
+                      </Typography>
+                    </div>
+                    <div className="space-y-2">
+                      <Typography className="text-black">
+                        <strong>
+                          Remove Access of PQ :{" "}
+                          {student.exam_remove_access_of_pq}{" "}
+                        </strong>
+                      </Typography>
+                      <Typography className="text-black">
+                        <strong>
+                          Remove Access of VL :{" "}
+                          {student.exam_remove_access_of_vl}
+                        </strong>{" "}
+                      </Typography>
+                      <Typography className="text-black">
+                        <strong>
+                          Remove from Study Group :{" "}
+                          {student.exam_remove_from_study_group}
+                        </strong>
+                      </Typography>
+                      <Typography className="text-black">
+                        <strong>
+                          Interview Status : {student.exam_interview_status}
+                        </strong>
                       </Typography>
                     </div>
                   </div>
                   <div className="flex justify-center mt-10">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>
@@ -145,8 +161,6 @@ const ViewResult = () => {
               </Card>
             </div>
           </div>
-
-        
         </div>
       </div>
     </Layout>

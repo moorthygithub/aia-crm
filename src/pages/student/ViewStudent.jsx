@@ -19,8 +19,18 @@ import FollowUpTable from "../../components/common/table/FollowUpTable";
 import ClassFollowUpTable from "../../components/common/table/ClassFollowUpTable";
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
-import { StudentViewAdCourse, StudentViewAdDelivery, StudentViewAdExam, StudentViewEdStudent, StudentViewVieEnquiry } from "../../components/buttonIndex/ButtonComponents";
-import { ButtonCreate } from "../../components/common/ButtonCss";
+import {
+  StudentViewAdCourse,
+  StudentViewAdDelivery,
+  StudentViewAdExam,
+  StudentViewEdStudent,
+  StudentViewVieEnquiry,
+} from "../../components/buttonIndex/ButtonComponents";
+import {
+  ButtonBack,
+  ButtonCreate,
+  ButtonIcons,
+} from "../../components/common/ButtonCss";
 
 const ViewStudent = () => {
   const { id } = useParams();
@@ -286,15 +296,11 @@ const ViewStudent = () => {
                 Edit Student
               </Link> */}
               <StudentViewEdStudent
-               className="bg-[#FFB70F] md:ml-0 ml-3 flex text-black px-4 py-2 rounded-md"
-               onClick={()=>navigate(`/edit-student/${student.id}`)}
-              
+                className={ButtonCreate}
+                onClick={() => navigate(`/edit-student/${student.id}`)}
               />
               {student.whatsapp_count == 0 && (
-                <button
-                  onClick={whatsApp}
-                  className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
-                >
+                <button onClick={whatsApp} className={ButtonCreate}>
                   <FaWhatsapp className="mt-1 mr-2" /> WhatsApp
                 </button>
               )}
@@ -306,8 +312,10 @@ const ViewStudent = () => {
               </Link> */}
 
               <StudentViewAdCourse
-              onClick={()=>navigate(`/add-student-course/${student.user_uid}`)}
-                className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
+                onClick={() =>
+                  navigate(`/add-student-course/${student.user_uid}`)
+                }
+                className={ButtonCreate}
               />
               {/* <Link
                 to={`/add-student-delivery/${student.user_uid}`}
@@ -316,8 +324,10 @@ const ViewStudent = () => {
                 Add Delivery
               </Link> */}
               <StudentViewAdDelivery
-                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
-                 onClick={()=>navigate(`/add-student-delivery/${student.user_uid}`)}
+                className={ButtonCreate}
+                onClick={() =>
+                  navigate(`/add-student-delivery/${student.user_uid}`)
+                }
               />
               {/* <Link
                 to={`/add-exam/${student.user_uid}`}
@@ -326,9 +336,8 @@ const ViewStudent = () => {
                 Add Exam
               </Link> */}
               <StudentViewAdExam
-                onClick={()=>navigate(`/add-exam/${student.user_uid}`)}
-                 className="bg-[#FFB70F] flex  ml-3 text-black px-4 py-2 rounded-md"
-              
+                onClick={() => navigate(`/add-exam/${student.user_uid}`)}
+                className={ButtonCreate}
               />
             </div>
           </div>
@@ -397,9 +406,10 @@ const ViewStudent = () => {
                       View Enquiry
                     </Link> */}
                     <StudentViewVieEnquiry
-                   className={ButtonCreate}
-                    
-                     onClick={()=>navigate(`/view-student-enquiry/${student.user_uid}`)}
+                      className={ButtonCreate}
+                      onClick={() =>
+                        navigate(`/view-student-enquiry/${student.user_uid}`)
+                      }
                     />
                     {/* <button
                       onClick={() =>
@@ -621,10 +631,7 @@ const ViewStudent = () => {
                   )}
                 </div>
                 <div className="mt-4 flex justify-center">
-                  <button
-                    onClick={handleBackButton}
-                    className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
-                  >
+                  <button onClick={handleBackButton} className={ButtonBack}>
                     Back
                   </button>
                 </div>

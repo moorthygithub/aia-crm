@@ -8,6 +8,7 @@ import {
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "./common/ButtonCss";
 
 const Logout = ({ open, handleOpen }) => {
   const navigate = useNavigate();
@@ -22,17 +23,12 @@ const Logout = ({ open, handleOpen }) => {
       <DialogHeader>Confirm Logout</DialogHeader>
       <DialogBody>Are you sure you want to log out?</DialogBody>
       <DialogFooter>
-        <Button
-          variant="text"
-          color="red"
-          onClick={handleOpen}
-          className="mr-1"
-        >
+        <button className={ButtonBack} onClick={handleOpen}>
           <span>Cancel</span>
-        </Button>
-        <Button variant="gradient" color="green" onClick={handleLogout}>
+        </button>
+        <button className={ButtonCreate} onClick={handleLogout}>
           <span>Confirm</span>
-        </Button>
+        </button>
       </DialogFooter>
     </Dialog>
   );

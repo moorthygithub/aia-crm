@@ -15,6 +15,7 @@ import image2 from "../../assets/img2.jpg";
 import image3 from "../../assets/img3.jpg";
 import Logo from "../../assets/logo.png";
 import { toast } from "react-toastify";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -162,14 +163,21 @@ const SignIn = () => {
                 />
               </div>
 
-              <Button
+              {/* <Button
                 type="submit"
                 disabled={loading}
                 className="mt-6 bg-blue-500 hover:bg-blue-600 text-white"
                 fullWidth
               >
                 {loading ? "Checking..." : "Sign In"}
-              </Button>
+              </Button> */}
+              <button
+                type="submit"
+                disabled={loading}
+                className={`${ButtonCreate} min-w-full`}
+              >
+                {loading ? "Checking..." : "Sign In"}
+              </button>
               <div className="flex items-center justify-between gap-2 mt-6">
                 <Typography
                   variant="small"

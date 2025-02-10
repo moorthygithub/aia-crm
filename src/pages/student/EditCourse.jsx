@@ -8,6 +8,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const video_lecture = [
   {
@@ -190,7 +191,7 @@ const course_status = [
 const EditStudentCourse = () => {
   const navigate = useNavigate();
   const { id } = useParams();
- 
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [student, setStudentCourse] = useState({
     course_validity: "",
@@ -228,7 +229,7 @@ const EditStudentCourse = () => {
             },
           }
         );
-       
+
         setStudentCourse(response.data.studentCourse);
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -282,7 +283,6 @@ const EditStudentCourse = () => {
 
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
-        ; 
         navigate(`/view-student/${localStorage.getItem("s_id")}`);
       } else {
         if (response.data.code == 401) {
@@ -295,14 +295,14 @@ const EditStudentCourse = () => {
       }
     } catch (error) {
       console.error("Error updating Course:", error);
-    //   toast.error("Error updating Course");
+      //   toast.error("Error updating Course");
     } finally {
       setIsButtonDisabled(false);
     }
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
   return (
@@ -377,7 +377,6 @@ const EditStudentCourse = () => {
               </div>
               <div className="md:col-span-3">
                 <Input
-                  
                   label="Receiving Bank Name"
                   type="text"
                   name="course_received_bank"
@@ -389,7 +388,6 @@ const EditStudentCourse = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
               <div>
                 <Fields
-                
                   title="Video Lectures Issue Status"
                   type="whatsappDropdown"
                   autoComplete="Name"
@@ -401,7 +399,6 @@ const EditStudentCourse = () => {
               </div>
               <div>
                 <Fields
-                
                   title="PQ Issue Status"
                   type="whatsappDropdown"
                   autoComplete="Name"
@@ -413,11 +410,10 @@ const EditStudentCourse = () => {
               </div>
               <div>
                 <Fields
-                
                   title="Welcome Letter Status"
                   type="whatsappDropdown"
                   autoComplete="Name"
-                 name="course_wls"
+                  name="course_wls"
                   value={student.course_wls}
                   onChange={(e) => onInputChange(e)}
                   options={letter_status}
@@ -425,11 +421,10 @@ const EditStudentCourse = () => {
               </div>
               <div>
                 <Fields
-               
                   title="Add to the WA Group"
                   type="whatsappDropdown"
                   autoComplete="Name"
-                 name="course_awag"
+                  name="course_awag"
                   value={student.course_awag}
                   onChange={(e) => onInputChange(e)}
                   options={add_wa}
@@ -439,7 +434,6 @@ const EditStudentCourse = () => {
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
               <div>
                 <Fields
-                  
                   title="Welcome Call"
                   type="whatsappDropdown"
                   autoComplete="Name"
@@ -451,7 +445,6 @@ const EditStudentCourse = () => {
               </div>
               <div>
                 <Fields
-                
                   title="LinkedIn Request"
                   type="whatsappDropdown"
                   autoComplete="Name"
@@ -468,41 +461,39 @@ const EditStudentCourse = () => {
                   type="whatsappDropdown"
                   autoComplete="Name"
                   name="course_status"
-                 value={student.course_status}
-                 onChange={(e) => onInputChange(e)}
+                  value={student.course_status}
+                  onChange={(e) => onInputChange(e)}
                   options={course_status}
                 />
               </div>
-              { student.course_status == 'Extended' &&
+              {student.course_status == "Extended" && (
                 <div>
                   <Input
-                  label="Expiry Date"
-                  required
-                  type="date"
-                  name="course_expiry_new_date"
-                  value={student.course_expiry_new_date}
-                  onChange={(e) => onInputChange(e)}
-                  className="w-full border border-gray-300 rounded-md p-2"
-                />
-                
-              </div>
-              }
+                    label="Expiry Date"
+                    required
+                    type="date"
+                    name="course_expiry_new_date"
+                    value={student.course_expiry_new_date}
+                    onChange={(e) => onInputChange(e)}
+                    className="w-full border border-gray-300 rounded-md p-2"
+                  />
+                </div>
+              )}
               <div>
                 <Fields
                   title="Delivery Status"
                   type="whatsappDropdown"
                   autoComplete="Name"
                   name="delivery_c_status"
-                 value={student.delivery_c_status}
-                 onChange={(e) => onInputChange(e)}
+                  value={student.delivery_c_status}
+                  onChange={(e) => onInputChange(e)}
                   options={delivery_c}
                 />
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
-            <div className="md:col-span-3">
+              <div className="md:col-span-3">
                 <Input
-                  
                   label="Remarks"
                   type="text"
                   name="course_remarks"
@@ -514,17 +505,16 @@ const EditStudentCourse = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
-                {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
 
               <button
-               type="button"
-                 onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
+                type="button"
+                onClick={handleBackButton}
+                className={ButtonBack}
               >
                 Back
               </button>

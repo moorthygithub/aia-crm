@@ -12,6 +12,7 @@ import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const ChangePassword = () => {
   const [password, setPassword] = useState({
@@ -41,35 +42,34 @@ const ChangePassword = () => {
       password: password.new_password,
       username: localStorage.getItem("username"),
     };
- 
-      try {
-        const response = await axios.post(
-          `${BASE_URL}/api/panel-change-password`,
-          formData,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
 
-        if (response.status == "200") {
-          toast.success("Password Changed Successfully");
-          navigate(`/`);
-        } else {
-          if (response.status == "401") {
-            toast.error("Please enter a Password Properly");
-          } else if (response.status == "402") {
-            toast.error("Please enter a Password Properly");
-          } else {
-            toast.error("Please enter a Password Properly");
-          }
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/panel-change-password`,
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
         }
-      } catch (error) {
-        console.error("Error updating Password:", error);
-        toast.error("Error updating Password");
-      } 
-   
+      );
+
+      if (response.status == "200") {
+        toast.success("Password Changed Successfully");
+        navigate(`/`);
+      } else {
+        if (response.status == "401") {
+          toast.error("Please enter a Password Properly");
+        } else if (response.status == "402") {
+          toast.error("Please enter a Password Properly");
+        } else {
+          toast.error("Please enter a Password Properly");
+        }
+      }
+    } catch (error) {
+      console.error("Error updating Password:", error);
+      toast.error("Error updating Password");
+    }
   };
 
   return (
@@ -115,16 +115,9 @@ const ChangePassword = () => {
               />
             </CardBody>
             <CardFooter className="pt-0 flex justify-center">
-              <Button
-                type="submit"
-                className="w-[20%]"
-                variant="gradient"
-                color="blue"
-                fullWidth
-              >
-                
-                {isButtonDisabled ? 'Submiting...' : 'Submit'}
-              </Button>
+              <button className={ButtonCreate}>
+                {isButtonDisabled ? "Submiting..." : "Submit"}
+              </button>
             </CardFooter>
           </Card>
         </form>

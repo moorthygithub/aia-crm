@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import Fields from "../../components/common/TextField/TextField";
 import styles from "./enquiry.module.css";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 const title = [
   {
     value: "Mr",
@@ -215,7 +216,11 @@ const EnquiryNow = () => {
       <div className={styles["main-container-out"]}>
         <div className={styles["sub-container-out"]}>
           <div className="flex justify-center mb-4">
-            <img src={logo} alt="logo" className="w-30 md:h-[50px] h-full mb-4" />
+            <img
+              src={logo}
+              alt="logo"
+              className="w-30 md:h-[50px] h-full mb-4"
+            />
           </div>
           <form id="addIdniv" onSubmit={onSubmit}>
             <div className={styles["form-container-div"]}>
@@ -337,8 +342,9 @@ const EnquiryNow = () => {
                     options={source}
                   />
                 </div>
-              
-              {(booking.enquiry_source == "Other"  || booking.enquiry_source == "Social Media") && (
+
+                {(booking.enquiry_source == "Other" ||
+                  booking.enquiry_source == "Social Media") && (
                   <div>
                     <Input
                       type="text"
@@ -350,9 +356,12 @@ const EnquiryNow = () => {
                     />
                   </div>
                 )}
-                </div>
-              <div className={styles["submit-button"]}>
-                <button type="submit"> Submit </button>
+              </div>
+              <div className="flex justify-center mt-4">
+                <button type="submit" className={`${ButtonCreate} `}>
+                  {" "}
+                  Submit{" "}
+                </button>
               </div>
             </div>
           </form>

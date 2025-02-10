@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useCallback, useState } from "react";
 import { ExternalLink, Search, Filter } from "lucide-react";
 
-
 import {
   Button,
   Input,
@@ -14,12 +13,13 @@ import { useNavigate } from "react-router-dom";
 import { ContextPanel } from "../../utils/ContextPanel";
 import Layout from "../../layout/Layout";
 
-
 const UserPage = () => {
   const { getStaticUsers } = useContext(ContextPanel);
+
   const [users, setUsers] = useState([]);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [filteredUsers, setFilteredUsers] = useState([]);
+  console.log("getStaticUsers", filteredUsers);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     userType: "all",
@@ -62,8 +62,6 @@ const UserPage = () => {
   useEffect(() => {
     applyFilters();
   }, [applyFilters, searchTerm, filters]);
-
-
 
   return (
     <Layout>
@@ -115,12 +113,20 @@ const UserPage = () => {
                 </MenuItem>
               </MenuList>
             </Menu>
-           <Button variant="outlined" onClick={()=>navigate('/page-management')} className="flex items-center gap-2">
+            <Button
+              variant="outlined"
+              onClick={() => navigate("/page-management")}
+              className="flex items-center gap-2"
+            >
               + Page
-            </Button> 
-            <Button variant="outlined" onClick={()=>navigate('/button-management')} className="flex items-center gap-2">
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={() => navigate("/button-management")}
+              className="flex items-center gap-2"
+            >
               + Button
-            </Button> 
+            </Button>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full">
@@ -181,7 +187,9 @@ const UserPage = () => {
                     <td className="py-3 px-4">
                       <div className="flex gap-2 flex-wrap">
                         <button
-                          onClick={() => navigate(`/management-dashboard/${user.id}`)}
+                          onClick={() =>
+                            navigate(`/management-dashboard/${user.user_type}`)
+                          }
                           className="inline-flex items-center gap-2 px-3 py-1 text-sm border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
                         >
                           <ExternalLink className="h-4 w-4" />

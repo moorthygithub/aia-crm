@@ -8,6 +8,7 @@ import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import BASE_URL from "../../base/BaseUrl";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const mobile = [
   {
@@ -271,7 +272,7 @@ const EditStudent = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
                 {isButtonDisabled ? "Updating..." : "Update"}
@@ -280,8 +281,8 @@ const EditStudent = () => {
               <button
               type="button"
                 onClick={handleBackButton}
-                className="bg-green-500 text-white px-4 py-2 rounded-md"
-              >
+                className={ButtonBack}
+                >
                 Back
               </button>
             </div>
