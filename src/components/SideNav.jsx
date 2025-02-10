@@ -27,6 +27,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   // Hardcoded sidenavType to "dark"
   const sidenavType = "dark";
 
+  
   const sidenavTypes = {
     dark: "bg-gradient-to-br from-gray-800 to-gray-900 ",
     white: "bg-white",
