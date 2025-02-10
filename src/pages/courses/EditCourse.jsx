@@ -7,6 +7,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Fields from "../../components/common/TextField/TextField";
 import Layout from "../../layout/Layout";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const status = [
   {
@@ -25,9 +26,9 @@ const EditCourse = () => {
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [course, setCourse] = useState({
-      courses_name: "",
-      courses_d_no: "",
-      courses_status: "",
+    courses_name: "",
+    courses_d_no: "",
+    courses_status: "",
   });
 
   useEffect(() => {
@@ -56,7 +57,6 @@ const EditCourse = () => {
     fetchCourseData();
   }, []);
 
-
   const onInputChange = (e) => {
     setCourse({
       ...course,
@@ -73,9 +73,9 @@ const EditCourse = () => {
     }
     setIsButtonDisabled(true);
     const formData = {
-        courses_name: course.courses_name,
-        courses_d_no: course.courses_d_no,
-        courses_status: course.courses_status,
+      courses_name: course.courses_name,
+      courses_d_no: course.courses_d_no,
+      courses_status: course.courses_status,
     };
     try {
       const response = await axios.put(
@@ -84,14 +84,13 @@ const EditCourse = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-        
           },
         }
       );
 
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
-        navigate('/courses')
+        navigate("/courses");
       } else {
         if (response.data.code == "401") {
           toast.error("Couty Duplicate Entry");
@@ -126,8 +125,7 @@ const EditCourse = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
               {/* Course */}
               <div>
-              
-                  <Fields
+                <Fields
                   required={true}
                   title="Course"
                   type="textField"
@@ -140,7 +138,7 @@ const EditCourse = () => {
 
               {/* Course Duration */}
               <div>
-                   <Fields
+                <Fields
                   required={true}
                   title="Course Duration"
                   type="textField"
@@ -152,7 +150,7 @@ const EditCourse = () => {
               </div>
 
               {/* Status */}
-             <div>
+              <div>
                 <Fields
                   required={true}
                   title="Status"
@@ -168,17 +166,18 @@ const EditCourse = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-           
-                {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
-              <Link to="/courses">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-              </Link>
+
+              <button
+                className={ButtonBack}
+                onClick={() => navigate("/courses")}
+              >
+                Back
+              </button>
             </div>
           </form>
         </div>

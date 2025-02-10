@@ -19,6 +19,7 @@ import FollowUpTable from "../../components/common/table/FollowUpTable";
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
 import FollowUp from "../../components/common/table/FollowUp";
+import { ButtonBack } from "../../components/common/ButtonCss";
 
 const ViewStudentEquiry = () => {
   const { id } = useParams();
@@ -61,7 +62,7 @@ const ViewStudentEquiry = () => {
   }, []);
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -113,16 +114,24 @@ const ViewStudentEquiry = () => {
                       </Typography>
                     </div>
                     <div className="space-y-2">
-                    {enquiry.enquiry_source == 'Other' && 
+                      {enquiry.enquiry_source == "Other" && (
+                        <Typography className="text-black">
+                          <strong>
+                            Source Other : {enquiry.enquiry_source_other}
+                          </strong>
+                        </Typography>
+                      )}
                       <Typography className="text-black">
-                        <strong>Source Other : {enquiry.enquiry_source_other}</strong>
+                        <strong>
+                          Full Name : {enquiry.enquiry_title}{" "}
+                          {enquiry.enquiry_full_name}
+                        </strong>
                       </Typography>
-}
                       <Typography className="text-black">
-                        <strong>Full Name : {enquiry.enquiry_title}{" "}{enquiry.enquiry_full_name}</strong>
-                      </Typography>
-                      <Typography className="text-black">
-                        <strong>Mobile : {enquiry.enquiry_country_code}{enquiry.enquiry_mobile} </strong>
+                        <strong>
+                          Mobile : {enquiry.enquiry_country_code}
+                          {enquiry.enquiry_mobile}{" "}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Email : {enquiry.enquiry_email}</strong>{" "}
@@ -133,10 +142,18 @@ const ViewStudentEquiry = () => {
                     </div>
                     <div className="space-y-2">
                       <Typography className="text-black">
-                        <strong>City/Country : {enquiry.enquiry_city} - {enquiry.enquiry_country}</strong>
+                        <strong>
+                          City/Country : {enquiry.enquiry_city} -{" "}
+                          {enquiry.enquiry_country}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Next Followup Date : {moment(enquiry.enquiry_follow_date).format('DD-MM-YYYY')}</strong>{" "}
+                        <strong>
+                          Next Followup Date :{" "}
+                          {moment(enquiry.enquiry_follow_date).format(
+                            "DD-MM-YYYY"
+                          )}
+                        </strong>{" "}
                       </Typography>
                       <Typography className="text-black">
                         <strong>Status : {enquiry.enquiry_status}</strong>
@@ -147,10 +164,7 @@ const ViewStudentEquiry = () => {
                     </div>
                   </div>
                   <div className="flex justify-center ">
-                    <button
-                      onClick={handleBackButton}
-                      className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
-                    >
+                    <button onClick={handleBackButton} className={ButtonBack}>
                       Back
                     </button>
                   </div>

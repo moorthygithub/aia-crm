@@ -9,6 +9,7 @@ import Fields from "../../components/common/TextField/TextField";
 import { ContextPanel } from "../../utils/ContextPanel";
 import { toast } from "react-toastify";
 import { Input } from "@material-tailwind/react";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const status = [
   {
@@ -137,7 +138,8 @@ const EditCountry = () => {
                   value={student.country_name}
                   onChange={onInputChange}
                   labelProps={{
-                   className: "!text-gray-500 absolute top-[1px] rounded-lg !border !border-gray-500"
+                    className:
+                      "!text-gray-500 absolute top-[1px] rounded-lg !border !border-gray-500",
                   }}
                 />
                 {/* <label
@@ -155,7 +157,6 @@ const EditCountry = () => {
                   className={`border ${disabled ? 'border-gray-300' : 'border-blue-500'} rounded-md p-2`}
                 /> */}
               </div>
-              
 
               {/* Country Code */}
               <div>
@@ -188,17 +189,18 @@ const EditCountry = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-               
-                {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
-              <Link to="/country">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-              </Link>
+
+              <button
+                className={ButtonBack}
+                onClick={() => navigate("/country")}
+              >
+                Back
+              </button>
             </div>
           </form>
         </div>

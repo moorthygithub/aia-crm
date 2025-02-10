@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const AddNotification = () => {
   const navigate = useNavigate();
@@ -80,7 +81,7 @@ const AddNotification = () => {
 
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
-        navigate('/notification')
+        navigate("/notification");
       } else {
         if (response.data.code == 401) {
           toast.error("Notification Duplicate Entry");
@@ -98,10 +99,9 @@ const AddNotification = () => {
     }
   };
 
-
-const handleBackButton =()=>{
-    navigate(-1)
-}
+  const handleBackButton = () => {
+    navigate(-1);
+  };
 
   return (
     <Layout>
@@ -148,7 +148,7 @@ const handleBackButton =()=>{
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
               {/* Description */}
               <div>
-                 <Fields
+                <Fields
                   required={true}
                   title="Description"
                   type="textField"
@@ -162,16 +162,13 @@ const handleBackButton =()=>{
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
-                {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
               <Link to="/notification">
-                <button  className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
+                <button className={ButtonBack}>Back</button>
               </Link>
             </div>
           </form>

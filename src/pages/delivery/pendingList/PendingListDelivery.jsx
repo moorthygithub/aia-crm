@@ -21,13 +21,17 @@ import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { DeliveryPendingCreate, DeliveryPendingEdit, DeliveryPendingView, DeliveryPenViewWhatsapp } from "../../../components/buttonIndex/ButtonComponents";
 
+import {
+  ButtonCreate,
+  IconsBackground,
+} from "../../../components/common/ButtonCss";
+
 const PendingListDelivery = () => {
   const [pendingDListData, setPendingDListData] = useState(null);
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
   const [studentnew, setStudentNew] = useState({});
-
 
   const [open, setOpen] = useState(false);
   const [student, setStudentDelivery] = useState({});
@@ -145,7 +149,6 @@ const PendingListDelivery = () => {
           console.log(tempRows, "tempRows");
           setPendingDListData(response.data?.delivery);
         }
-
       } catch (error) {
         console.error("Error fetching pending list delivery data", error);
       } finally {
@@ -244,7 +247,6 @@ const PendingListDelivery = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
-          
           return (
             <div className="flex items-center space-x-2">
               {/* <MdEdit
@@ -253,9 +255,8 @@ const PendingListDelivery = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <DeliveryPendingEdit
-               onClick={() => navigate(`/edit-delivery/${id}`)}
-              
-               className="h-5 w-5 cursor-pointer"
+                onClick={() => navigate(`/edit-delivery/${id}`)}
+                className="h-5 w-5 cursor-pointer"
               />
               {/* <MdOutlineRemoveRedEye
                onClick={() =>handleClickOpen(id)}
@@ -263,9 +264,8 @@ const PendingListDelivery = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <DeliveryPendingView
-                 onClick={() =>handleClickOpen(id)}
-               
-                 className="h-5 w-5 cursor-pointer"
+                onClick={() => handleClickOpen(id)}
+                className="h-5 w-5 cursor-pointer"
               />
             </div>
           );
@@ -280,42 +280,34 @@ const PendingListDelivery = () => {
     viewColumns: true,
     download: true,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   return (
     <>
-    <Layout>
-      <DeliveryFilter />
-      <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
-        <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
-          Delivery Pending List
-        </h3>
+      <Layout>
+        <DeliveryFilter />
+        <div className="flex flex-col md:flex-row justify-between items-center bg-white mt-5 p-2 rounded-lg space-y-4 md:space-y-0">
+          <h3 className="text-center md:text-left text-lg md:text-xl font-bold">
+            Delivery Pending List
+          </h3>
 
-        {/* <Link  to='/add-delivery' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
+          {/* <Link  to='/add-delivery' className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">
           + Add Delivery
         </Link> */}
 
-        <DeliveryPendingCreate
-           onClick={() => navigate(`/add-delivery`)}
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        
-        />
-      </div>
-      <div className="mt-5">
-        <MUIDataTable
-          data={pendingDListData ? pendingDListData : []}
-          columns={columns}
-          options={options}
-        />
-      </div>
-    </Layout>
-    <Dialog
+          <DeliveryPendingCreate
+            onClick={() => navigate(`/add-delivery`)}
+            className={ButtonCreate}
+          />
+        </div>
+        <div className="mt-5">
+          <MUIDataTable
+            data={pendingDListData ? pendingDListData : []}
+            columns={columns}
+            options={options}
+          />
+        </div>
+      </Layout>
+      <Dialog
         open={open}
         keepMounted
         aria-describedby="alert-dialog-slide-description"
@@ -341,9 +333,12 @@ const PendingListDelivery = () => {
                   </button> */}
                   <DeliveryPenViewWhatsapp
                      onClick={whatsApp}
-                    className="bg-[#FFB70F] md:ml-0 ml-3 flex items-center text-black px-4 py-2 rounded-2xl hover:bg-[#e5a70e] transition"
-                  
+                     
+                     className={IconsBackground}
                   />
+                  {/* <button onClick={whatsApp} className={IconsBackground}>
+                    <WhatsAppIcon />
+                  </button> */}
                 </Tooltip>
                 <Tooltip title="Close">
                   <button

@@ -60,7 +60,7 @@ const ViewRequest = () => {
             />
 
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-              View Delivery
+              View Delivery 
             </h1>
           </div>
 

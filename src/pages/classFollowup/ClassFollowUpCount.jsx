@@ -10,6 +10,7 @@ import { Card, CardContent, Dialog, Tooltip } from "@mui/material";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
 import { ClassFollowUpCreate } from "../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const ClassFollowUpCount = () => {
   const dateyear = ["2024-25"];
@@ -228,7 +229,7 @@ const ClassFollowUpCount = () => {
                   <button
                     disabled={isButtonDisabled}
                     type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                    className={ButtonCreate}
                   >
                     {isButtonDisabled ? "Submiting..." : "Submit"}
                   </button>

@@ -35,7 +35,7 @@ const StudentList = () => {
         );
 
         const res = response.data?.student;
-        console.log(res , "res")
+        console.log(res, "res");
 
         if (Array.isArray(res)) {
           const tempRows = res.map((item) => [
@@ -137,10 +137,8 @@ const StudentList = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <StudentView
-                       onClick={() => navigate(`/view-student/${id}`)}
-                  
-                       className="h-5 w-5 cursor-pointer"
-              
+                onClick={() => navigate(`/view-student/${id}`)}
+                className="h-5 w-5 cursor-pointer"
               />
             </div>
           );
@@ -156,35 +154,26 @@ const StudentList = () => {
     download: true,
     filter: false,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
 
- const emailnotification = (e) => {
+  const emailnotification = (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     axios({
-      url: BASE_URL+"/api/panel-send-email-notification",
+      url: BASE_URL + "/api/panel-send-email-notification",
       method: "get",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }).then((res) => {
-    
-   
-        if(res.data.code == '200'){
-          toast.success("Notification Sent Sucessfully");
-            setLoading(false);
-        }else{
-          toast.error("Notification Not Sent Sucessfully");
-            setLoading(false);
-        }
-    })  
+      if (res.data.code == "200") {
+        toast.success("Notification Sent Sucessfully");
+        setLoading(false);
+      } else {
+        toast.error("Notification Not Sent Sucessfully");
+        setLoading(false);
+      }
+    });
   };
 
   return (

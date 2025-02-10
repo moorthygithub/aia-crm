@@ -9,6 +9,7 @@ import axios from "axios";
 import BASE_URL from "../../base/BaseUrl";
 import moment from "moment";
 import { toast } from "react-toastify";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const title = [
   {
@@ -33,7 +34,7 @@ const EditPersonalDetails = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-localStorage.setItem("edit_enquiry_id" , id);
+  localStorage.setItem("edit_enquiry_id", id);
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [enquiry, setEnquiry] = useState({
@@ -144,12 +145,10 @@ localStorage.setItem("edit_enquiry_id" , id);
     }
   };
 
-
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/edit-enquiry/${localStorage.getItem("edit_enquiry_id")}`);
   };
-
 
   return (
     <Layout>
@@ -157,11 +156,13 @@ localStorage.setItem("edit_enquiry_id" , id);
         <div>
           {/* Title */}
           <div className="flex mb-4 mt-6">
-          
-              <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-       
+            <MdKeyboardBackspace
+              onClick={handleBackButton}
+              className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+            />
+
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-            Edit Personal Details
+              Edit Personal Details
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -175,7 +176,10 @@ localStorage.setItem("edit_enquiry_id" , id);
                         <strong>Enquiry No : {enquiry.enquiry_no} </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Enquiry Date : {moment(enquiry.enquiry_date).format('DD-MM-YYYY')}</strong>
+                        <strong>
+                          Enquiry Date :{" "}
+                          {moment(enquiry.enquiry_date).format("DD-MM-YYYY")}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Course : {enquiry.enquiry_course}</strong>
@@ -187,9 +191,13 @@ localStorage.setItem("edit_enquiry_id" , id);
                         <strong>Status : {enquiry.enquiry_status}</strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>New Followup Date : {moment(enquiry.enquiry_follow_date).format('DD-MM-YYYY')}</strong>
+                        <strong>
+                          New Followup Date :{" "}
+                          {moment(enquiry.enquiry_follow_date).format(
+                            "DD-MM-YYYY"
+                          )}
+                        </strong>
                       </Typography>
-                    
                     </div>
                     <div className="space-y-2">
                       <Typography className="text-black">
@@ -269,13 +277,8 @@ localStorage.setItem("edit_enquiry_id" , id);
                   </div>
                 </div>
                 <div className="mt-4 text-center">
-                 
-                  <button
-                    onClick={onSubmit}
-                    className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
-                  >
-                    
-                    {isButtonDisabled ? 'Updating...' : 'Update'}
+                  <button onClick={onSubmit} className={ButtonCreate}>
+                    {isButtonDisabled ? "Updating..." : "Update"}
                   </button>
                 </div>
               </form>

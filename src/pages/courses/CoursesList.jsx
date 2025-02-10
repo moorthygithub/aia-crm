@@ -6,7 +6,11 @@ import BASE_URL from "../../base/BaseUrl";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import { MdEdit } from "react-icons/md";
-import { CoursesCreate, CoursesEdit } from "../../components/buttonIndex/ButtonComponents";
+import {
+  CoursesCreate,
+  CoursesEdit,
+} from "../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const CoursesList = () => {
   const [coursesListData, setCoursesListData] = useState(null);
@@ -83,11 +87,8 @@ const CoursesList = () => {
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <CoursesEdit
-              
-              onClick={() => navigate(`/add-courses/${id}`)}
-             
+                onClick={() => navigate(`/add-courses/${id}`)}
                 className="h-5 w-5 cursor-pointer"
-              
               />
             </div>
           );
@@ -102,14 +103,6 @@ const CoursesList = () => {
     viewColumns: true,
     download: true,
     print: true,
-   
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   return (
     <Layout>
@@ -124,7 +117,7 @@ const CoursesList = () => {
 
         <CoursesCreate
           onClick={() => navigate(`/add-courses`)}
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          className={ButtonCreate}
         />
       </div>
       <div className="mt-5">

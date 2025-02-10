@@ -11,6 +11,8 @@ import MUIDataTable from "mui-datatables";
 import moment from "moment";
 import { EnquiryCloseCreate, EnquiryCloseEdit, EnquiryCloseView } from "../../../components/buttonIndex/ButtonComponents";
 
+import { ButtonCreate } from "../../../components/common/ButtonCss";
+
 const CloseListEnquiry = () => {
   const [closeListData, setCloseListData] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -130,7 +132,7 @@ const CloseListEnquiry = () => {
             <div className="flex items-center space-x-2">
               {/* <MdEdit
                 title="edit"
-                onClick={(e) => handleOpenButtonLink(e,`${id}`)}
+                onClick={(e) => handleOpenButtonLink(e, `${id}`)}
                 className="h-5 w-5 cursor-pointer"
               /> */}
               <EnquiryCloseEdit
@@ -141,6 +143,8 @@ const CloseListEnquiry = () => {
               />
               {/* <MdOutlineRemoveRedEye
                onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
+              <MdOutlineRemoveRedEye
+                onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
                 title="view"
                 className="h-5 w-5 cursor-pointer"
               /> */}
@@ -159,34 +163,27 @@ const CloseListEnquiry = () => {
   const options = {
     selectableRows: "none",
     elevation: 0,
-    
+
     responsive: "standard",
     viewColumns: true,
     download: true,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   const handleOpenButton = (e) => {
-    e.preventDefault(); 
-    localStorage.setItem("enquiry_page",location.pathname);
-    navigate('/add-enquiry');
+    e.preventDefault();
+    localStorage.setItem("enquiry_page", location.pathname);
+    navigate("/add-enquiry");
   };
 
-  const handleOpenButtonLink = (e,value) => {
-    e.preventDefault(); 
-    localStorage.setItem("enquiry_page",location.pathname);
+  const handleOpenButtonLink = (e, value) => {
+    e.preventDefault();
+    localStorage.setItem("enquiry_page", location.pathname);
     navigate(`/edit-enquiry/${value}`);
   };
 
-  const handleOpenButtonLinkView = (e,value) => {
-    e.preventDefault(); 
-    localStorage.setItem("enquiry_page",location.pathname);
+  const handleOpenButtonLinkView = (e, value) => {
+    e.preventDefault();
+    localStorage.setItem("enquiry_page", location.pathname);
     navigate(`/view-enquiry/${value}`);
   };
 
@@ -202,8 +199,8 @@ const CloseListEnquiry = () => {
           + Add Enquiry
         </button> */}
         <EnquiryCloseCreate
-        
-        onClick={handleOpenButton} className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          onClick={handleOpenButton}
+          className={ButtonCreate}
         />
       </div>
       <div className="mt-5">

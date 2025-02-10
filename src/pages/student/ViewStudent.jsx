@@ -20,6 +20,7 @@ import ClassFollowUpTable from "../../components/common/table/ClassFollowUpTable
 import ResultTable from "../../components/common/table/ResultTable";
 import ExamTable from "../../components/common/table/ExamTable";
 import { StudentViewAdCourse, StudentViewAdDelivery, StudentViewAdExam, StudentViewEdStudent, StudentViewVieEnquiry } from "../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const ViewStudent = () => {
   const { id } = useParams();
@@ -396,10 +397,18 @@ const ViewStudent = () => {
                       View Enquiry
                     </Link> */}
                     <StudentViewVieEnquiry
-                     className="bg-[#5D92F4] text-white px-4 py-2 rounded-md"
+                   className={ButtonCreate}
                     
                      onClick={()=>navigate(`/view-student-enquiry/${student.user_uid}`)}
                     />
+                    {/* <button
+                      onClick={() =>
+                        navigate(`/view-student-enquiry/${student.user_uid}`)
+                      }
+                      className={ButtonCreate}
+                    >
+                      View Enquiry
+                    </button> */}
                   </div>
                 </CardBody>
               </Card>
@@ -574,7 +583,7 @@ const ViewStudent = () => {
               </div>
             </div>
           )}
-           {activeSection === "classfollowup" && (
+          {activeSection === "classfollowup" && (
             <div className="p-3 mt-3 bg-white shadow-md rounded-lg">
               <div className="flex justify-center">
                 <h1 className="text-black text-2xl">CLASS FOLLOW UP</h1>

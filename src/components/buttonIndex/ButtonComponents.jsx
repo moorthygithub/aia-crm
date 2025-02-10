@@ -729,8 +729,8 @@ export const ClassView = ({ onClick, className }) => {
   }
 
   return (
-    <button onClick={onClick} className={className} title="Edit">
-      <View className="h-4 w-4" />
+    <button onClick={onClick} className={className} title="View">
+      <Eye className="h-4 w-4" />
     </button>
   );
 };

@@ -12,7 +12,11 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import DownloadCommon from "../../download/delivery/DeliveryDownload";
-import { DownloadStudentDownload, DownloadStudentView } from "../../../components/buttonIndex/ButtonComponents";
+import {
+  DownloadStudentDownload,
+  DownloadStudentView,
+} from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 function Student() {
   const navigate = useNavigate();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -253,7 +257,7 @@ function Student() {
           </div>
           <div className="flex justify-center m-3">
             <DownloadStudentDownload
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              className={ButtonCreate}
               onClick={onSubmit}
               disabled={isButtonDisabled}
             >
@@ -261,7 +265,7 @@ function Student() {
             </DownloadStudentDownload>
 
             <DownloadStudentView
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              className={ButtonCreate}
               onClick={onReportView}
             >
               View

@@ -13,6 +13,7 @@ import {
   TaskManagerPendingCreateTask,
   TaskManagerPendingEdit,
 } from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const PendingListTask = () => {
   const [pendingTListData, setPendingTListData] = useState(null);
@@ -161,11 +162,11 @@ const PendingListTask = () => {
           </Link> */}
 
           <TaskManagerPendingCreateTask
-            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            className={ButtonCreate}
             onClick={() => navigate("/add-task")}
           ></TaskManagerPendingCreateTask>
           <TaskManagerPendingCreateRepetitive
-            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            className={ButtonCreate}
             onClick={() => navigate("/add-repetitive")}
           ></TaskManagerPendingCreateRepetitive>
         </div>
