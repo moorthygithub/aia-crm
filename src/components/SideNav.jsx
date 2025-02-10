@@ -2,6 +2,7 @@ import { Link, NavLink, useLocation } from "react-router-dom";
 import {
   HomeIcon,
   TableCellsIcon,
+  UserCircleIcon,
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { Button, IconButton, Typography } from "@material-tailwind/react";
@@ -321,7 +322,27 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                     color="inherit"
                     className="font-medium capitalize"
                   >
-                    download
+                    Download
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/userManagement">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="white"
+                  className="flex items-center gap-4 px-4 capitalize"
+                  fullWidth
+                >
+                  <UserCircleIcon className="w-5 h-5 text-inherit" />
+                  <Typography
+                    color="inherit"
+                    className="font-medium capitalize"
+                  >
+                   User Management
                   </Typography>
                 </Button>
               )}

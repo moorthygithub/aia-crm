@@ -9,6 +9,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import EnquiryFilter from "../../../components/EnquiryFilter";
 import moment from "moment";
+import { EnquiryOpenCreate } from "../../../components/buttonIndex/ButtonComponents";
 
 const OpenListEnquiry = () => {
   const [openListData, setOpenListData] = useState(null);
@@ -192,12 +193,16 @@ const OpenListEnquiry = () => {
           Enquiry Open List
         </h3>
 
-        <button
+        {/* <button
           onClick={handleOpenButton}
           className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
         >
           + Add Enquiry
-        </button>
+        </button> */}
+        <EnquiryOpenCreate
+         onClick={handleOpenButton}
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+        />
       </div>
       <div className="mt-5">
         <MUIDataTable

@@ -19,6 +19,7 @@ import {
 } from "@mui/material";
 import HighlightOffIcon from "@mui/icons-material/HighlightOff";
 import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import { DeliveryDeliverdCreate, DeliveryDeliverdEdit, DeliveryDeliverdView } from "../../../components/buttonIndex/ButtonComponents";
 
 const DeliveredListDelivery = () => {
   const [deliveredDListData, setDeliveredDListData] = useState(null);
@@ -245,16 +246,28 @@ const DeliveredListDelivery = () => {
          
           return (
             <div className="flex items-center space-x-2">
-              <MdEdit
+              {/* <MdEdit
                 onClick={() => navigate(`/edit-delivery/${id}`)}
                 title="edit"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <DeliveryDeliverdEdit
+              
+              onClick={() => navigate(`/edit-delivery/${id}`)}
+             
+              className="h-5 w-5 cursor-pointer"
+              
               />
-              <MdOutlineRemoveRedEye
-                // onClick={() => navigate(`/view-student-delivery/${id}`)}
+              {/* <MdOutlineRemoveRedEye
+               
                 onClick={() =>handleClickOpen(id)}
                 title="view"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <DeliveryDeliverdView
+               onClick={() =>handleClickOpen(id)}
+         
+               className="h-5 w-5 cursor-pointer"
               />
             </div>
           );
@@ -286,12 +299,17 @@ const DeliveredListDelivery = () => {
             Delivered List
           </h3>
 
-          <Link
+          {/* <Link
             to="/add-delivery"
             className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
           >
             + Add Delivery
-          </Link>
+          </Link> */}
+          <DeliveryDeliverdCreate
+          
+           onClick={() => navigate(`/add-delivery`)}
+          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+          />
         </div>
         <div className="mt-5">
           <MUIDataTable
