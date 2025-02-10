@@ -2,6 +2,7 @@ import { Edit, Visibility, WhatsApp, Email } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import { StdViewResultEdit, StdViewResultMail, StdViewResultView, StdViewResultWhatsapp } from "../../buttonIndex/ButtonComponents";
 
 const ResultTable = (props) => {
   return (
@@ -29,28 +30,46 @@ const ResultTable = (props) => {
               </td>
               <td class="py-3 px-6 text-center ">
                 <span>
-                  <Tooltip title="Edit Result" placement="top">
+                  {/* <Tooltip title="Edit Result" placement="top">
                     <Link to={`/edit-result/${dataSumm.id}`}>
                       <Edit />
                     </Link>
-                  </Tooltip>
-                  <Tooltip title="View Exam" placement="top">
+                   
+                  </Tooltip> */}
+                  <StdViewResultEdit
+                      onClick={()=>navigate(`/edit-result/${dataSumm.id}`)}
+                    
+                    />
+                  {/* <Tooltip title="View Exam" placement="top">
                     <Link to={`/view-result/${ dataSumm.id}`}>
                       <Visibility />
                     </Link>
-                  </Tooltip>
-                  <Tooltip title="Send Email" placement="top">
+                  </Tooltip> */}
+
+                  <StdViewResultView
+                    onClick={()=>navigate(`/view-result/${ dataSumm.id}`)}
+                  
+                  />
+                  {/* <Tooltip title="Send Email" placement="top">
                     <Email
                       style={{ cursor: "pointer" }}
                       onClick={(e) => props.sendresultEmail(e, dataSumm.id)}
                     />
-                  </Tooltip>
-                  <Tooltip title="Send Whatsapp" placement="top">
+                  </Tooltip> */}
+                  <StdViewResultMail
+                  
+                  onClick={(e) => props.sendresultEmail(e, dataSumm.id)}
+                  />
+                  {/* <Tooltip title="Send Whatsapp" placement="top">
                     <WhatsApp
                       style={{ cursor: "pointer" }}
                       onClick={(e) => props.resultwhatsApp(e)}
                     />
-                  </Tooltip>
+                  </Tooltip> */}
+                  <StdViewResultWhatsapp
+                        onClick={(e) => props.resultwhatsApp(e)}
+                  
+                  />
                 </span>
               </td>
             </tr>

@@ -9,7 +9,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
 import EnquiryFilter from "../../../components/EnquiryFilter";
 import moment from "moment";
-import { EnquiryOpenCreate } from "../../../components/buttonIndex/ButtonComponents";
+import { EnquiryOpenCreate, EnquiryOpenEdit, EnquiryOpenView } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const OpenListEnquiry = () => {
@@ -134,15 +134,30 @@ const OpenListEnquiry = () => {
           console.log(id, "id");
           return (
             <div className="flex items-center space-x-2">
+              {/* <MdEdit
+                onClick={(e) => handleOpenButtonLink(e,`${id}`)}
               <MdEdit
                 onClick={(e) => handleOpenButtonLink(e, `${id}`)}
                 title="edit"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryOpenEdit
+               onClick={(e) => handleOpenButtonLink(e,`${id}`)}
+               
+               className="h-5 w-5 cursor-pointer"
               />
+              {/* <MdOutlineRemoveRedEye
+              onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
               <MdOutlineRemoveRedEye
                 onClick={(e) => handleOpenButtonLinkView(e, `${id}`)}
                 title="view"
                 className="h-5 w-5 cursor-pointer"
+              /> */}
+              <EnquiryOpenView
+               onClick={(e) => handleOpenButtonLinkView(e,`${id}`)}
+               
+               className="h-5 w-5 cursor-pointer"
+              
               />
             </div>
           );
