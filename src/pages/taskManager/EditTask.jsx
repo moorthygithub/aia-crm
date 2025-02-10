@@ -8,6 +8,7 @@ import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
+import { ButtonCreate } from "../../components/common/ButtonCss";
 
 const status = [
   {
@@ -138,14 +139,14 @@ const EditTask = () => {
         }
       );
 
-      if (response.data.code == '200') {
+      if (response.data.code == "200") {
         toast.success("Data Updated Successfully");
         navigate("/task-pending");
-        console.log("calling")
+        console.log("calling");
       } else {
-        if (response.data.code == '401') {
+        if (response.data.code == "401") {
           toast.error("Task Duplicate Entry");
-        } else if (response.data.code == '402') {
+        } else if (response.data.code == "402") {
           toast.error("Task Duplicate Entry");
         } else {
           toast.error("Task Duplicate Entry");
@@ -272,11 +273,10 @@ const EditTask = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-              
-                {isButtonDisabled ? 'Updating...' : 'Update'}
+                {isButtonDisabled ? "Updating..." : "Update"}
               </button>
             </div>
           </form>

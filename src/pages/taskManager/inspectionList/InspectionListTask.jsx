@@ -13,6 +13,7 @@ import {
   TaskManagerInspectionCreateTask,
   TaskManagerInspectionEdit,
 } from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const InspectionListTask = () => {
   const [inspectionTListData, setInspectionTListData] = useState(null);
@@ -155,11 +156,11 @@ const InspectionListTask = () => {
             + Add Repetitive
           </Link> */}
           <TaskManagerInspectionCreateTask
-            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            className={ButtonCreate}
             onClick={() => navigate("/add-task")}
           ></TaskManagerInspectionCreateTask>
           <TaskManagerInspectionCreateRepetitive
-            className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+            className={ButtonCreate}
             onClick={() => navigate("/add-repetitive")}
           ></TaskManagerInspectionCreateRepetitive>
         </div>

@@ -7,6 +7,7 @@ import Fields from "../../components/common/TextField/TextField";
 import Layout from "../../layout/Layout";
 import BASE_URL from "../../base/BaseUrl";
 import { toast } from "react-toastify";
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const AddClass = () => {
   const navigate = useNavigate();
@@ -75,14 +76,13 @@ const AddClass = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-          
           },
         }
       );
 
       if (response.data.code == "200") {
         toast.success("Data Updated Successfully");
-        navigate('/class');
+        navigate("/class");
       } else {
         if (response.data.code == "401") {
           toast.error("Class Duplicate Entry");
@@ -180,16 +180,13 @@ const AddClass = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
                 {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
               <Link to="/class">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
+                <button className={ButtonBack}>Back</button>
               </Link>
             </div>
           </form>

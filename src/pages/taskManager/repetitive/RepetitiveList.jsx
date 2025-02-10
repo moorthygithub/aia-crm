@@ -13,6 +13,7 @@ import {
   TaskManagerRepetitiveCreate,
   TaskManagerRepetitiveEdit,
 } from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const RepetitiveList = () => {
   const [repetitiveListData, setRepetitiveListData] = useState(null);
@@ -165,13 +166,6 @@ const RepetitiveList = () => {
     download: true,
     filter: false,
     print: true,
-    setRowProps: (rowData) => {
-      return {
-        style: {
-          borderBottom: "10px solid #f1f7f9",
-        },
-      };
-    },
   };
   return (
     <Layout>
@@ -188,7 +182,7 @@ const RepetitiveList = () => {
           + Add Repetitive
         </Link> */}
         <TaskManagerRepetitiveCreate
-          className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+          className={ButtonCreate}
           onClick={() => navigate("/add-repetitive")}
         ></TaskManagerRepetitiveCreate>
       </div>

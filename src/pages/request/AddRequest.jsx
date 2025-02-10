@@ -9,7 +9,7 @@ import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import SelectPopup from "../../components/common/popup/SelectPopup";
 import { toast } from "react-toastify";
-
+import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
 const AddRequest = () => {
   const navigate = useNavigate();
@@ -68,15 +68,14 @@ const AddRequest = () => {
 
   const onInputChange = (e) => {
     setRequest({
-    ...student,
-    [e.target.name]: e.target.value,
-    });  
+      ...student,
+      [e.target.name]: e.target.value,
+    });
 
-    if(e.target.name == 'user_uid'){
-
-        setUserUID(e.target.value);
+    if (e.target.name == "user_uid") {
+      setUserUID(e.target.value);
     }
-};
+  };
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -88,8 +87,8 @@ const AddRequest = () => {
     setIsButtonDisabled(true);
     const formData = {
       user_uid: userUID,
-            course_request: student.course_request,
-            course_request_remarks: student.course_request_remarks,
+      course_request: student.course_request,
+      course_request_remarks: student.course_request_remarks,
     };
     try {
       const response = await axios.post(
@@ -98,14 +97,13 @@ const AddRequest = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-           
           },
         }
       );
 
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
-        navigate('/request-pending');
+        navigate("/request-pending");
       } else {
         if (response.data.code == 401) {
           toast.error("Request Duplicate Entry");
@@ -123,9 +121,8 @@ const AddRequest = () => {
     }
   };
 
-
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(-1);
   };
 
@@ -134,9 +131,11 @@ const AddRequest = () => {
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-         
-            <MdKeyboardBackspace onClick={handleBackButton} className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-        
+          <MdKeyboardBackspace
+            onClick={handleBackButton}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
             Add Request
           </h1>
@@ -157,7 +156,7 @@ const AddRequest = () => {
                   options={requestType}
                 />
               </div>
-              
+
               <div>
                 <Fields
                   required={true}
@@ -174,9 +173,7 @@ const AddRequest = () => {
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
               {/* Remarks */}
               <div>
-                
-                 <Fields
-                 
+                <Fields
                   title="Remarks"
                   type="textField"
                   autoComplete="Name"
@@ -189,16 +186,15 @@ const AddRequest = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
                 {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-            
-                <button onClick={handleBackButton} className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
-              
+
+              <button onClick={handleBackButton} className={ButtonBack}>
+                Back
+              </button>
             </div>
           </form>
           <Dialog open={showmodal} onClose={() => closegroupModal()}>
