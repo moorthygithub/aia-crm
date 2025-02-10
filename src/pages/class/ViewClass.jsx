@@ -13,6 +13,11 @@ import { FaWhatsapp } from "react-icons/fa";
 import { IoPerson } from "react-icons/io5";
 import { CiMail } from "react-icons/ci";
 import { BiLeftArrowAlt } from "react-icons/bi";
+import {
+  ButtonBack,
+  ButtonCreate,
+  ButtonIcons,
+} from "../../components/common/ButtonCss";
 
 const ViewClass = () => {
   const navigate = useNavigate();
@@ -158,7 +163,7 @@ const ViewClass = () => {
         sort: false,
       },
     },
-    
+
     {
       name: "Actions",
       options: {
@@ -344,14 +349,14 @@ const ViewClass = () => {
             <div className="flex justify-center mt-6 gap-2">
               <button
                 onClick={sendclassEmail}
-                className="btn flex btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
+                className={`${ButtonIcons} w-[13rem]`}
                 disabled={isButtonDisabled}
               >
                 <CiMail className="mr-2 mt-1" />{" "}
                 {isButtonDisabled ? "Sending..." : "Send Email to Not Attend"}
               </button>
               <Link to="/class">
-                <button className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md">Back</button>
+                <button className={ButtonBack}>Back</button>
               </Link>
             </div>
           </form>

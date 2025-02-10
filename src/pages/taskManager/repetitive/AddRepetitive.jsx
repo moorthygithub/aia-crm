@@ -8,46 +8,44 @@ import { toast } from "react-toastify";
 import BASE_URL from "../../../base/BaseUrl";
 import Layout from "../../../layout/Layout";
 import Fields from "../../../components/common/TextField/TextField";
-
+import { ButtonBack, ButtonCreate } from "../../../components/common/ButtonCss";
 
 const status = [
-    {
-      value: "Month",
-      label: "Month",
-    },
-    {
-      value: "Weekly",
-      label: "Weekly",
-    },
-  ];
+  {
+    value: "Month",
+    label: "Month",
+  },
+  {
+    value: "Weekly",
+    label: "Weekly",
+  },
+];
 
-  const daysOfWeek = [
-    { value: "Sunday", label: "Sunday" },
-    { value: "Monday", label: "Monday" },
-    { value: "Tuesday", label: "Tuesday" },
-    { value: "Wednesday", label: "Wednesday" },
-    { value: "Thursday", label: "Thursday" },
-    { value: "Friday", label: "Friday" },
-    { value: "Saturday", label: "Saturday" },
-  ];
+const daysOfWeek = [
+  { value: "Sunday", label: "Sunday" },
+  { value: "Monday", label: "Monday" },
+  { value: "Tuesday", label: "Tuesday" },
+  { value: "Wednesday", label: "Wednesday" },
+  { value: "Thursday", label: "Thursday" },
+  { value: "Friday", label: "Friday" },
+  { value: "Saturday", label: "Saturday" },
+];
 
-  const daysOfMonth = Array.from({ length: 30 }, (_, i) => ({
-    value: (i + 1).toString(),
-    label: (i + 1).toString(),
-  }));
+const daysOfMonth = Array.from({ length: 30 }, (_, i) => ({
+  value: (i + 1).toString(),
+  label: (i + 1).toString(),
+}));
 
 const AddRepetitive = () => {
   const navigate = useNavigate();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [enquiry, setEnquiry] = useState({
-  
-
     task_details: "",
 
     user_id: "",
-    task_for : "",
-    task_day : ""
+    task_for: "",
+    task_day: "",
   });
 
   const [taskDetails, setTaskDetails] = useState([]);
@@ -95,7 +93,7 @@ const AddRepetitive = () => {
     }
     setIsButtonDisabled(true);
     const formData = {
-        task_for: enquiry.task_for,
+      task_for: enquiry.task_for,
       task_details: enquiry.task_details,
       user_id: enquiry.user_id,
       task_day: enquiry.task_day,
@@ -147,10 +145,9 @@ const AddRepetitive = () => {
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form onSubmit={onSubmit} autoComplete="off">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-           
               <div>
                 <Fields
-                title="Task On"
+                  title="Task On"
                   required={true}
                   type="whatsappDropdown"
                   name="task_for"
@@ -168,14 +165,12 @@ const AddRepetitive = () => {
                   value={enquiry.task_day}
                   onChange={(e) => onInputChange(e)}
                   options={
-                    enquiry.task_for == "Month"
-                      ? daysOfMonth
-                      : daysOfWeek
+                    enquiry.task_for == "Month" ? daysOfMonth : daysOfWeek
                   }
                 />
               </div>
               {/* Due Date */}
-             
+
               {/* Employee */}
               <div>
                 <Fields
@@ -194,7 +189,7 @@ const AddRepetitive = () => {
               {/* Task Details */}
               <div>
                 <Input
-                label="Task Details"
+                  label="Task Details"
                   required
                   type="text"
                   name="task_details"
@@ -206,16 +201,13 @@ const AddRepetitive = () => {
             <div className="mt-4 text-center">
               <button
                 type="submit"
-                className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+                className={ButtonCreate}
                 disabled={isButtonDisabled}
               >
-                
-                {isButtonDisabled ? 'Submiting...' : 'Submit'}
+                {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
               <Link to="/repetitive-list">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md">
-                  Back
-                </button>
+                <button className={ButtonBack}>Back</button>
               </Link>
             </div>
           </form>

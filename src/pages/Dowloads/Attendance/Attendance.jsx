@@ -19,6 +19,7 @@ import {
   DownloadAttendanceViewAttend,
   DownloadAttendanceViewNotAttend,
 } from "../../../components/buttonIndex/ButtonComponents";
+import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 function Attendance() {
   const navigate = useNavigate();
@@ -292,7 +293,7 @@ function Attendance() {
           </div>
           <div className="flex justify-center m-3">
             <DownloadAttendanceDownloadAttend
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              className={ButtonCreate}
               onClick={onSubmit}
               disabled={isButtonDisabled}
             >
@@ -300,15 +301,15 @@ function Attendance() {
             </DownloadAttendanceDownloadAttend>
 
             <DownloadAttendanceViewAttend
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              className={ButtonCreate}
               onClick={onReportView}
             ></DownloadAttendanceViewAttend>
             <DownloadAttendanceDownloadNotAttend
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-40 mx-2"
+              className={`${ButtonCreate} w-40`}
               onClick={onSubmit1}
             ></DownloadAttendanceDownloadNotAttend>
             <DownloadAttendanceViewNotAttend
-              className="text-sm font-[400] cursor-pointer text-white bg-blue-600 hover:bg-red-700 p-2 rounded-lg shadow-md transition-all hover:scale-105 active:scale-95 w-36 mx-2"
+              className={ButtonCreate}
               onClick={onReportView1}
             ></DownloadAttendanceViewNotAttend>
           </div>
