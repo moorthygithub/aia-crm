@@ -6,71 +6,201 @@ AIA-CRM is a Customer Relationship Management (CRM) system designed for managing
 
 ## Project Structure
 
-```
-ag-solutions-bangalore-aia-crm/
-│-- README.md
-│-- index.html
-│-- package.json
-│-- vite.config.js
-│-- postcss.config.cjs
-│-- tailwind.config.cjs
-│-- test.jsx
-│-- test2.jsx
-│-- public/
-│   └── img/
-│-- src/
-│   ├── App.jsx
-│   ├── App.css
-│   ├── index.css
-│   ├── main.jsx
-│   ├── assets/
-│   ├── base/
-│   │   └── BaseUrl.jsx
-│   ├── components/
-│   │   ├── ClassFollowupFilter.jsx
-│   │   ├── DashboardNavbar.jsx
-│   │   ├── DeliveryFilter.jsx
-│   │   ├── EnquiryFilter.jsx
-│   │   ├── Footer.jsx
-│   │   ├── Logout.jsx
-│   │   ├── ProtectedRoute.jsx
-│   │   ├── RequestFilter.jsx
-│   │   ├── SideNav.jsx
-│   │   ├── TaskManagerFilter.jsx
-│   │   ├── buttonIndex/
-│   │   │   ├── ButtonComponents.jsx
-│   │   │   ├── checkPermission.js
-│   │   ├── common/
-│   │       ├── ButtonCss.jsx
-│   │       ├── DropDown.jsx
-│   │       ├── PageTitle.jsx
-│   │       ├── TextField/
-│   │       ├── dataCard/
-│   │       ├── popup/
-│   │       ├── table/
-│   ├── layout/
-│   │   └── Layout.jsx
-│   ├── pages/
-│   │   ├── auth/
-│   │   ├── class/
-│   │   ├── classFollowup/
-│   │   ├── country/
-│   │   ├── courses/
-│   │   ├── dashboard/
-│   │   ├── delivery/
-│   │   ├── download/
-│   │   ├── enquiry/
-│   │   ├── enquiryNow/
-│   │   ├── maintenance/
-│   │   ├── notification/
-│   │   ├── profile/
-│   │   ├── request/
-│   │   ├── student/
-│   │   ├── taskManager/
-│   │   ├── userManagement/
-│   ├── utils/
-│   │   └── ContextPanel.jsx
-```
+└── ag-solutions-bangalore-aia-crm/
+├── README.md
+├── index.html
+├── package.json
+├── postcss.config.cjs
+├── tailwind.config.cjs
+├── vite.config.js
+├── public/
+│ └── img/
+└── src/
+├── App.css
+├── App.jsx
+├── index.css
+├── main.jsx
+├── assets/
+├── base/
+│ └── BaseUrl.jsx
+├── components/
+│ ├── ClassFollowupFilter.jsx
+│ ├── DashboardNavbar.jsx
+│ ├── DeliveryFilter.jsx
+│ ├── EnquiryFilter.jsx
+│ ├── Footer.jsx
+│ ├── Logout.jsx
+│ ├── ProtectedRoute.jsx
+│ ├── RequestFilter.jsx
+│ ├── SideNav.jsx
+│ ├── TaskManagerFilter.jsx
+│ ├── buttonIndex/
+│ │ ├── ButtonComponents.jsx
+│ │ └── checkPermission.js
+│ └── common/
+│ ├── ButtonCss.jsx
+│ ├── DropDown.jsx
+│ ├── PageTitle.jsx
+│ ├── TextField/
+│ │ ├── TextField.jsx
+│ │ └── textfield.module.css
+│ ├── dataCard/
+│ │ ├── CommonCard.jsx
+│ │ └── DetailsCard.jsx
+│ ├── popup/
+│ │ └── SelectPopup.jsx
+│ └── table/
+│ ├── ClassFollowUpTable.jsx
+│ ├── CourseTable.jsx
+│ ├── DeliveryTable.jsx
+│ ├── ExamTable.jsx
+│ ├── FollowUp.jsx
+│ ├── FollowUpTable.jsx
+│ ├── RequestTable.jsx
+│ └── ResultTable.jsx
+├── layout/
+│ └── Layout.jsx
+├── pages/
+│ ├── Dowloads/
+│ │ ├── Attendance/
+│ │ │ ├── Attendance.jsx
+│ │ │ ├── AttendanceNotReport.jsx
+│ │ │ └── AttendanceReport.jsx
+│ │ ├── Delivery/
+│ │ │ ├── Delivery.jsx
+│ │ │ └── DeliveryReport.jsx
+│ │ ├── Enquiry/
+│ │ │ ├── Enquiry.jsx
+│ │ │ └── EnquiryReport.jsx
+│ │ ├── Exam/
+│ │ │ ├── Exam.jsx
+│ │ │ └── ExamReport.jsx
+│ │ └── Students/
+│ │ ├── Students.jsx
+│ │ └── StudentsReport.jsx
+│ ├── UserType/
+│ │ ├── EditUserType.jsx
+│ │ └── UserTypeList.jsx
+│ ├── auth/
+│ │ ├── ForgetPassword.jsx
+│ │ ├── SIgnUp.jsx
+│ │ └── SignIn.jsx
+│ ├── class/
+│ │ ├── AddAttendence.jsx
+│ │ ├── AddClass.jsx
+│ │ ├── ClassList.jsx
+│ │ ├── Extra.jsx
+│ │ └── ViewClass.jsx
+│ ├── classFollowup/
+│ │ ├── ClassFollowUp.jsx
+│ │ ├── ClassFollowUpCount.jsx
+│ │ ├── CompletedFollowUp.jsx
+│ │ ├── EditClassFollowUp.jsx
+│ │ └── ViewCompleted.jsx
+│ ├── country/
+│ │ ├── AddCountry.jsx
+│ │ ├── CountryList.jsx
+│ │ └── EditCountry.jsx
+│ ├── courses/
+│ │ ├── AddCourse.jsx
+│ │ ├── CoursesList.jsx
+│ │ └── EditCourse.jsx
+│ ├── dashboard/
+│ │ └── Home.jsx
+│ ├── delivery/
+│ │ ├── AddDelivery.jsx
+│ │ ├── EditDelivery.jsx
+│ │ ├── View.jsx
+│ │ ├── deliveredList/
+│ │ │ └── DeliveredListDelivery.jsx
+│ │ └── pendingList/
+│ │ └── PendingListDelivery.jsx
+│ ├── download/
+│ │ ├── attendance/
+│ │ │ └── AttendanceDownload.jsx
+│ │ ├── delivery/
+│ │ │ └── DeliveryDownload.jsx
+│ │ ├── enquiry/
+│ │ │ └── EnquiryDownload.jsx
+│ │ ├── exam/
+│ │ │ └── ExamDownload.jsx
+│ │ └── student/
+│ │ └── StudentDownload.jsx
+│ ├── enquiry/
+│ │ ├── AddEnquiry.jsx
+│ │ ├── Edit.jsx
+│ │ ├── EditEnquiry.jsx
+│ │ ├── EditPersonalDetails.jsx
+│ │ ├── ViewEnquiry.jsx
+│ │ ├── closeList/
+│ │ │ └── CloseListEnquiry.jsx
+│ │ ├── openList/
+│ │ │ └── OpenListEnquiry.jsx
+│ │ └── overdueList/
+│ │ └── OverdueListEnquiry.jsx
+│ ├── enquiryNow/
+│ │ ├── EnquiryNow.jsx
+│ │ └── enquiry.module.css
+│ ├── maintenance/
+│ │ └── Maintenance.jsx
+│ ├── notification/
+│ │ ├── AddNotification.jsx
+│ │ └── NotificationList.jsx
+│ ├── profile/
+│ │ ├── ChangePassword.jsx
+│ │ └── Profile.jsx
+│ ├── request/
+│ │ ├── AddRequest.jsx
+│ │ ├── EditRequest.jsx
+│ │ ├── ViewRequest.jsx
+│ │ ├── approvedList/
+│ │ │ └── ApprovedListRequest.jsx
+│ │ ├── completedList/
+│ │ │ └── CompletedListRequest.jsx
+│ │ └── pendingList/
+│ │ └── PendingListRequest.jsx
+│ ├── student/
+│ │ ├── AddExam.jsx
+│ │ ├── EditCourse.jsx
+│ │ ├── EditDelivery.jsx
+│ │ ├── EditExam.jsx
+│ │ ├── EditResult.jsx
+│ │ ├── EditStudent.jsx
+│ │ ├── ExamPendingList.jsx
+│ │ ├── PendingInterview.jsx
+│ │ ├── PendingOffboarding.jsx
+│ │ ├── PendingOnboarding.jsx
+│ │ ├── StudentAddCourse.jsx
+│ │ ├── StudentAddDelivery.jsx
+│ │ ├── StudentCourseDue.jsx
+│ │ ├── StudentList.jsx
+│ │ ├── ViewCourse.jsx
+│ │ ├── ViewDelivery.jsx
+│ │ ├── ViewEquiry.jsx
+│ │ ├── ViewExam.jsx
+│ │ ├── ViewResult.jsx
+│ │ └── ViewStudent.jsx
+│ ├── taskManager/
+│ │ ├── AddTask.jsx
+│ │ ├── EditTask.jsx
+│ │ ├── completedList/
+│ │ │ └── CompletedListTask.jsx
+│ │ ├── inspectionList/
+│ │ │ └── InspectionListTask.jsx
+│ │ ├── overdueList/
+│ │ │ └── OverDueList.jsx
+│ │ ├── pendingList/
+│ │ │ └── PendingListTask.jsx
+│ │ └── repetitive/
+│ │ ├── AddRepetitive.jsx
+│ │ └── RepetitiveList.jsx
+│ └── userManagement/
+│ ├── CreateButton.jsx
+│ ├── CreatePage.jsx
+│ ├── ManagementDashboard.jsx
+│ └── UserPage.jsx
+└── utils/
+└── ContextPanel.jsx
 
 ## Features
 
