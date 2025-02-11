@@ -109,18 +109,19 @@ const ClassFollowUpCount = () => {
           },
         }
       );
-
-      if (response.data.code == "200") {
-        setReloadData(true);
+      console.log(response);
+      console.log(response.data.code);
+      if (response.data.code == 200) {
+        // setReloadData(true);
         handleClose();
-        toast.success("Data Updated Successfully");
+        toast.success(response.data.msg);
       } else {
         if (response.data.code == "401") {
-          toast.error("Class Follow Up Duplicate Entry");
+          toast.error(response.data.msg);
         } else if (response.data.code == "402") {
-          toast.error("Class Follow Up  Duplicate Entry");
+          toast.error(response.data.msg);
         } else {
-          toast.error("Class Follow Up Duplicate Entry");
+          toast.error(response.data.msg);
         }
       }
     } catch (error) {

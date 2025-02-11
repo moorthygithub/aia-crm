@@ -121,6 +121,8 @@ const AppProvider = ({ children }) => {
           "/examreport",
           "/attendancereport",
           "/notattend",
+          "/userType",
+          "/edit-user-type/",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)
@@ -156,34 +158,42 @@ const AppProvider = ({ children }) => {
     setIsError(false);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${BASE_URL}/api/panel-fetch-usercontrol-new`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-     
-      // array in local storage
-      localStorage.setItem("pageControl", JSON.stringify(response.data?.pagePermissions));
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-usercontrol-new`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      
+      // array in local storage
+      localStorage.setItem(
+        "pageControl",
+        JSON.stringify(response.data?.pagePermissions)
+      );
     } catch (error) {
       setIsError(true);
     } finally {
       setIsLoading(false);
     }
   };
- 
+
   const fetchPermissions = async () => {
     setIsLoading(true);
     setIsError(false);
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(`${BASE_URL}/api/panel-fetch-usercontrol`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-usercontrol`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
       // Store the entire `usercontrol` array in localStorage
-      localStorage.setItem("buttonControl", JSON.stringify(response.data?.buttonPermissions));
-
-      
+      localStorage.setItem(
+        "buttonControl",
+        JSON.stringify(response.data?.buttonPermissions)
+      );
     } catch (error) {
       setIsError(true);
     } finally {
@@ -201,17 +211,23 @@ const AppProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if(token){
-      getStaticUsers()
-      fetchPagePermission()
+    if (token) {
+      getStaticUsers();
+      fetchPagePermission();
       fetchPermissions();
-     
     }
-  
-}, []);
+  }, []);
 
   return (
-    <ContextPanel.Provider value={{ isPanelUp, setIsPanelUp ,fetchPagePermission,getStaticUsers,fetchPermissions}}>
+    <ContextPanel.Provider
+      value={{
+        isPanelUp,
+        setIsPanelUp,
+        fetchPagePermission,
+        getStaticUsers,
+        fetchPermissions,
+      }}
+    >
       {children}
     </ContextPanel.Provider>
   );

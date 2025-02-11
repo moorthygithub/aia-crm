@@ -20,6 +20,7 @@ import { FaCodePullRequest } from "react-icons/fa6";
 import { GrTasks } from "react-icons/gr";
 import { MdNotificationsActive } from "react-icons/md";
 import { PiDownloadSimpleBold } from "react-icons/pi";
+import { UserRoundCog } from "lucide-react";
 
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
@@ -343,6 +344,26 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
                     className="font-medium capitalize"
                   >
                    User Management
+                  </Typography>
+                </Button>
+              )}
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/userType">
+              {({ isActive }) => (
+                <Button
+                  variant={isActive ? "gradient" : "text"}
+                  color="white"
+                  className="flex items-center gap-4 px-4 capitalize"
+                  fullWidth
+                >
+                  <UserCircleIcon className="w-5 h-5 text-inherit" />
+                  <Typography
+                    color="inherit"
+                    className="font-medium capitalize"
+                  >
+                   User Type
                   </Typography>
                 </Button>
               )}
