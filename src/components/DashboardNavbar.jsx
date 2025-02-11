@@ -23,7 +23,12 @@ import Logout from "./Logout";
 import { useState } from "react";
 import { HiArrowRightStartOnRectangle } from "react-icons/hi2";
 
-const DashboardNavbar = ({ openSideNav, openSidebar, setOpenSideNav , setOpenSidebar}) => {
+const DashboardNavbar = ({
+  openSideNav,
+  openSidebar,
+  setOpenSideNav,
+  setOpenSidebar,
+}) => {
   const { pathname } = useLocation();
 
   const [openModal, setOpenModal] = useState(false);
@@ -37,17 +42,10 @@ const DashboardNavbar = ({ openSideNav, openSidebar, setOpenSideNav , setOpenSid
     { name: "Home", link: "/home" },
     ...pathSegments.slice(0, 1).map((segment, index) => ({
       name: segment.charAt(0).toUpperCase() + segment.slice(1),
-      link: `/home/${segment}`,  
+      // link: `/home/${segment}`,
     })),
   ];
 
-  const pageTitle =
-    pathSegments.length === 0
-      ? "Home"
-      : pathSegments[pathSegments.length - 1]?.charAt(0).toUpperCase() +
-        pathSegments[pathSegments.length - 1]?.slice(1);
-
-  // Hardcode fixedNavbar to true
   const fixedNavbar = true;
 
   return (
@@ -69,52 +67,31 @@ const DashboardNavbar = ({ openSideNav, openSidebar, setOpenSideNav , setOpenSid
             }`}
           >
             {breadcrumbs.map((breadcrumb, index) => (
-              <Link key={index}>
+              <Link key={index} to={breadcrumb.link}>
                 <Typography
                   variant="small"
                   color="white"
-                  className="font-normal  transition-all text-white hover:text-blue-500 hover:opacity-100"
+                  className="font-normal transition-all text-white hover:text-blue-500 hover:opacity-100"
                 >
                   {breadcrumb.name}
                 </Typography>
               </Link>
             ))}
           </Breadcrumbs>
-          {/* <Typography variant="h6" color="white">
-            {pageTitle}
-          </Typography> */}
         </div>
         <div className="flex items-center">
-          {/* Search and other elements can be added here */}
-
-          {/* Sidebar toggle button for mobile view */}
           <IconButton
             variant="text"
             color="white"
             className="grid "
-            // onClick={() => setOpenSideNav(!openSideNav) }
-            // onClick={() => {
-            //   setOpenSideNav(!openSideNav);
-            //   console.log( openSideNav, 'clicking');
-            // }}
-            // onClick={() => {
-            //   setOpenSidebar(!openSidebar)
-            //   setOpenSideNav((prevState) => {
-            //     console.log(!prevState, 'clicking'); 
-            //     return !prevState; 
-            //   });
-            // }}
-            
             onClick={() => {
               const screenWidth = window.innerWidth;
-            
+
               if (screenWidth >= 1024) {
-                // For big screens (e.g., desktops, tablets in landscape)
                 setOpenSidebar(!openSidebar);
               } else {
-                // For small screens (e.g., mobile, tablets in portrait)
                 setOpenSideNav((prevState) => {
-                  console.log(!prevState, 'clicking');
+                  console.log(!prevState, "clicking");
                   return !prevState;
                 });
               }
@@ -122,7 +99,6 @@ const DashboardNavbar = ({ openSideNav, openSidebar, setOpenSideNav , setOpenSid
           >
             <Bars3Icon strokeWidth={3} className="h-6 w-6 text-white" />
           </IconButton>
-          {/* profile icon  */}
           <Menu
             open={profileMenuOpen}
             handler={setProfileMenuOpen}

@@ -8,32 +8,7 @@ const TaskManagerFilter = () => {
     navigate(path);
   };
 
-  
-    const buttons = [
-    
-      {
-        label: "Pending List",
-        path: "/task-pending",
-        color: "from-pink-500 to-orange-400",
-      },
-      {
-        label: "Inspection List",
-        path: "/task-inspection",
-        color: "from-blue-500 to-cyan-400",
-      },
-      {
-        label: "Completed List",
-        path: "/task-completed",
-        color: "from-green-500 to-teal-400",
-      },
-    ];
-    
-  const buttons1 = [
-    {
-      label: "Repetitive",
-      path: "/repetitive-list",
-      color: "from-pink-500 to-orange-400",
-    },
+  const buttons = [
     {
       label: "Pending List",
       path: "/task-pending",
@@ -51,7 +26,31 @@ const TaskManagerFilter = () => {
     },
   ];
 
-  const check = localStorage.getItem("user_type_id") == 4 ? buttons1 : buttons
+  const buttons1 = [
+    {
+      label: "Pending List",
+      path: "/task-pending",
+      color: "from-pink-500 to-orange-400",
+    },
+    {
+      label: "Repetitive",
+      path: "/repetitive-list",
+      color: "from-pink-500 to-orange-400",
+    },
+
+    {
+      label: "Inspection List",
+      path: "/task-inspection",
+      color: "from-blue-500 to-cyan-400",
+    },
+    {
+      label: "Completed List",
+      path: "/task-completed",
+      color: "from-green-500 to-teal-400",
+    },
+  ];
+
+  const check = localStorage.getItem("user_type_id") == 4 ? buttons1 : buttons;
 
   return (
     <div className="flex flex-wrap justify-between mt-6 gap-4">
