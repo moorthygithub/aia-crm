@@ -94,6 +94,7 @@ import CreatePage from "./pages/userManagement/CreatePage";
 import CreateButton from "./pages/userManagement/CreateButton";
 import UserTypeList from "./pages/UserType/UserTypeList";
 import EditUserType from "./pages/UserType/EditUserType";
+import BirthdayHoliday from "./pages/birthday/BirthdayHoliday";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -263,6 +264,7 @@ const App = () => {
             path="/notattend"
             element={<ProtectedRoute element={<NotAttendanceReport />} />}
           />
+          <Route path="/birthdaylist" element={<BirthdayHoliday />} />
           <Route path="/userManagement" element={<UserPage />} />
           <Route
             path="/management-dashboard/:id"

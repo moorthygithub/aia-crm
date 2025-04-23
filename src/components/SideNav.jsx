@@ -9,7 +9,7 @@ import { Button, IconButton, Typography } from "@material-tailwind/react";
 import { useEffect, useRef } from "react";
 import image from "../assets/logo.png";
 import { MdDashboard } from "react-icons/md";
-import { FaFlag } from "react-icons/fa";
+import { FaBirthdayCake, FaFlag } from "react-icons/fa";
 import { MdClass } from "react-icons/md";
 import { FaUserGroup } from "react-icons/fa6";
 import { IoMdPersonAdd } from "react-icons/io";
@@ -23,7 +23,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
   const { pathname } = useLocation();
   const sidenavType = "dark";
-  
 
   const pageControl = JSON.parse(localStorage.getItem("pageControl") || "[]");
   const userId = localStorage.getItem("id");
@@ -34,7 +33,6 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
     transparent: "bg-transparent",
   };
 
- 
   const navigationItems = [
     { icon: MdDashboard, label: "Dashboard", path: "/home" },
     { icon: FaFlag, label: "Country", path: "/country" },
@@ -43,10 +41,19 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
     { icon: IoMdPersonAdd, label: "Student", path: "/student" },
     { icon: FaTruckMoving, label: "Delivery", path: "/pending-delivery" },
     { icon: TableCellsIcon, label: "Class", path: "/class" },
-    { icon: TableCellsIcon, label: "Class Follow Up", path: "/class-followup-count" },
+    { icon: FaBirthdayCake, label: "Birthday", path: "/birthdaylist" },
+    {
+      icon: TableCellsIcon,
+      label: "Class Follow Up",
+      path: "/class-followup-count",
+    },
     { icon: FaCodePullRequest, label: "Request", path: "/request-pending" },
     { icon: GrTasks, label: "Task Manager", path: "/task-pending" },
-    { icon: MdNotificationsActive, label: "Notification", path: "/notification" },
+    {
+      icon: MdNotificationsActive,
+      label: "Notification",
+      path: "/notification",
+    },
     { icon: PiDownloadSimpleBold, label: "Download", path: "/enquiry" },
     { icon: UserCircleIcon, label: "User Management", path: "/userManagement" },
     { icon: UserCircleIcon, label: "User Type", path: "/userType" },
@@ -81,11 +88,14 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
       <div className="m-4">
         <ul className="mb-4 flex flex-col gap-1">
           {navigationItems.map((item, index) => {
-          
             const control = pageControl.find(
               (p) => p.page === item.label && p.url === item.path.substring(1)
             );
-            if (!control || !control.userIds.includes(userId) || control.status !== "Active") {
+            if (
+              !control ||
+              !control.userIds.includes(userId) ||
+              control.status !== "Active"
+            ) {
               return null;
             }
 

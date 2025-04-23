@@ -82,6 +82,7 @@ const EnquiryNow = () => {
     enquiry_full_name: "",
     enquiry_mobile: "",
     enquiry_email: "",
+    enquiry_dob: "",
     enquiry_country: "",
     enquiry_city: "",
     enquiry_category: "",
@@ -160,6 +161,7 @@ const EnquiryNow = () => {
       enquiry_full_name: booking.enquiry_full_name,
       enquiry_mobile: booking.enquiry_mobile,
       enquiry_email: booking.enquiry_email,
+      enquiry_dob: booking.enquiry_dob,
       enquiry_country: booking.enquiry_country,
       enquiry_city: booking.enquiry_city,
       enquiry_category: booking.enquiry_category,
@@ -184,6 +186,7 @@ const EnquiryNow = () => {
           enquiry_full_name: "",
           enquiry_mobile: "",
           enquiry_email: "",
+          enquiry_dob: "",
           enquiry_country: "",
           enquiry_city: "",
           enquiry_category: "",
@@ -272,6 +275,15 @@ const EnquiryNow = () => {
               </div>
               <div className="grid md:grid-cols-3 grid-cols-1 gap-3">
                 <div>
+                  <Input
+                    type="date"
+                    label="DOB"
+                    name="enquiry_dob"
+                    value={booking.enquiry_dob}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+                <div>
                   <Fields
                     required={true}
                     title="Country"
@@ -294,7 +306,8 @@ const EnquiryNow = () => {
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
-
+              </div>
+              <div className="grid md:grid-cols-3 grid-cols-1 gap-3 mt-5">
                 <div>
                   <Fields
                     required={true}
@@ -306,8 +319,6 @@ const EnquiryNow = () => {
                     options={category}
                   />
                 </div>
-              </div>
-              <div className="grid md:grid-cols-3 grid-cols-1 gap-3 mt-5">
                 <div>
                   <Fields
                     required={true}

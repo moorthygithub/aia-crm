@@ -11,8 +11,8 @@ import {
 } from "lucide-react";
 import React from "react";
 import { checkPermission } from "./checkPermission";
-import { FaWhatsapp } from "react-icons/fa";
-import { MdEmail } from "react-icons/md";
+import { FaBirthdayCake, FaWhatsapp, FaWhatsappSquare } from "react-icons/fa";
+import { MdEmail, MdOutlineEmail } from "react-icons/md";
 
 const getStaticPermissions = () => {
   const buttonPermissions = localStorage.getItem("buttonControl");
@@ -1432,6 +1432,38 @@ export const DownloadAttendanceViewNotAttend = ({ onClick, className }) => {
   );
 };
 DownloadAttendanceViewNotAttend.page = "Download";
+
+//birthday
+export const BirthDayWhatsaApp = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "BirthDayWhatsaApp", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Whatsapp">
+      <FaWhatsapp className="h-4 w-4" />
+    </button>
+  );
+};
+
+BirthDayWhatsaApp.page = "Birthday";
+export const BirthDayEmail = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "BirthDayEmail", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Email">
+      <MdOutlineEmail className="h-4 w-4" />
+    </button>
+  );
+};
+
+BirthDayEmail.page = "Birthday";
 /*-----------------------------------Morrthy------------------ */
 
 export default {
@@ -1560,4 +1592,6 @@ export default {
   DownloadAttendanceDownloadNotAttend,
 
   DownloadAttendanceViewNotAttend,
+  BirthDayWhatsaApp,
+  BirthDayEmail,
 };

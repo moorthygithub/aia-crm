@@ -50,6 +50,7 @@ const EditStudent = () => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [student, setStudent] = useState({
     address: "",
+    user_dob: "",
     mobile_device: "",
     admission_form_no: "",
     qualification: "",
@@ -77,7 +78,7 @@ const EditStudent = () => {
             },
           }
         );
-        
+
         setStudent(response.data.studentData);
       } catch (error) {
         console.error("Error fetching vendor data:", error);
@@ -103,6 +104,7 @@ const EditStudent = () => {
     }
     setIsButtonDisabled(true);
     const formData = {
+      user_dob: student.user_dob,
       address: student.address,
       admission_form_no: student.admission_form_no,
       qualification: student.qualification,
@@ -143,7 +145,7 @@ const EditStudent = () => {
   };
 
   const handleBackButton = (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     navigate(`/view-student/${localStorage.getItem("s_id")}`);
   };
 
@@ -182,8 +184,17 @@ const EditStudent = () => {
                 <span className="mt-1 text-black">{student.email}</span>
               </div>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-4">
               <div>
+                <Input
+                  type="date"
+                  label="DOB"
+                  name="user_dob"
+                  value={student.user_dob}
+                  onChange={(e) => onInputChange(e)}
+                />
+              </div>
+              <div className="md:col-span-2">
                 <Fields
                   required={true}
                   title="Address"
@@ -279,10 +290,10 @@ const EditStudent = () => {
               </button>
 
               <button
-              type="button"
+                type="button"
                 onClick={handleBackButton}
                 className={ButtonBack}
-                >
+              >
                 Back
               </button>
             </div>

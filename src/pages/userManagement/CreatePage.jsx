@@ -53,6 +53,7 @@ const CreatePage = () => {
         { title: "Download", url: "/enquiry" },
         { title: "User Management", url: "/userManagement" },
         { title: "User Type", url: "/userType" },
+        { title: "BirthDay", url: "/birthdaylist" },
       ],
     };
 

@@ -388,6 +388,14 @@ const ViewStudent = () => {
                     </div>
                     <div className="space-y-2">
                       <Typography className="text-black">
+                        <strong>
+                          DOB :
+                          {student.user_dob
+                            ? moment(student.user_dob).format("DD-MM-YYYY")
+                            : ""}
+                        </strong>
+                      </Typography>
+                      <Typography className="text-black">
                         <strong>Qualification : {student.qualification}</strong>
                       </Typography>
                       <Typography className="text-black">
