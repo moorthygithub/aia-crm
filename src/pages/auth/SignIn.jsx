@@ -47,7 +47,7 @@ const SignIn = () => {
         const token = res.data.UserInfo?.token;
         const user_type = res.data.UserInfo?.user.user_type;
         const allUser = res.data?.userN;
-        const id = res.data.UserInfo?.user.user_type;
+        const id = res.data.UserInfo?.user.id;
         const username = res.data.UserInfo?.user.name;
         if (token) {
           localStorage.setItem("allUsers", JSON.stringify(allUser));
