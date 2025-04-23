@@ -123,6 +123,7 @@ const AppProvider = ({ children }) => {
           "/notattend",
           "/userType",
           "/edit-user-type/",
+          "/birthdaylist",
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)

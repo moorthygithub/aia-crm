@@ -92,6 +92,7 @@ const AddEnquiry = () => {
     enquiry_course_other: "",
     enquiry_source: "",
     enquiry_source_other: "",
+    enquiry_dob: "",
   });
   const [course, setCourse] = useState([]);
   const [country, setCountry] = useState([]);
@@ -186,6 +187,7 @@ const AddEnquiry = () => {
       enquiry_source: enquiry.enquiry_source,
       enquiry_course_other: enquiry.enquiry_course_other,
       enquiry_source_other: enquiry.enquiry_source_other,
+      enquiry_dob: enquiry.enquiry_dob,
     };
     try {
       const response = await axios.post(
@@ -299,6 +301,15 @@ const AddEnquiry = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
               {/* Country */}
               <div>
+                <Input
+                  type="date"
+                  label="DOB"
+                  name="enquiry_dob"
+                  value={enquiry.enquiry_dob}
+                  onChange={(e) => onInputChange(e)}
+                />
+              </div>
+              <div>
                 <Fields
                   required={true}
                   title="Country"
@@ -323,7 +334,9 @@ const AddEnquiry = () => {
                   onChange={(e) => onInputChange(e)}
                 />
               </div>
-
+            </div>
+            {/* Third div   */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
               {/* Category */}
               <div>
                 <Fields
@@ -336,11 +349,7 @@ const AddEnquiry = () => {
                   onChange={(e) => onInputChange(e)}
                   options={category}
                 />
-              </div>
-            </div>
-            {/* Third div   */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-5">
-              {/* Course */}
+              </div>{" "}
               <div>
                 <Fields
                   required={true}
@@ -365,7 +374,6 @@ const AddEnquiry = () => {
                   />
                 </div>
               )}
-
               {/* Source  */}
               <div>
                 <Fields

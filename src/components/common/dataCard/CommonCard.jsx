@@ -1,20 +1,25 @@
 import { Typography } from "@material-tailwind/react";
+import moment from "moment";
 
 const CommonCard = (props) => {
-
-    const { data } = props;
+  const { data } = props;
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 md:h-[230px] h-full gap-4">
       {" "}
       <div className="space-y-2">
         <Typography className="text-black">
-          <strong>Enquiry No :  {data.enquiry_no} </strong>
+          <strong>Enquiry No : {data.enquiry_no} </strong>
         </Typography>
         <Typography className="text-black">
-          <strong>Enquiry Date :  {data.enquiry_date}</strong>
+          <strong>
+            Enquiry Date :
+            {data.enquiry_date
+              ? moment(data.enquiry_date).format("DD-MM-YYYY")
+              : ""}
+          </strong>
         </Typography>
         <Typography className="text-black">
-          <strong>Course :  {data.enquiry_course}</strong>
+          <strong>Course : {data.enquiry_course}</strong>
         </Typography>
         <Typography className="text-black">
           <strong>Source : {data.enquiry_source}</strong>
@@ -25,7 +30,7 @@ const CommonCard = (props) => {
       </div>
       <div className="space-y-2">
         <Typography className="text-black">
-          <strong>Full Name :  {data.enquiry_full_name}</strong>{" "}
+          <strong>Full Name : {data.enquiry_full_name}</strong>{" "}
         </Typography>
         <Typography className="text-black">
           <strong>Mobile : {data.enquiry_mobile}</strong>{" "}
@@ -37,7 +42,9 @@ const CommonCard = (props) => {
           <strong>Category : {data.enquiry_category}</strong>{" "}
         </Typography>
         <Typography className="text-black">
-          <strong>City/Country : {data.enquiry_city}/{data.enquiry_country}</strong>
+          <strong>
+            City/Country : {data.enquiry_city}/{data.enquiry_country}
+          </strong>
         </Typography>
       </div>
     </div>

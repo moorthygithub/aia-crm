@@ -42,6 +42,7 @@ const EditPersonalDetails = () => {
     enquiry_full_name: "",
     enquiry_mobile: "",
     enquiry_email: "",
+    enquiry_dob: "",
   });
   const [followup, setFollowUp] = useState([]);
   useEffect(() => {
@@ -112,6 +113,7 @@ const EditPersonalDetails = () => {
       enquiry_full_name: enquiry.enquiry_full_name,
       enquiry_mobile: enquiry.enquiry_mobile,
       enquiry_email: enquiry.enquiry_email,
+      enquiry_dob: enquiry.enquiry_dob,
     };
     console.log("debug", formData);
     try {
@@ -228,7 +230,7 @@ const EditPersonalDetails = () => {
             </div>
             <div className="p-6 mt-3 bg-white shadow-md rounded-lg">
               <form id="addIndiv" autoComplete="off">
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
+                <div className="grid grid-cols-3 gap-4 mb-6">
                   <div className="form-group">
                     <Fields
                       required={false}
@@ -242,7 +244,7 @@ const EditPersonalDetails = () => {
                     />
                   </div>
 
-                  <div>
+                  <div className="col-span-2">
                     <Input
                       required
                       label="Full Name"
@@ -252,6 +254,8 @@ const EditPersonalDetails = () => {
                       onChange={(e) => onInputChange(e)}
                     />
                   </div>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
                   <div>
                     <Input
                       label="Mobile No"
@@ -272,6 +276,15 @@ const EditPersonalDetails = () => {
                       autoComplete="Name"
                       name="enquiry_email"
                       value={enquiry.enquiry_email}
+                      onChange={(e) => onInputChange(e)}
+                    />
+                  </div>
+                  <div>
+                    <Input
+                      type="date"
+                      label="DOB"
+                      name="enquiry_dob"
+                      value={enquiry.enquiry_dob}
                       onChange={(e) => onInputChange(e)}
                     />
                   </div>
