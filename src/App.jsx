@@ -95,6 +95,8 @@ import CreateButton from "./pages/userManagement/CreateButton";
 import UserTypeList from "./pages/UserType/UserTypeList";
 import EditUserType from "./pages/UserType/EditUserType";
 import BirthdayHoliday from "./pages/birthday/BirthdayHoliday";
+import WebsiteEnquiry from "./pages/websiteEnquiry/WebsiteEnquiry";
+import WebsiteEnquiryClose from "./pages/websiteEnquiry/WebsiteEnquiryClose";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -193,6 +195,8 @@ const App = () => {
           <Route path="/notification" element={<NotificationList />} />
           <Route path="/add-notification" element={<AddNotification />} />
           <Route path="/download-enquiry" element={<EnquiryDownload />} />
+          <Route path="/website-enquiry" element={<WebsiteEnquiry />} />
+          <Route path="/website-enquiry-close" element={<WebsiteEnquiryClose />} />
           <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}

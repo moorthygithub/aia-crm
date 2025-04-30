@@ -194,6 +194,18 @@ const Home = () => {
               </h1>
             </div>
           </Link>
+
+          {(localStorage.getItem("user_type_id") == "5" ||
+            localStorage.getItem("user_type_id") == "4") && (
+            <Link to="/birthdaylist" style={{ cursor: "pointer" }}>
+              <div class="bg-white text-[#464D69] shadow-lg rounded-lg p-3 font-semibold text-center">
+                <h1 class="text-sm ">Birthday</h1>
+                <h1 class="text-2xl text-[#727891]">
+                  <CountUp start={0} end={cardData.birthday} />
+                </h1>
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </Layout>

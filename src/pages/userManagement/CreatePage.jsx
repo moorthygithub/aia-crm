@@ -54,6 +54,7 @@ const CreatePage = () => {
         { title: "User Management", url: "/userManagement" },
         { title: "User Type", url: "/userType" },
         { title: "BirthDay", url: "/birthdaylist" },
+        { title: "Webiste Enquiry", url: "/website-enquiry" },
       ],
     };
 
