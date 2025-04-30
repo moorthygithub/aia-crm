@@ -85,7 +85,7 @@ const WebsiteEnquiryClose = () => {
   const columns = [
     {
       name: "userName",
-      label: "User Name",
+      label: "Full Name",
       options: {
         filter: false,
         sort: false,
@@ -117,7 +117,7 @@ const WebsiteEnquiryClose = () => {
     },
     {
       name: "userType",
-      label: "User Type",
+      label: "From",
       options: {
         filter: false,
         sort: false,
