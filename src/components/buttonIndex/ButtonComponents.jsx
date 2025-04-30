@@ -27,36 +27,6 @@ const getStaticPermissions = () => {
   }
 };
 
-/*-------------------------Country---------------- */
-// export const VechilesEdit = ({ onClick, className }) => {
-//   const userId = localStorage.getItem("id") || "";
-//   const staticPermissions = getStaticPermissions();
-//   if (!checkPermission(userId, "VechilesEdit", staticPermissions)) {
-//     return null;
-//   }
-
-//   return (
-//     <button onClick={onClick} className={className} title="Edit Vehicles">
-//       <Edit className="h-4 w-4 text-blue-500" />
-//     </button>
-//   );
-// };
-// VechilesEdit.page = "Vehicles";
-// export const VechilesView = ({ onClick, className }) => {
-//   const userId = localStorage.getItem("id") || "";
-//   const staticPermissions = getStaticPermissions();
-//   if (!checkPermission(userId, "VechilesView", staticPermissions)) {
-//     return null;
-//   }
-
-//   return (
-//     <button onClick={onClick} className={className} title="Side View">
-//       <Eye className="h-4 w-4 text-blue-500" />
-//     </button>
-//   );
-// };
-// VechilesView.page = "Vehicles";
-
 export const CountryCreate = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -1464,6 +1434,21 @@ export const BirthDayEmail = ({ onClick, className }) => {
 };
 
 BirthDayEmail.page = "Birthday";
+export const WebisteEnquiryEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "WebisteEnquiryEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit">
+      <Edit className="h-4 w-4" />
+    </button>
+  );
+};
+
+WebisteEnquiryEdit.page = "Webiste Enquiry";
 /*-----------------------------------Morrthy------------------ */
 
 export default {
@@ -1594,4 +1579,5 @@ export default {
   DownloadAttendanceViewNotAttend,
   BirthDayWhatsaApp,
   BirthDayEmail,
+  WebisteEnquiryEdit,
 };

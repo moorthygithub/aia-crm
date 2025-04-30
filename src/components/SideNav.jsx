@@ -18,6 +18,7 @@ import { FaCodePullRequest } from "react-icons/fa6";
 import { GrTasks } from "react-icons/gr";
 import { MdNotificationsActive } from "react-icons/md";
 import { PiDownloadSimpleBold } from "react-icons/pi";
+import { CgWebsite } from "react-icons/cg";
 
 const SideNav = ({ openSideNav, setOpenSideNav }) => {
   const sidenavRef = useRef(null);
@@ -49,6 +50,11 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
     },
     { icon: FaCodePullRequest, label: "Request", path: "/request-pending" },
     { icon: GrTasks, label: "Task Manager", path: "/task-pending" },
+    {
+      icon: CgWebsite,
+      label: "Webiste Enquiry",
+      path: "/website-enquiry",
+    },
     {
       icon: MdNotificationsActive,
       label: "Notification",
