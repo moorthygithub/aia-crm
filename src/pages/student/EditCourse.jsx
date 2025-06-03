@@ -9,6 +9,7 @@ import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
 import { toast } from "react-toastify";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
+import moment from "moment";
 
 const video_lecture = [
   {
@@ -207,7 +208,9 @@ const EditStudentCourse = () => {
     course_lr: "",
     course_remarks: "",
     course_expiry_new_date: "",
+    course_expiry_date: "",
     delivery_c_status: "",
+    course_start_date: "",
   });
 
   useEffect(() => {
@@ -268,6 +271,7 @@ const EditStudentCourse = () => {
       course_lr: student.course_lr,
       course_remarks: student.course_remarks,
       course_expiry_new_date: student.course_expiry_new_date,
+      course_expiry_date: student.course_expiry_date,
       delivery_c_status: student.delivery_c_status,
     };
     try {
@@ -321,48 +325,74 @@ const EditStudentCourse = () => {
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
           <form onSubmit={onSubmit} autoComplete="off">
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-              {/* UID */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5  mb-6">
               <div>
-                <label className="block text-gray-700 ">UID</label>
-                <span className="mt-1 text-black">{student.user_uid}</span>
-              </div>
-              <div>
-                <label className="block text-gray-700 ">Course</label>
-                <span className="mt-1 text-black">
-                  {student.course_opted}
-                  {student.course_opted == "Other"
-                    ? " ( " + student.course_opted_other + " )"
-                    : ""}
-                </span>
+                <label className="block text-sm font-medium text-gray-600 mb-1">
+                  UID
+                </label>
+                <p className="text-base font-semibold text-gray-900">
+                  {student.user_uid}
+                </p>
               </div>
 
               <div>
-                <Fields
-                  required={true}
-                  title="Validity of the Course"
-                  type="whatsappDropdown"
-                  autoComplete="Name"
-                  name="course_validity"
-                  value={student.course_validity}
-                  onChange={(e) => onInputChange(e)}
-                  options={course_validity}
-                />
+                <label className="block text-sm font-medium text-gray-600 mb-1">
+                  Course
+                </label>
+                <p className="text-base font-semibold text-gray-900">
+                  {student.course_opted}
+                  {student.course_opted === "Other" && (
+                    <span className="text-gray-500">
+                      {" "}
+                      ({student.course_opted_other})
+                    </span>
+                  )}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">
+                  Validity Course
+                </label>
+                <p className="text-base font-semibold text-gray-900">
+                  {student.course_validity}
+                </p>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-600 mb-1">
+                  Start Date
+                </label>
+                <p className="text-base font-semibold text-gray-900">
+                  {moment(student.course_start_date).format("DD-MM-YYYY")}
+                </p>
               </div>
 
               <div>
                 <Input
                   required
-                  label="Fees Paid"
-                  type="number"
-                  autoComplete="Name"
-                  name="course_fees"
-                  value={student.course_fees}
-                  onChange={(e) => onInputChange(e)}
+                  label="Expiry Date"
+                  type="date"
+                  name="course_expiry_date"
+                  value={student.course_expiry_date}
+                  onChange={onInputChange}
                 />
               </div>
+
             </div>
+
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+              <div>
+                <Input
+                  required
+                  label="Fees Paid"
+                  type="number"
+                  autoComplete="off"
+                  name="course_fees"
+                  value={student.course_fees}
+                  onChange={onInputChange}
+                />
+              </div>
               <div>
                 <Fields
                   required={true}
@@ -375,7 +405,7 @@ const EditStudentCourse = () => {
                   options={mode}
                 />
               </div>
-              <div className="md:col-span-3">
+              <div className="md:col-span-2">
                 <Input
                   label="Receiving Bank Name"
                   type="text"
