@@ -107,6 +107,10 @@ const delivery_c = [
     value: "Added",
     label: "Added",
   },
+  {
+    value: "Not Applicable",
+    label: "Not Applicable",
+  },
 ];
 
 const lr = [
@@ -378,7 +382,6 @@ const EditStudentCourse = () => {
                   onChange={onInputChange}
                 />
               </div>
-
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
