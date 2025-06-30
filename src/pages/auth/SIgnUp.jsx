@@ -1,9 +1,9 @@
 import {
-  Input,
-  Checkbox,
   Button,
-  Typography,
   Card,
+  Checkbox,
+  Input,
+  Typography,
 } from "@material-tailwind/react";
 import { Link } from "react-router-dom";
 

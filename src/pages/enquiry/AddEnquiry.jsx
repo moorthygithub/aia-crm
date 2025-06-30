@@ -10,6 +10,16 @@ import { toast } from "react-toastify";
 import EnquiryFilter from "../../components/EnquiryFilter";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 
+const employe_name = [
+  {
+    value: "Ruchi Bhat",
+    label: "Ruchi Bhat",
+  },
+  {
+    value: "Krati Agarwal",
+    label: "Krati Agarwal",
+  },
+];
 const title = [
   {
     value: "Mr",
@@ -93,6 +103,7 @@ const AddEnquiry = () => {
     enquiry_source: "",
     enquiry_source_other: "",
     enquiry_dob: "",
+    enquiry_employee_name: "",
   });
   const [course, setCourse] = useState([]);
   const [country, setCountry] = useState([]);
@@ -188,6 +199,7 @@ const AddEnquiry = () => {
       enquiry_course_other: enquiry.enquiry_course_other,
       enquiry_source_other: enquiry.enquiry_source_other,
       enquiry_dob: enquiry.enquiry_dob,
+      enquiry_employee_name: enquiry.enquiry_employee_name,
     };
     try {
       const response = await axios.post(
@@ -399,6 +411,15 @@ const AddEnquiry = () => {
                   />
                 </div>
               )}
+              <Fields
+                title="Employee Name"
+                type="whatsappDropdown"
+                autoComplete="Name"
+                name="enquiry_employee_name"
+                value={enquiry.enquiry_employee_name}
+                onChange={(e) => onInputChange(e)}
+                options={employe_name}
+              />
             </div>
             <div className="mt-4 text-center">
               <button

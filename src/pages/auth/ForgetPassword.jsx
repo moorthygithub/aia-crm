@@ -54,7 +54,7 @@ const ForgetPassword = () => {
             <p className="text-xs mt-4 text-[#002D74]">Get started with AIA</p>
             <form
               method="POST"
-              className="mt-8 mb-2 w-full"
+              className="mt-4 mb-2 w-full"
               onSubmit={onResetPassword}
             >
               <div className="mb-6 flex flex-col gap-6">
@@ -106,14 +106,14 @@ const ForgetPassword = () => {
             >
               Forget Password
             </Button> */}
-              <button type="submit" className={`${ButtonCreate} min-w-full`}>
+              <button type="submit" className={`${ButtonCreate} min-w-full mx-0`}>
                 Forget Password
               </button>
 
-              <div className="flex items-center justify-between gap-2 mt-6">
+              <div className="flex items-center justify-center gap-2 mt-1 md:mt-3">
                 <Typography
                   variant="paragraph"
-                  className="text-center text-blue-gray-500 font-medium mt-4"
+                  className="text-[12px] md:text-[16px] text-center text-blue-gray-500 font-medium mt-4"
                 >
                   Remembered your password?
                   <Link to="/" className="text-gray-900 ml-1">

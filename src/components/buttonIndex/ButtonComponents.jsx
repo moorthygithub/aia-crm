@@ -1044,7 +1044,7 @@ export const TaskManagerPendingCreateRepetitive = ({ onClick, className }) => {
 
   return (
     <button onClick={onClick} className={className}>
-      {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+      {/* <Plus className="h-4 w-4 " /> */}+ Repetitive
     </button>
   );
 };
@@ -1100,7 +1100,7 @@ export const TaskManagerInspectionCreateRepetitive = ({
 
   return (
     <button onClick={onClick} className={className}>
-      {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+      {/* <Plus className="h-4 w-4 " /> */}+ Repetitive
     </button>
   );
 };

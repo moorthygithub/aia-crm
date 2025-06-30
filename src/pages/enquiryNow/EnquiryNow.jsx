@@ -169,6 +169,7 @@ const EnquiryNow = () => {
       enquiry_source: booking.enquiry_source,
       enquiry_course_other: booking.enquiry_course_other,
       enquiry_source_other: booking.enquiry_source_other,
+      enquiry_employee_name: null,
     };
 
     try {
@@ -215,9 +216,11 @@ const EnquiryNow = () => {
   };
 
   return (
-    <div className="bg-gray-200 ">
-      <div className={styles["main-container-out"]}>
-        <div className={styles["sub-container-out"]}>
+    <div className="bg-gray-200">
+      {/* <div className={styles["main-container-out"]}>
+        <div className={styles["sub-container-out"]}> */}
+      <div className="flex justify-center md:h-screen">
+        <div className="bg-white w-4/5 mt-6 md:mt-24  p-5 shadow-md md:h-[400px]">
           <div className="flex justify-center mb-4">
             <img
               src={logo}
@@ -227,7 +230,7 @@ const EnquiryNow = () => {
           </div>
           <form id="addIdniv" onSubmit={onSubmit}>
             <div className={styles["form-container-div"]}>
-              <div className="md:flex gap-2 justify-start ju mb-5">
+              <div className="md:flex gap-2 justify-start mb-5">
                 <div className="form-group md:w-24 md:mb-0 mb-3">
                   <Fields
                     required={true}

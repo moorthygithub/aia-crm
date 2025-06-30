@@ -27,6 +27,9 @@ const CommonCard = (props) => {
         <Typography className="text-black">
           <strong>Source Other : {data.enquiry_source_other}</strong>
         </Typography>
+        <Typography className="text-black">
+          <strong>Employee Name : {data.enquiry_employee_name}</strong>
+        </Typography>
       </div>
       <div className="space-y-2">
         <Typography className="text-black">

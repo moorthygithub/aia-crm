@@ -99,6 +99,23 @@ const WebsiteEnquiry = () => {
         sort: false,
       },
     },
+
+    {
+      name: "userLocation",
+      label: "Loaction",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "userCourse",
+      label: "Course",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
     {
       name: "userMessage",
       label: "Message",
@@ -174,7 +191,7 @@ const WebsiteEnquiry = () => {
           <CircularProgress
             disableShrink
             style={{
-              marginLeft: "600px",
+              marginLeft: "500px",
               marginTop: "300px",
               marginBottom: "300px",
             }}
