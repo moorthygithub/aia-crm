@@ -245,7 +245,7 @@ const ViewEnquiry = () => {
             <div>
               <Card className="mt-4">
                 <CardBody>
-                  <div className="grid grid-cols-1 md:grid-cols-2 md:h-[200px] h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-2  h-full">
                     {" "}
                     <div className="space-y-2">
                       <Typography className="text-black">
@@ -265,10 +265,7 @@ const ViewEnquiry = () => {
                       </Typography>
                       <Typography className="text-black">
                         <strong>
-                          New Followup Date :{" "}
-                          {moment(enquiry.enquiry_follow_date).format(
-                            "DD-MM-YYYY"
-                          )}
+                          Employee Name : {enquiry?.enquiry_employee_name}
                         </strong>
                       </Typography>
                     </div>
@@ -305,10 +302,18 @@ const ViewEnquiry = () => {
                         </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Remarks : {enquiry.enquiry_remarks}</strong>
+                        <strong>
+                          New Followup Date :{" "}
+                          {moment(enquiry.enquiry_follow_date).format(
+                            "DD-MM-YYYY"
+                          )}
+                        </strong>
                       </Typography>
                     </div>
                   </div>
+                  <Typography className="text-black mt-2">
+                    <strong>Remarks : {enquiry.enquiry_remarks}</strong>
+                  </Typography>
                   <div className="flex justify-center mt-4">
                     <button onClick={handleBackButton} className={ButtonBack}>
                       Back

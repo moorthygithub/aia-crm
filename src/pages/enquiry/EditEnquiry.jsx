@@ -163,7 +163,7 @@ const EditEnquiry = () => {
             />
 
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-              Edit Enquiry  
+              Edit Enquiry
             </h1>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -212,7 +212,7 @@ const EditEnquiry = () => {
                     />
                   </div>
                 </div>
-                <div className="mt-4 text-center">
+                <div className="flex">
                   <button onClick={handleEdit} className={ButtonCreate}>
                     Edit Personal
                   </button>

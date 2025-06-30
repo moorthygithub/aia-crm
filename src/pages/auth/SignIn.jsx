@@ -1,21 +1,15 @@
-import {
-  Input,
-  Checkbox,
-  Button,
-  Typography,
-  Carousel,
-} from "@material-tailwind/react";
+import { Carousel, Input, Typography } from "@material-tailwind/react";
+import axios from "axios";
 import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import BASE_URL from "../../base/BaseUrl";
-import { ContextPanel } from "../../utils/ContextPanel";
+import { toast } from "react-toastify";
 import image1 from "../../assets/img1.jpg";
 import image2 from "../../assets/img2.jpg";
 import image3 from "../../assets/img3.jpg";
 import Logo from "../../assets/logo.png";
-import { toast } from "react-toastify";
+import BASE_URL from "../../base/BaseUrl";
 import { ButtonCreate } from "../../components/common/ButtonCss";
+import { ContextPanel } from "../../utils/ContextPanel";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -60,12 +54,14 @@ const SignIn = () => {
           await fetchPagePermission();
 
           navigate("/home");
-          toast.success("User Logged In Successfully");
+          toast.success(res.data.msg);
         } else {
-          toast.error("Login Failed, Token not received.");
+          toast.error(res.data.msg);
         }
       } else {
-        toast.error("Login Failed, Please check your credentials.");
+        toast.error(
+          res.data.msg || "Login Failed, Please check your credentials."
+        );
       }
     } catch (error) {
       console.error(error);
@@ -76,7 +72,7 @@ const SignIn = () => {
   };
   return (
     <>
-      <section className="flex flex-col lg:flex-row h-screen">
+      <section className="flex flex-col lg:flex-row h-screen ">
         {/* Left Section for Carousel // h-full -add */}
         <div className="hidden lg:block lg:w-1/2 h-full">
           <Carousel autoplay loop>
@@ -162,26 +158,17 @@ const SignIn = () => {
                   }}
                 />
               </div>
-
-              {/* <Button
-                type="submit"
-                disabled={loading}
-                className="mt-6 bg-blue-500 hover:bg-blue-600 text-white"
-                fullWidth
-              >
-                {loading ? "Checking..." : "Sign In"}
-              </Button> */}
               <button
                 type="submit"
                 disabled={loading}
-                className={`${ButtonCreate} min-w-full`}
+                className={`${ButtonCreate} min-w-full mx-0`}
               >
                 {loading ? "Checking..." : "Sign In"}
               </button>
-              <div className="flex items-center justify-between gap-2 mt-6">
+              <div className="flex items-center justify-between gap-2 mt-6 ">
                 <Typography
                   variant="small"
-                  className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500 "
+                  className="font-medium p-2 text-[12px] md:text-[14px] text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500 "
                 >
                   <Link to="/enquiry-now" className="text-gray-900 ml-1">
                     Enquiry Now
@@ -189,7 +176,7 @@ const SignIn = () => {
                 </Typography>
                 <Typography
                   variant="small"
-                  className="font-medium p-2 text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500"
+                  className="font-medium p-2 text-[12px] md:text-[14px] text-gray-900 hover:bg-blue-200 hover:rounded-lg border-b border-blue-500"
                 >
                   <Link to="/forget-password" className="text-gray-900 ml-1">
                     Forgot Password
