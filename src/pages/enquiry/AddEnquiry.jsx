@@ -19,6 +19,10 @@ const employe_name = [
     value: "Krati Agarwal",
     label: "Krati Agarwal",
   },
+  {
+    value: "Aamrapali",
+    label: "Aamrapali",
+  },
 ];
 const title = [
   {
