@@ -66,6 +66,10 @@ const status = [
     value: "Not Qualified",
     label: "Not Qualified",
   },
+  {
+    value: "DROP",
+    label: "DROP",
+  },
 ];
 
 const EditExam = () => {
