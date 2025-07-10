@@ -324,7 +324,7 @@ const EditStudentCourse = () => {
           />
 
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-            Edit Course
+            Edit Course 
           </h1>
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
