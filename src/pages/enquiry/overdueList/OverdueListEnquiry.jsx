@@ -132,6 +132,14 @@ const OverdueListEnquiry = () => {
       },
     },
     {
+      name: "enquiry_employee_name",
+      label: "Employee Name",
+      options: {
+        filter: true,
+        sort: true,
+      },
+    },
+    {
       name: "enquiry_status",
       label: "Status",
       options: {
