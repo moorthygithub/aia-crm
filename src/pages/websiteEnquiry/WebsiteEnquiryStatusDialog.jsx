@@ -10,10 +10,15 @@ import React from "react";
 import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import Dropdown from "../../components/common/DropDown";
+import { useNavigate } from "react-router-dom";
 
 const statusOptions = [
   { value: "Pending", label: "Pending" },
   { value: "Close", label: "Close" },
+  {
+    value: "Convert to Enquiry",
+    label: "Convert to Enquiry",
+  },
 ];
 
 const WebsiteEnquiryStatusDialog = ({
@@ -24,12 +29,13 @@ const WebsiteEnquiryStatusDialog = ({
   selectedEnquiry,
   fetchStudentData,
 }) => {
+  const navigate = useNavigate();
   const handleUpdateStatus = async () => {
     try {
       const token = localStorage.getItem("token");
-      const formData = new FormData();
-      formData.append("userStatus", userStatus);
-
+      const formData = {
+        status: userStatus,
+      };
       await axios.put(
         `${BASE_URL}/api/panel-update-webenquiry/${selectedEnquiry.id}`,
         formData,
@@ -39,10 +45,14 @@ const WebsiteEnquiryStatusDialog = ({
           },
         }
       );
+      if (userStatus == "Convert to Enquiry") {
+        navigate(`/create-enquiry/${selectedEnquiry.id}`);
+      } else {
+        fetchStudentData();
+        onClose();
+      }
 
       toast.success("Status updated successfully!");
-      fetchStudentData();
-      onClose();
     } catch (error) {
       console.error("Error updating user status", error);
       toast.error("Failed to update status");

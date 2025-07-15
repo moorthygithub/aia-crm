@@ -10,16 +10,6 @@ import Layout from "../../layout/Layout";
 import CommonWebsiteEnquiry from "./CommonWebsiteEnquiry";
 import WebsiteEnquiryStatusDialog from "./WebsiteEnquiryStatusDialog";
 
-const status = [
-  {
-    value: "Pending",
-    label: "Pending",
-  },
-  {
-    value: "Close",
-    label: "Close",
-  },
-];
 const WebsiteEnquiry = () => {
   const [websiteListData, setWebsiteListData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +23,7 @@ const WebsiteEnquiry = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${BASE_URL}/api/panel-fetch-webenquiry-list/Pending`,
+        `${BASE_URL}/api/panel-fetch-webenquiry-pending-list`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -65,7 +55,6 @@ const WebsiteEnquiry = () => {
 
       const enquiryData = response.data?.webenquiry;
       setSelectedEnquiry(enquiryData);
-      console.log(enquiryData.userStatus, "pen");
       setUserStatus(enquiryData?.userStatus || "Pending");
       setOpenDialog(true);
     } catch (error) {
@@ -159,6 +148,14 @@ const WebsiteEnquiry = () => {
     download: false,
     filter: false,
     print: false,
+    setRowProps: (row, dataIndex) => {
+      if (websiteListData[dataIndex]?.is_duplicate === true) {
+        return {
+          style: { backgroundColor: "#fff9c4" }, 
+        };
+      }
+      return {};
+    },
   };
   const handleUpdateStatus = async () => {
     try {

@@ -41,7 +41,7 @@ const WebsiteEnquiryClose = () => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        `${BASE_URL}/api/panel-fetch-webenquiry-list/Close`,
+        `${BASE_URL}/api/panel-fetch-webenquiry-other-list`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -134,6 +134,14 @@ const WebsiteEnquiryClose = () => {
     {
       name: "userType",
       label: "From",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
+      name: "userStatus",
+      label: "Status",
       options: {
         filter: false,
         sort: false,
