@@ -94,6 +94,7 @@ import EditUserType from "./pages/UserType/EditUserType";
 import UserTypeList from "./pages/UserType/UserTypeList";
 import WebsiteEnquiry from "./pages/websiteEnquiry/WebsiteEnquiry";
 import WebsiteEnquiryClose from "./pages/websiteEnquiry/WebsiteEnquiryClose";
+import CreateEnquiry from "./pages/websiteEnquiry/CreateEnquiry";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -193,7 +194,11 @@ const App = () => {
           <Route path="/add-notification" element={<AddNotification />} />
           <Route path="/download-enquiry" element={<EnquiryDownload />} />
           <Route path="/website-enquiry" element={<WebsiteEnquiry />} />
-          <Route path="/website-enquiry-close" element={<WebsiteEnquiryClose />} />
+          <Route
+            path="/website-enquiry-close"
+            element={<WebsiteEnquiryClose />}
+          />
+          <Route path="/create-enquiry/:id" element={<CreateEnquiry />} />
           <Route
             path="/profile"
             element={<ProtectedRoute element={<Profile />} />}
