@@ -1,7 +1,7 @@
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
