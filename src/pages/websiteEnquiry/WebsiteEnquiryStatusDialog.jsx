@@ -19,6 +19,10 @@ const statusOptions = [
     value: "Convert to Enquiry",
     label: "Convert to Enquiry",
   },
+  {
+    value: "Duplicate",
+    label: "Duplicate",
+  },
 ];
 
 const WebsiteEnquiryStatusDialog = ({

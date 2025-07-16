@@ -151,7 +151,7 @@ const WebsiteEnquiry = () => {
     setRowProps: (row, dataIndex) => {
       if (websiteListData[dataIndex]?.is_duplicate === true) {
         return {
-          style: { backgroundColor: "#fff9c4" }, 
+          style: { backgroundColor: "#fff9c4" },
         };
       }
       return {};
@@ -184,6 +184,7 @@ const WebsiteEnquiry = () => {
   return (
     <>
       <Layout>
+        <CommonWebsiteEnquiry />
         {loading ? (
           <CircularProgress
             disableShrink
@@ -195,18 +196,14 @@ const WebsiteEnquiry = () => {
             color="secondary"
           />
         ) : (
-          <>
-            <CommonWebsiteEnquiry />
-
-            <div className="mt-5">
-              <MUIDataTable
-                title="Website Enquiry Pending List"
-                data={websiteListData ? websiteListData : []}
-                columns={columns}
-                options={options}
-              />
-            </div>
-          </>
+          <div className="mt-5">
+            <MUIDataTable
+              title="Website Enquiry Pending List"
+              data={websiteListData ? websiteListData : []}
+              columns={columns}
+              options={options}
+            />
+          </div>
         )}
       </Layout>
       <WebsiteEnquiryStatusDialog
