@@ -141,14 +141,6 @@ const WebsiteEnquiryClose = () => {
       },
     },
     {
-      name: "userStatus",
-      label: "Status",
-      options: {
-        filter: false,
-        sort: false,
-      },
-    },
-    {
       name: "created_date",
       label: "Created Date",
       options: {
@@ -159,6 +151,15 @@ const WebsiteEnquiryClose = () => {
         },
       },
     },
+    {
+      name: "userStatus",
+      label: "Status",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+
     {
       name: "id",
       label: "Action",

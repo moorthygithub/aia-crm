@@ -41,6 +41,7 @@ const WebsiteEnquiry = () => {
     fetchStudentData();
   }, []);
   const handleOpenDialog = async (id) => {
+    console.log(id, "id");
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
