@@ -52,7 +52,7 @@ const SideNav = ({ openSideNav, setOpenSideNav }) => {
     { icon: GrTasks, label: "Task Manager", path: "/task-pending" },
     {
       icon: CgWebsite,
-      label: "Webiste Enquiry",
+      label: "Website Enquiry",
       path: "/website-enquiry",
     },
     {
