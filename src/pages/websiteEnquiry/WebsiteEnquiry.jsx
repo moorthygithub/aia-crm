@@ -2,18 +2,17 @@ import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import { WebisteEnquiryEdit } from "../../components/buttonIndex/ButtonComponents";
 import Layout from "../../layout/Layout";
 import CommonWebsiteEnquiry from "./CommonWebsiteEnquiry";
 import WebsiteEnquiryStatusDialog from "./WebsiteEnquiryStatusDialog";
+import moment from "moment";
 
 const WebsiteEnquiry = () => {
   const [websiteListData, setWebsiteListData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [userStatus, setUserStatus] = useState("");
@@ -121,6 +120,19 @@ const WebsiteEnquiry = () => {
         sort: false,
       },
     },
+
+    {
+      name: "created_date",
+      label: "Created Date",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value) => {
+          return value ? moment(value).format("DD-MM-YYYY") : "-";
+        },
+      },
+    },
+
     {
       name: "id",
       label: "Action",

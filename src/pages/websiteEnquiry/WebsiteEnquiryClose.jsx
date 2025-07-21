@@ -17,6 +17,7 @@ import {
 import { toast } from "react-toastify";
 import CommonWebsiteEnquiry from "./CommonWebsiteEnquiry";
 import WebsiteEnquiryStatusDialog from "./WebsiteEnquiryStatusDialog";
+import moment from "moment";
 
 const status = [
   {
@@ -148,6 +149,17 @@ const WebsiteEnquiryClose = () => {
       },
     },
     {
+      name: "created_date",
+      label: "Created Date",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRender: (value) => {
+          return value ? moment(value).format("DD-MM-YYYY") : "-";
+        },
+      },
+    },
+    {
       name: "id",
       label: "Action",
       options: {
@@ -203,27 +215,27 @@ const WebsiteEnquiryClose = () => {
   return (
     <>
       <Layout>
-          <CommonWebsiteEnquiry />
-          {loading ? (
-            <CircularProgress
-              disableShrink
-              style={{
-                marginLeft: "500px",
-                marginTop: "300px",
-                marginBottom: "300px",
-              }}
-              color="secondary"
+        <CommonWebsiteEnquiry />
+        {loading ? (
+          <CircularProgress
+            disableShrink
+            style={{
+              marginLeft: "500px",
+              marginTop: "300px",
+              marginBottom: "300px",
+            }}
+            color="secondary"
+          />
+        ) : (
+          <div className="mt-5">
+            <MUIDataTable
+              title="Website Enquiry Close List"
+              data={websiteListData ? websiteListData : []}
+              columns={columns}
+              options={options}
             />
-          ) : (
-            <div className="mt-5">
-              <MUIDataTable
-                title="Website Enquiry Close List"
-                data={websiteListData ? websiteListData : []}
-                columns={columns}
-                options={options}
-              />
-            </div>
-          )}
+          </div>
+        )}
       </Layout>
 
       <WebsiteEnquiryStatusDialog
