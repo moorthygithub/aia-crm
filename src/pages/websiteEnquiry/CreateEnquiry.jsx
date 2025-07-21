@@ -115,20 +115,36 @@ const CreateEnquiry = () => {
   const [course, setCourse] = useState([]);
   const [country, setCountry] = useState([]);
   useEffect(() => {
-    var isLoggedIn = localStorage.getItem("id");
+    const isLoggedIn = localStorage.getItem("id");
     if (!isLoggedIn) {
       window.location = "/signin";
-    } else {
+      return;
     }
 
     axios({
-      url: BASE_URL + "/api/panel-fetch-enquiry-by-id/" + id,
+      url: `${BASE_URL}/api/panel-fetch-webenquiry-by-id/${id}`,
       method: "GET",
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }).then((res) => {
-      setEnquiry(res.data.enquiry);
+      const web = res.data.webenquiry;
+      setEnquiry({
+        enquiry_year: "2024-25",
+        enquiry_title: "",
+        enquiry_full_name: web.userName || "",
+        enquiry_mobile: web.userMobile || "",
+        enquiry_email: web.userEmail || "",
+        enquiry_country: "",
+        enquiry_city: web.userLocation || "",
+        enquiry_category: "",
+        enquiry_course: web.userCourse || "",
+        enquiry_course_other: "",
+        enquiry_source: "",
+        enquiry_source_other: "",
+        enquiry_dob: "",
+        enquiry_employee_name: "",
+      });
     });
   }, [id]);
 
@@ -252,7 +268,7 @@ const CreateEnquiry = () => {
 
   const handleBackButton = (e) => {
     e.preventDefault();
-    navigate(localStorage.getItem("enquiry_page"));
+    navigate("/website-enquiry");
   };
 
   return (
