@@ -36,17 +36,14 @@ const ViewStudent = () => {
   const { id } = useParams();
 
   const navigate = useNavigate();
-
-  console.log(id, "id");
-
   const [student, setStudent] = useState({});
   const [studentCourse, setStudentCourse] = useState({});
   const [studentExam, setStudentExam] = useState({});
-  console.log(studentExam, "studentExam");
   const [studentRequest, setStudentRequest] = useState({});
   const [studentFollowUp, setStudentFollowUp] = useState({});
   const [studentClassFollowUp, setStudentClassFollowUp] = useState({});
   const [studentFinal, setStudentFinal] = useState({});
+  const [enquiryData, setEnquiryData] = useState({});
   const [studentDelivery, setStudentDelivery] = useState({});
 
   const [activeSection, setActiveSection] = useState("courses");
@@ -54,15 +51,6 @@ const ViewStudent = () => {
   const handleClick = (section) => {
     setActiveSection(section);
   };
-
-  const [followup, setFollowUp] = useState([]);
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("id");
-    if (!isLoggedIn) {
-      navigate("/");
-      return;
-    }
-  }, []);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -82,6 +70,7 @@ const ViewStudent = () => {
         setStudentFinal(res.data.studentCourse);
         setStudentExam(res.data?.studentExam);
         setStudentRequest(res.data.studentRequest);
+        setEnquiryData(res.data.enquiryData);
         setStudentFollowUp(res.data.studentFollowUp);
         setStudentClassFollowUp(res.data.studentClassFollowUp);
         setStudentDelivery(res.data.studentDelivery);
@@ -384,9 +373,17 @@ const ViewStudent = () => {
                       </Typography>
                     </div>
                   </div>
-                  <Typography className="text-black my-3">
-                    <strong>Remarks : {student.remarks}</strong>
-                  </Typography>
+                  <div className="grid grid-cols-1 md:grid-cols-3  h-full">
+                    <Typography className="text-black my-3  break-words whitespace-pre-line">
+                      <strong>
+                        Employee Name : {enquiryData.enquiry_employee_name}
+                      </strong>
+                    </Typography>
+
+                    <Typography className="text-black my-3 col-span-2">
+                      <strong>Remarks: {student.remarks}</strong>
+                    </Typography>
+                  </div>
                   <div className="flex justify-center ">
                     <StudentViewVieEnquiry
                       className={ButtonCreate}

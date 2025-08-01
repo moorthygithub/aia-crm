@@ -1,35 +1,29 @@
-import React, { useContext, useEffect, useState } from "react";
-import Layout from "../../../layout/Layout";
-import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
 import axios from "axios";
-import BASE_URL from "../../../base/BaseUrl";
-import { MdEdit } from "react-icons/md";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import MUIDataTable from "mui-datatables";
-import EnquiryFilter from "../../../components/EnquiryFilter";
 import moment from "moment";
+import MUIDataTable from "mui-datatables";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import BASE_URL from "../../../base/BaseUrl";
 import {
   EnquiryOpenCreate,
   EnquiryOpenEdit,
   EnquiryOpenView,
 } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
+import EnquiryFilter from "../../../components/EnquiryFilter";
+import Layout from "../../../layout/Layout";
 
 const OpenListEnquiry = () => {
   const [openListData, setOpenListData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
   const location = useLocation();
   useEffect(() => {
     const fetchOpenData = async () => {
+      setLoading(true);
+
       try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
-        setLoading(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(
           `${BASE_URL}/api/panel-fetch-enquiry-list`,
@@ -40,11 +34,7 @@ const OpenListEnquiry = () => {
           }
         );
 
-        let res = response.data?.enquiry;
-
         setOpenListData(response.data?.enquiry);
-
-        // setOpenListData(response.data?.enquiry);
       } catch (error) {
         console.error("Error fetching open list enquiry data", error);
       } finally {
@@ -143,7 +133,6 @@ const OpenListEnquiry = () => {
         filter: false,
         sort: false,
         customBodyRender: (id) => {
-          console.log(id, "id");
           return (
             <div className="flex items-center space-x-2">
               {/* <MdEdit
@@ -220,13 +209,25 @@ const OpenListEnquiry = () => {
           className={ButtonCreate}
         />
       </div>
-      <div className="mt-5">
-        <MUIDataTable
-          data={openListData ? openListData : []}
-          columns={columns}
-          options={options}
+      {loading ? (
+        <CircularProgress
+          disableShrink
+          style={{
+            marginLeft: "500px",
+            marginTop: "200px",
+            marginBottom: "300px",
+          }}
+          color="secondary"
         />
-      </div>
+      ) : (
+        <div className="mt-5">
+          <MUIDataTable
+            data={openListData ? openListData : []}
+            columns={columns}
+            options={options}
+          />
+        </div>
+      )}
     </Layout>
   );
 };

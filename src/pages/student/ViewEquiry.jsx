@@ -87,7 +87,7 @@ const ViewStudentEquiry = () => {
             <div>
               <Card className="mt-4">
                 <CardBody>
-                  <div className="grid grid-cols-1 md:grid-cols-3 md:h-[150px] h-full">
+                  <div className="grid grid-cols-1 md:grid-cols-3  h-full">
                     {" "}
                     <div className="space-y-2">
                       <Typography className="text-black">
@@ -110,7 +110,10 @@ const ViewStudentEquiry = () => {
                         </Typography>
                       )}
                       <Typography className="text-black">
-                        <strong>Source :{enquiry.enquiry_source}</strong>
+                        <strong>
+                          {" "}
+                          Employee Name :{enquiry.enquiry_employee_name}
+                        </strong>
                       </Typography>
                     </div>
                     <div className="space-y-2">
@@ -137,7 +140,7 @@ const ViewStudentEquiry = () => {
                         <strong>Email : {enquiry.enquiry_email}</strong>{" "}
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Category : {enquiry.enquiry_category}</strong>{" "}
+                        <strong>Source :{enquiry.enquiry_source}</strong>
                       </Typography>
                     </div>
                     <div className="space-y-2">
@@ -159,10 +162,16 @@ const ViewStudentEquiry = () => {
                         <strong>Status : {enquiry.enquiry_status}</strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Remarks : {enquiry.enquiry_remarks}</strong>
+                        <strong>Category : {enquiry.enquiry_category}</strong>{" "}
                       </Typography>
                     </div>
                   </div>
+                  <Typography className="text-black mt-2">
+                    <strong >
+                      Remarks : {enquiry.enquiry_remarks}
+                    </strong>
+                  </Typography>
+        
                   <div className="flex justify-center ">
                     <button onClick={handleBackButton} className={ButtonBack}>
                       Back
