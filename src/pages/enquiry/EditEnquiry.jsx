@@ -1,4 +1,4 @@
-import { Card, CardBody, Input } from "@material-tailwind/react";
+import { Card, CardBody, Input, Textarea } from "@material-tailwind/react";
 import CommonCard from "../../components/common/dataCard/CommonCard";
 import Layout from "../../layout/Layout";
 import { Link, useNavigate, useParams } from "react-router-dom";
@@ -163,11 +163,11 @@ const EditEnquiry = () => {
             />
 
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-              Edit Enquiry 
+              Edit Enquiry
             </h1>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="col-span-2">
+          <div className="grid grid-cols-1  gap-4">
+            <div>
               <Card className="mt-4">
                 <CardBody>
                   <CommonCard data={enquiry} />
@@ -176,7 +176,7 @@ const EditEnquiry = () => {
             </div>
             <div className="p-6 mt-3 bg-white shadow-md rounded-lg">
               <form id="addIndiv" autoComplete="off">
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="form-group">
                     <Fields
                       required={true}
@@ -200,19 +200,19 @@ const EditEnquiry = () => {
                       onChange={(e) => onInputChange(e)}
                     />
                   </div>
-                  <div>
-                    <Input
-                      label="Remarks"
-                      multiline
-                      required
-                      autoComplete="Name"
-                      name="enquiry_remarks"
-                      value={enquiry.enquiry_remarks}
-                      onChange={(e) => onInputChange(e)}
-                    />
-                  </div>
                 </div>
-                <div className="flex">
+                <div>
+                  <Textarea
+                    label="Remarks"
+                    multiline
+                    required
+                    autoComplete="Name"
+                    name="enquiry_remarks"
+                    value={enquiry.enquiry_remarks}
+                    onChange={(e) => onInputChange(e)}
+                  />
+                </div>
+                <div className="flex justify-center">
                   <button onClick={handleEdit} className={ButtonCreate}>
                     Edit Personal
                   </button>
