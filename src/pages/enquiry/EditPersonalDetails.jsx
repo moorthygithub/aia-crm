@@ -32,6 +32,7 @@ const title = [
 
 const EditPersonalDetails = () => {
   const { id } = useParams();
+  const [course, setCourse] = useState([]);
 
   const navigate = useNavigate();
   localStorage.setItem("edit_enquiry_id", id);
@@ -41,9 +42,11 @@ const EditPersonalDetails = () => {
     enquiry_title: "",
     enquiry_full_name: "",
     enquiry_mobile: "",
+    enquiry_course: "",
     enquiry_email: "",
     enquiry_dob: "",
   });
+  console.log(enquiry, "enquiry");
   const [followup, setFollowUp] = useState([]);
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -52,7 +55,22 @@ const EditPersonalDetails = () => {
       return;
     }
   }, []);
+  useEffect(() => {
+    const fetchCourseData = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/api/panel-fetch-course`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        setCourse(response.data.course);
+      } catch (error) {
+        console.error("Error fetching services:", error);
+      }
+    };
 
+    fetchCourseData();
+  }, []);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -112,6 +130,7 @@ const EditPersonalDetails = () => {
       enquiry_title: enquiry.enquiry_title,
       enquiry_full_name: enquiry.enquiry_full_name,
       enquiry_mobile: enquiry.enquiry_mobile,
+      enquiry_course: enquiry.enquiry_course,
       enquiry_email: enquiry.enquiry_email,
       enquiry_dob: enquiry.enquiry_dob,
     };
@@ -171,7 +190,7 @@ const EditPersonalDetails = () => {
             <div className="col-span-2 ">
               <Card className="mt-4">
                 <CardBody>
-                  <div className="grid grid-cols-1 md:grid-cols-2 md:h-[300px] h-full gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 h-full gap-4">
                     {" "}
                     <div className="space-y-2">
                       <Typography className="text-black">
@@ -186,9 +205,28 @@ const EditPersonalDetails = () => {
                       <Typography className="text-black">
                         <strong>Course : {enquiry.enquiry_course}</strong>
                       </Typography>
+                      {enquiry.enquiry_course == "Other" ? (
+                        <Typography className="text-black">
+                          <strong>
+                            Course Other : {enquiry.enquiry_course_other}
+                          </strong>
+                        </Typography>
+                      ) : (
+                        ""
+                      )}
+
                       <Typography className="text-black">
                         <strong>Source : {enquiry.enquiry_source}</strong>
                       </Typography>
+                      {enquiry.enquiry_source == "Other" ? (
+                        <Typography className="text-black">
+                          <strong>
+                            Source Other : {enquiry.enquiry_source_other}
+                          </strong>
+                        </Typography>
+                      ) : (
+                        ""
+                      )}
                       <Typography className="text-black">
                         <strong>Status : {enquiry.enquiry_status}</strong>
                       </Typography>
@@ -221,16 +259,21 @@ const EditPersonalDetails = () => {
                         </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Remarks : {enquiry.enquiry_remarks}</strong>
+                        <strong>
+                          Employee Name : {enquiry.enquiry_employee_name}
+                        </strong>
                       </Typography>
                     </div>
                   </div>
+                  <Typography className="text-black my-3">
+                    <strong>Remarks : {enquiry.enquiry_remarks}</strong>
+                  </Typography>
                 </CardBody>
               </Card>
             </div>
             <div className="p-6 mt-3 bg-white shadow-md rounded-lg">
               <form id="addIndiv" autoComplete="off">
-                <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="grid grid-cols-3 gap-2 mb-4">
                   <div className="form-group">
                     <Fields
                       required={false}
@@ -243,7 +286,6 @@ const EditPersonalDetails = () => {
                       options={title}
                     />
                   </div>
-
                   <div className="col-span-2">
                     <Input
                       required
@@ -255,7 +297,8 @@ const EditPersonalDetails = () => {
                     />
                   </div>
                 </div>
-                <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
+
+                <div className="grid grid-cols-1 md:grid-cols-1 gap-3">
                   <div>
                     <Input
                       label="Mobile No"
@@ -288,7 +331,21 @@ const EditPersonalDetails = () => {
                       onChange={(e) => onInputChange(e)}
                     />
                   </div>
+
+                  <div>
+                    <Fields
+                      required={true}
+                      title="Course"
+                      type="courseDropdown"
+                      autoComplete="Name"
+                      name="enquiry_course"
+                      value={enquiry.enquiry_course}
+                      onChange={(e) => onInputChange(e)}
+                      options={course}
+                    />
+                  </div>
                 </div>
+
                 <div className="mt-4 text-center">
                   <button onClick={onSubmit} className={ButtonCreate}>
                     {isButtonDisabled ? "Updating..." : "Update"}

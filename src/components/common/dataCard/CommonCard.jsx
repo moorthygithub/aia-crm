@@ -4,7 +4,7 @@ import moment from "moment";
 const CommonCard = (props) => {
   const { data } = props;
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 md:h-[230px] h-full gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2  h-full gap-4">
       {" "}
       <div className="space-y-2">
         <Typography className="text-black">
@@ -12,7 +12,7 @@ const CommonCard = (props) => {
         </Typography>
         <Typography className="text-black">
           <strong>
-            Enquiry Date :
+            Enquiry Date :{" "}
             {data.enquiry_date
               ? moment(data.enquiry_date).format("DD-MM-YYYY")
               : ""}
@@ -21,12 +21,23 @@ const CommonCard = (props) => {
         <Typography className="text-black">
           <strong>Course : {data.enquiry_course}</strong>
         </Typography>
+        {data.enquiry_course == "Other" ? (
+          <Typography className="text-black">
+            <strong>Course Other : {data.enquiry_course_other}</strong>
+          </Typography>
+        ) : (
+          ""
+        )}
         <Typography className="text-black">
           <strong>Source : {data.enquiry_source}</strong>
         </Typography>
-        <Typography className="text-black">
-          <strong>Source Other : {data.enquiry_source_other}</strong>
-        </Typography>
+        {data.enquiry_source == "Other" ? (
+          <Typography className="text-black">
+            <strong>Source Other : {data.enquiry_source_other}</strong>
+          </Typography>
+        ) : (
+          ""
+        )}
         <Typography className="text-black">
           <strong>Employee Name : {data.enquiry_employee_name}</strong>
         </Typography>
