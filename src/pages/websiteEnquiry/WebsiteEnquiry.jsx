@@ -1,5 +1,6 @@
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
 import MUIDataTable from "mui-datatables";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -8,7 +9,6 @@ import { WebisteEnquiryEdit } from "../../components/buttonIndex/ButtonComponent
 import Layout from "../../layout/Layout";
 import CommonWebsiteEnquiry from "./CommonWebsiteEnquiry";
 import WebsiteEnquiryStatusDialog from "./WebsiteEnquiryStatusDialog";
-import moment from "moment";
 
 const WebsiteEnquiry = () => {
   const [websiteListData, setWebsiteListData] = useState([]);
@@ -41,7 +41,6 @@ const WebsiteEnquiry = () => {
     fetchStudentData();
   }, []);
   const handleOpenDialog = async (id) => {
-    console.log(id, "id");
     try {
       const token = localStorage.getItem("token");
       const response = await axios.get(
@@ -101,7 +100,7 @@ const WebsiteEnquiry = () => {
       name: "userCourse",
       label: "Course",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -117,7 +116,7 @@ const WebsiteEnquiry = () => {
       name: "userType",
       label: "From",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -159,7 +158,7 @@ const WebsiteEnquiry = () => {
     responsive: "standard",
     viewColumns: false,
     download: false,
-    filter: false,
+    filter: true,
     print: false,
     setRowProps: (row, dataIndex) => {
       if (websiteListData[dataIndex]?.is_duplicate === true) {

@@ -95,6 +95,8 @@ import UserTypeList from "./pages/UserType/UserTypeList";
 import WebsiteEnquiry from "./pages/websiteEnquiry/WebsiteEnquiry";
 import WebsiteEnquiryClose from "./pages/websiteEnquiry/WebsiteEnquiryClose";
 import CreateEnquiry from "./pages/websiteEnquiry/CreateEnquiry";
+import DownloadWebsiteEnquiry from "./pages/Dowloads/WebsiteEnquiry/DownloadWebsiteEnquiry";
+import WebsiteEnquiryReport from "./pages/Dowloads/WebsiteEnquiry/WebsiteEnquiryReport";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -234,6 +236,10 @@ const App = () => {
             element={<ProtectedRoute element={<Enquiry />} />}
           />
           <Route
+            path="/download-website-enquiry"
+            element={<ProtectedRoute element={<DownloadWebsiteEnquiry />} />}
+          />
+          <Route
             path="/students"
             element={<ProtectedRoute element={<Students />} />}
           />
@@ -245,6 +251,10 @@ const App = () => {
           <Route
             path="/attendance"
             element={<ProtectedRoute element={<Attendance />} />}
+          />
+          <Route
+            path="/websiteenquiryreport"
+            element={<ProtectedRoute element={<WebsiteEnquiryReport />} />}
           />
           <Route
             path="/enquiryreport"

@@ -119,7 +119,6 @@ const BirthdayHoliday = () => {
           const studentName = rowData[0];
           const mobile = rowData[1];
           const userid = rowData[3];
-          // console.log(userid, "userid");
           const message = `Happy Birthday ${studentName}!
 
 The entire team at Academy of Internal Audit wishes you a wonderful year ahead filled with success, growth, and new opportunities. May you achieve great heights in your career and personal life. Keep learning, keep growing!

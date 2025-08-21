@@ -35,7 +35,7 @@ const StudentList = () => {
         );
 
         const res = response.data?.student;
-        console.log(res, "res");
+       
 
         if (Array.isArray(res)) {
           const tempRows = res.map((item) => [

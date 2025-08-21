@@ -24,7 +24,6 @@ const status = [
 
 const EditCountry = () => {
   const navigate = useNavigate();
-  console.log(navigate);
   const { id } = useParams();
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
@@ -90,7 +89,6 @@ const EditCountry = () => {
           },
         }
       );
-      console.log(response, "response");
       if (response.data.code == 200) {
         toast.success("Data Updated Successfully");
         navigate("/country");

@@ -82,7 +82,6 @@ function Student() {
     var v = document.getElementById("dowRecp").checkValidity();
     var v = document.getElementById("dowRecp").reportValidity();
     e.preventDefault();
-    console.log("Data : ", data);
     if (v) {
       setIsButtonDisabled(true);
 
@@ -136,7 +135,6 @@ function Student() {
       },
     }).then((res) => {
       setCourse(res.data.course);
-      console.log(res.data.course, "datacourse");
     });
   }, []);
 

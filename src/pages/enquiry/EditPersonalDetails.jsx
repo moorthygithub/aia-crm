@@ -46,7 +46,6 @@ const EditPersonalDetails = () => {
     enquiry_email: "",
     enquiry_dob: "",
   });
-  console.log(enquiry, "enquiry");
   const [followup, setFollowUp] = useState([]);
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
@@ -134,7 +133,6 @@ const EditPersonalDetails = () => {
       enquiry_email: enquiry.enquiry_email,
       enquiry_dob: enquiry.enquiry_dob,
     };
-    console.log("debug", formData);
     try {
       const response = await axios.put(
         `${BASE_URL}/api/panel-update-enquiry-personal/${id}`,

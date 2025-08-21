@@ -91,7 +91,6 @@ const DashboardNavbar = ({
                 setOpenSidebar(!openSidebar);
               } else {
                 setOpenSideNav((prevState) => {
-                  console.log(!prevState, "clicking");
                   return !prevState;
                 });
               }

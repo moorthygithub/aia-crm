@@ -17,7 +17,6 @@ import { ButtonCreate } from "../../../components/common/ButtonCss";
 
 const RepetitiveList = () => {
   const [repetitiveListData, setRepetitiveListData] = useState(null);
-  console.log(repetitiveListData, "repetitiveListData");
   const [loading, setLoading] = useState(false);
   const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
@@ -50,7 +49,6 @@ const RepetitiveList = () => {
             item["task_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setRepetitiveListData(response.data?.taskmanager);
         }
       } catch (error) {

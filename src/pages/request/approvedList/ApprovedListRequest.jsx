@@ -39,7 +39,6 @@ const ApprovedListRequest = () => {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
     }).then((res) => {
-      console.log("clicking");
       if (res.status == 200) {
         toast.success("Data Update Sucessfully");
         setShouldRefetch(true);

@@ -46,11 +46,8 @@ const DetailsCard = () => {
         },
       });
       setBooking(response.data?.booking);
-      console.log("set booking", response.data?.booking);
       setBookingAssign(response.data.bookingAssign);
-      console.log("setbooking assign", response.data?.bookingAssign);
       setVendor(response.data.vendor);
-      console.log("vendor data", response.data?.vendor);
     } catch (error) {
       console.error("Error fetching booking data:", error);
     }

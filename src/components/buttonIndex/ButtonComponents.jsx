@@ -116,7 +116,7 @@ export const EnquiryViewSendMail = ({ onClick, className }) => {
 
   return (
     <button onClick={onClick} className={className}>
-      <MdEmail className="mt-1 h-4 w-4 mr-2" />
+      <MdEmail className="h-4 w-4 mr-2" />
       Send Mail
     </button>
   );
@@ -131,7 +131,7 @@ export const EnquiryViewWhatsapp = ({ onClick, className }) => {
 
   return (
     <button onClick={onClick} className={className}>
-      <FaWhatsapp className="h-4 w-4 mt-1 mr-2 " /> Whatsapp
+      <FaWhatsapp className="h-4 w-4 mr-2 " /> Whatsapp
     </button>
   );
 };

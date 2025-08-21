@@ -26,7 +26,6 @@ const ViewStudentEquiry = () => {
 
   const navigate = useNavigate();
 
-  console.log(id, "id");
 
   const [enquiry, setEnquiry] = useState({});
   const [followup, setFollowUp] = useState([]);

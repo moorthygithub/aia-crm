@@ -46,7 +46,6 @@ const CompletedListTask = () => {
             item["task_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setCompletedTListData(response.data?.taskmanager);
         }
       } catch (error) {

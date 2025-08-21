@@ -53,7 +53,6 @@ const EditStudentDelivery = () => {
     delivery_tracking_url: "",
   });
 
-  console.log(student, "student");
 
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");

@@ -1,30 +1,24 @@
-import Layout from "../../../layout/Layout";
-import PageTitle from "../../../components/common/PageTitle";
-import Dropdown from "../../../components/common/DropDown";
-import { FaArrowCircleLeft } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import { Button, Input } from "@material-tailwind/react";
-import { Card } from "@material-tailwind/react";
+import { Card, Input } from "@material-tailwind/react";
+import axios from "axios";
 import Moment from "moment";
-import { useState, useEffect } from "react";
-import BASE_URL from "../../../base/BaseUrl";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import axios from "axios";
-import DownloadCommon from "../../download/delivery/DeliveryDownload";
+import BASE_URL from "../../../base/BaseUrl";
 import {
   DownloadEnquiryDownload,
   DownloadEnquiryView,
 } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
+import Dropdown from "../../../components/common/DropDown";
+import PageTitle from "../../../components/common/PageTitle";
+import Layout from "../../../layout/Layout";
+import DownloadCommon from "../../download/delivery/DeliveryDownload";
 
-function Enquiry() {
+function DownloadWebsiteEnquiry() {
   const navigate = useNavigate();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
-
-  const handleClick = () => {
-    navigate("-1");
-  };
 
   //FROM AND TO DATE
   var today = new Date();
@@ -45,10 +39,10 @@ function Enquiry() {
   });
 
   const status = [
-    { value: "New Enquiry", label: "New Enquiry" },
-    { value: "Postponed", label: "Postponed" },
-    { value: "In Process", label: "In Process" },
-    { value: "Not Interested Closed", label: "Not Interested Closed" },
+    { value: "Pending", label: "Pending" },
+    { value: "Close", label: "Close" },
+    { value: "Duplicate", label: "Duplicate" },
+    { value: "Convert to Enquiry", label: "Convert to Enquiry" },
   ];
 
   //SUBMIT
@@ -65,9 +59,8 @@ function Enquiry() {
     e.preventDefault();
     if (v) {
       setIsButtonDisabled(true);
-
       axios({
-        url: BASE_URL + "/api/panel-download-enquiry",
+        url: BASE_URL + "/api/panel-download-website-enquiry",
         method: "POST",
         data,
         headers: {
@@ -78,10 +71,10 @@ function Enquiry() {
           const url = window.URL.createObjectURL(new Blob([res.data]));
           const link = document.createElement("a");
           link.href = url;
-          link.setAttribute("download", "enquiry_list.csv");
+          link.setAttribute("download", "website_enquiry_list.csv");
           document.body.appendChild(link);
           link.click();
-          toast.success("Enquiry is Downloaded Successfully");
+          toast.success("Website Enquiry is Downloaded Successfully");
           setIsButtonDisabled(false);
           //   setEnquiryDownload("");
         })
@@ -96,13 +89,22 @@ function Enquiry() {
   const onReportView = (e) => {
     e.preventDefault();
     localStorage.setItem(
-      "enquiry_date_from",
+      "website_enquiry_date_from",
       downloadEnquiry.enquiry_date_from
     );
-    localStorage.setItem("enquiry_date_to", downloadEnquiry.enquiry_date_to);
-    localStorage.setItem("enquiry_status", downloadEnquiry.enquiry_status);
-    localStorage.setItem("enquiry_course", downloadEnquiry.enquiry_course);
-    navigate("/enquiryreport");
+    localStorage.setItem(
+      "website_enquiry_date_to",
+      downloadEnquiry.enquiry_date_to
+    );
+    localStorage.setItem(
+      "website_enquiry_status",
+      downloadEnquiry.enquiry_status
+    );
+    localStorage.setItem(
+      "website_enquiry_course",
+      downloadEnquiry.enquiry_course
+    );
+    navigate("/websiteenquiryreport");
   };
   //FETCHCOURSE
   const [course, setCourse] = useState([]);
@@ -134,11 +136,7 @@ function Enquiry() {
         theme="light"
       />
       <div className="mt-4 mb-6">
-        <PageTitle
-          title={"Download Enquiry"}
-          // icon={FaArrowCircleLeft}
-          // backLink="-1"
-        />
+        <PageTitle title={"Download Website Enquiry"} />
       </div>
       <Card className="p-4">
         <h3 className="text-red-500 mb-5">
@@ -228,4 +226,4 @@ function Enquiry() {
   );
 }
 
-export default Enquiry;
+export default DownloadWebsiteEnquiry;

@@ -19,7 +19,6 @@ const UserPage = () => {
   const [users, setUsers] = useState([]);
   const navigate = useNavigate();
   const [filteredUsers, setFilteredUsers] = useState([]);
-  console.log("getStaticUsers", filteredUsers);
   const [searchTerm, setSearchTerm] = useState("");
   const [filters, setFilters] = useState({
     userType: "all",

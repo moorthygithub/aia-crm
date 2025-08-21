@@ -126,6 +126,8 @@ const AppProvider = ({ children }) => {
           "/birthdaylist",
           "/website-enquiry",
           "/create-enquiry/",
+          "/download-website-enquiry",
+          "/websiteenquiryreport"
         ];
         const isAllowedPath = allowedPaths.some((path) =>
           currentPath.startsWith(path)

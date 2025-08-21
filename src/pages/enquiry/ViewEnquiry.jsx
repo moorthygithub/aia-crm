@@ -199,7 +199,7 @@ const ViewEnquiry = () => {
               />
 
               <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-                View Enquiry
+                View Enquiry 
               </h1>
             </div>
             <div className="mb-4 mt-6 md:w-[30%] w-full flex">

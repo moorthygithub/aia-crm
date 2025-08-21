@@ -39,7 +39,6 @@ const InspectionListTask = () => {
         );
 
         let res = response.data?.taskmanager;
-        console.log(res, "res");
         if (Array.isArray(res)) {
           const tempRows = res.map((item) => [
             moment(item["task_from_date"]).format("DD-MM-YYYY"),
@@ -51,7 +50,6 @@ const InspectionListTask = () => {
             item["task_status"],
           ]);
 
-          console.log(tempRows, "tempRows");
           setInspectionTListData(response.data?.taskmanager);
         }
       } catch (error) {

@@ -43,7 +43,6 @@ const OverDueTaskList = () => {
             item["task_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setPendingTListData(response.data?.taskmanager);
         }
 

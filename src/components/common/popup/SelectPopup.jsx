@@ -45,7 +45,6 @@ const SelectPopup = (props) => {
   const addDonorToReceipt = (fts_id) => {
     setMessage(fts_id);
     props.getUserid(fts_id);
-    console.log(message); 
   };
 
   const getData = async () => {

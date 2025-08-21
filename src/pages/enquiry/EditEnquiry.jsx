@@ -10,7 +10,11 @@ import BASE_URL from "../../base/BaseUrl";
 import moment from "moment";
 import { toast } from "react-toastify";
 import Student from "../Dowloads/Students/Students";
-import { ButtonCreate } from "../../components/common/ButtonCss";
+import { ButtonCreate, ButtonIcons } from "../../components/common/ButtonCss";
+import {
+  EnquiryViewSendMail,
+  EnquiryViewWhatsapp,
+} from "../../components/buttonIndex/ButtonComponents";
 
 const status = [
   {
@@ -40,7 +44,6 @@ const EditEnquiry = () => {
 
   const navigate = useNavigate();
 
-  console.log(id, "id");
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [enquiry, setEnquiry] = useState({
@@ -96,7 +99,94 @@ const EditEnquiry = () => {
       [name]: value,
     });
   };
+  const whatsApp1 = (e) => {
+    e.preventDefault();
+    const fullName = enquiry.enquiry_full_name;
+    const phoneNumber = enquiry.enquiry_mobile;
+    const code = enquiry.enquiry_country_code;
+    const message = `Hi ${fullName}\n\n Thank you for connecting with AIA. We are thrilled to help you achieve your academic and career goals.
+      \n
+      At AIA, we offer a range of programs (CFE, CIA & CAMS). Our experienced faculty, comprehensive study materials, and personalized support system ensure that every student receives the best guidance and support.
+      \n
+      We look forward to welcoming you to the AIA family and helping you reach your full potential.
+      \n
+      Best Regards,\n
+      *Ruchi Bhat*\n
+      Manager- Coordination\n
+      Academy of Internal Audit\n
+      C-826, Vipul Plaza, Sector-81\n
+      Faridabad, Delhi-NCR, India\n
+      www.aia.in.net\n
+      Office No: 0129-417-4177\n
+      Toll free: 1800-1200-2555`;
+    const whatsappLink = `https://wa.me/${code}${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
 
+    let data = {
+      eqid: enquiry.id,
+    };
+    axios({
+      url: BASE_URL + "/api/panel-send-enquiry-whatsapp",
+      method: "POST",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.data.code == 200) {
+        window.open(whatsappLink, "_blank");
+        navigate("/openList-enquiry");
+      } else {
+        toast.error("Whats App Not Sent Sucessfully");
+      }
+    });
+  };
+  const whatsApp2 = (e) => {
+    e.preventDefault();
+
+    const phoneNumber = enquiry.enquiry_mobile;
+    const code = enquiry.enquiry_country_code;
+    const message = `Hello dear,
+    \n
+    Hope you are doing well!
+    \n
+    We tried reaching out to you but unfortunately couldn't connect. We are eager to discuss how our programs can help you achieve your academic and career goals.  
+    \n
+    Thank you for considering AIA. We look forward to connecting with you soon and helping you reach your full potential.
+    \n
+    Best Regards,\n
+    *Ruchi Bhat*\n
+    Manager- Coordination\n
+    Academy of Internal Audit\n
+    C-826, Vipul Plaza, Sector-81\n
+    Faridabad, Delhi-NCR, India\n
+    www.aia.in.net\n
+    Office No: 0129-417-4177\n
+    Toll free: 1800-1200-2555`;
+    const whatsappLink = `https://wa.me/${code}${phoneNumber}?text=${encodeURIComponent(
+      message
+    )}`;
+
+    let data = {
+      eqid: enquiry.id,
+    };
+    axios({
+      url: BASE_URL + "/api/panel-send-enquiry-followup-whatsapp",
+      method: "POST",
+      data,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
+      },
+    }).then((res) => {
+      if (res.data.code == "200") {
+        window.open(whatsappLink, "_blank");
+        history.push("listing");
+      } else {
+        toast.error("Whats App Not Sent Sucessfully");
+      }
+    });
+  };
   const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.target;
@@ -110,7 +200,6 @@ const EditEnquiry = () => {
       enquiry_follow_date: enquiry.enquiry_follow_date,
       enquiry_status: enquiry.enquiry_status,
     };
-    console.log("debug", formData);
     try {
       const response = await axios.put(
         `${BASE_URL}/api/panel-update-enquiry/${id}`,
@@ -141,6 +230,39 @@ const EditEnquiry = () => {
       setIsButtonDisabled(false);
     }
   };
+  const sendEmail = async (e) => {
+    e.preventDefault();
+    setIsButtonDisabled(true);
+
+    try {
+      const data = {
+        eqid: enquiry.id,
+        enquiry_email: enquiry.enquiry_email,
+      };
+
+      const res = await axios.post(
+        `${BASE_URL}/api/panel-send-enquiry-followup-emails`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (res.data.code === 200) {
+        toast.success("Email Sent Successfully");
+        navigate("/openList-enquiry");
+      } else {
+        toast.error("Email Not Sent Successfully");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setIsButtonDisabled(false);
+    }
+  };
 
   const handleEdit = () => {
     navigate(`/edit-personal/${id}`);
@@ -156,15 +278,35 @@ const EditEnquiry = () => {
       <div>
         <div>
           {/* Title */}
-          <div className="flex mb-4 mt-6">
-            <MdKeyboardBackspace
-              onClick={handleBackButton}
-              className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
-            />
+          <div className="md:flex justify-between">
+            <div className="flex mb-4 mt-6">
+              <MdKeyboardBackspace
+                onClick={handleBackButton}
+                className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+              />
 
-            <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-              Edit Enquiry
-            </h1>
+              <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
+                Edit Enquiry
+              </h1>
+            </div>
+            <div className="mb-4 mt-6 md:w-[30%] w-full flex">
+              <EnquiryViewSendMail
+                onClick={sendEmail}
+                className={ButtonIcons}
+              />
+
+              <EnquiryViewWhatsapp
+                onClick={
+                  enquiry.enquiry_status == "New Enquiry"
+                    ? whatsApp1
+                    : enquiry.enquiry_status == "Postponed" ||
+                      enquiry.enquiry_status == "In Process"
+                    ? whatsApp2
+                    : ""
+                }
+                className={ButtonIcons}
+              />
+            </div>
           </div>
           <div className="grid grid-cols-1  gap-4">
             <div>

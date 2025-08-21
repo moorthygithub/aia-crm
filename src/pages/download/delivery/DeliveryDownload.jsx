@@ -9,7 +9,7 @@ const DownloadCommon = () => {
   };
   const buttons = [
     {
-      label: "Enquire",
+      label: "Enquiry",
       path: "/enquiry",
       color: "from-pink-500 to-orange-400",
     },
@@ -32,6 +32,11 @@ const DownloadCommon = () => {
       label: "Attendance",
       path: "/attendance",
       color: "from-orange-500 to-cyan-400",
+    },
+    {
+      label: "Website Enquiry",
+      path: "/download-website-enquiry",
+      color: "from-teal-500 to-orange-400",
     },
   ];
 

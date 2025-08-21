@@ -133,7 +133,6 @@ const DeliveredListDelivery = () => {
           }
         );
         const res = response.data?.delivery;
-        console.log(res, "res");
         if (Array.isArray(res)) {
           const tempRows = res.map((item) => [
             item["user_uid"],
@@ -152,7 +151,6 @@ const DeliveredListDelivery = () => {
             item["delivery_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setDeliveredDListData(response.data?.delivery);
         }
       } catch (error) {

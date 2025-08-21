@@ -14,8 +14,6 @@ ag-solutions-bangalore-aia-crm/
 │-- vite.config.js
 │-- postcss.config.cjs
 │-- tailwind.config.cjs
-│-- public/
-│   └── img/
 │-- src/
 │   ├── App.jsx
 │   ├── App.css

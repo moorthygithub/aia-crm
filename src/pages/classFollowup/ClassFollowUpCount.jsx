@@ -54,7 +54,6 @@ const ClassFollowUpCount = () => {
             },
           }
         );
-        console.log(response, "response");
         setCardData(response.data?.student);
       } catch (error) {
         console.error("Error fetching services:", error);
@@ -109,8 +108,6 @@ const ClassFollowUpCount = () => {
           },
         }
       );
-      console.log(response);
-      console.log(response.data.code);
       if (response.data.code == 200) {
         // setReloadData(true);
         handleClose();
