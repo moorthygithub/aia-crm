@@ -26,7 +26,6 @@ const AddDelivery = () => {
   });
 
   const [useruid, setUserUID] = useState([]);
-  console.log(useruid, "useruid");
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("id");
     if (!isLoggedIn) {

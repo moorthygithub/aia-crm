@@ -100,7 +100,6 @@ const PendingListRequest = () => {
             item["course_request_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setPendingRListData(response.data?.urequest);
         }
       } catch (error) {

@@ -59,7 +59,6 @@ const Profile = () => {
       ...admin,
       [e.target.name]: e.target.value,
     });
-    console.log("calling");
   };
 
   const onSubmit = async (e) => {

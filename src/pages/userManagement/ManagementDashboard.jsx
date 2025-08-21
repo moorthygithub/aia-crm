@@ -114,8 +114,6 @@ const ManagementDashboard = () => {
   // Mutation for updating button permissions
   const updateButtonPermissionMutation = useMutation({
     mutationFn: async ({ permissionId, updatedData }) => {
-      console.log("updted data and permissionid", updatedData, permissionId);
-      console.log("permissionId", permissionId);
       const token = localStorage.getItem("token");
       const response = await axios.put(
         `${BASE_URL}/api/panel-update-usercontrol/${permissionId}`,
@@ -191,10 +189,6 @@ const ManagementDashboard = () => {
   }, [pageControlData]);
 
   const user = staticUsers.find((u) => u.user_type === userId);
-  console.log("statuic user", staticUsers);
-  console.log("user", user);
-  console.log("userId", userId);
-
   const pages = useMemo(
     () => [...new Set(pagePermissions.map((p) => p.page))],
     [pagePermissions]

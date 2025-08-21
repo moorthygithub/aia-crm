@@ -146,7 +146,6 @@ const PendingListDelivery = () => {
             item["delivery_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setPendingDListData(response.data?.delivery);
         }
       } catch (error) {

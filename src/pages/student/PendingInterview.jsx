@@ -46,7 +46,6 @@ const PendingInterview = () => {
             item["status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setStudentListData(response.data?.student);
         }
       } catch (error) {

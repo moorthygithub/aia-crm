@@ -142,7 +142,7 @@ const EditTask = () => {
       if (response.data.code == "200") {
         toast.success("Data Updated Successfully");
         navigate("/task-pending");
-        console.log("calling");
+     
       } else {
         if (response.data.code == "401") {
           toast.error("Task Duplicate Entry");

@@ -1,38 +1,18 @@
 import { CircularProgress } from "@mui/material";
 import axios from "axios";
+import moment from "moment";
 import MUIDataTable from "mui-datatables";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import { WebisteEnquiryEdit } from "../../components/buttonIndex/ButtonComponents";
 import Layout from "../../layout/Layout";
-import Fields from "../../components/common/TextField/TextField";
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-} from "@material-tailwind/react";
-import { toast } from "react-toastify";
 import CommonWebsiteEnquiry from "./CommonWebsiteEnquiry";
 import WebsiteEnquiryStatusDialog from "./WebsiteEnquiryStatusDialog";
-import moment from "moment";
 
-const status = [
-  {
-    value: "Pending",
-    label: "Pending",
-  },
-  {
-    value: "Close",
-    label: "Close",
-  },
-];
 const WebsiteEnquiryClose = () => {
   const [websiteListData, setWebsiteListData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedEnquiry, setSelectedEnquiry] = useState(null);
   const [userStatus, setUserStatus] = useState("");
@@ -120,7 +100,7 @@ const WebsiteEnquiryClose = () => {
       name: "userCourse",
       label: "Course",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -136,7 +116,7 @@ const WebsiteEnquiryClose = () => {
       name: "userType",
       label: "From",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -155,7 +135,7 @@ const WebsiteEnquiryClose = () => {
       name: "userStatus",
       label: "Status",
       options: {
-        filter: false,
+        filter: true,
         sort: false,
       },
     },
@@ -185,7 +165,7 @@ const WebsiteEnquiryClose = () => {
     responsive: "standard",
     viewColumns: false,
     download: false,
-    filter: false,
+    filter: true,
     print: false,
   };
   const handleUpdateStatus = async () => {

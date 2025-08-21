@@ -49,7 +49,6 @@ const PendingListTask = () => {
             item["task_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setPendingTListData(response.data?.taskmanager);
         }
       } catch (error) {

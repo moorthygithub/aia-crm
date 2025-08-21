@@ -115,7 +115,6 @@ const CreatePage = () => {
   const createMutation = useMutation({
     mutationFn: async (data) => {
       const token = localStorage.getItem("token");
-      //    console.log("data",data)
       const response = await fetch(
         `${BASE_URL}/api/panel-create-usercontrol-new`,
         {

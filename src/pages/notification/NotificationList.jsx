@@ -41,7 +41,6 @@ const NotificationList = () => {
             item["notification_heading"],
             item["notification_description"],
           ]);
-          console.log(tempRows, "tempRows");
           setCNotificationListData(response.data?.notification);
         }
 

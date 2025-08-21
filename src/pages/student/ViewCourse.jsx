@@ -23,7 +23,7 @@ const ViewCourse = () => {
 
   const navigate = useNavigate();
 
-  console.log(id, "id");
+ 
 
   const [student, setStudentCourse] = useState({});
 

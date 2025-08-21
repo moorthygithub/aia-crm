@@ -24,7 +24,6 @@ const ClassFollowUp = () => {
   const location = useLocation();
   const { selectedData } = location.state || {};
 
-  console.log(selectedData , "selectedData")
 
 
 

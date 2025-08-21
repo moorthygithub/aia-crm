@@ -58,7 +58,6 @@ const ClassList = () => {
             item["class_status"],
             item["id"],
           ]);
-          console.log(tempRows, "tempRows");
           setClassListData(tempRows);
         }
 
@@ -165,7 +164,6 @@ const ClassList = () => {
       },
     }).then((res) => {
       if (res.status == "200") {
-        console.log("clicking");
         toast.success("Notification Sent Sucessfully");
       } else {
         toast.error("Notification Not Sent Sucessfully");
