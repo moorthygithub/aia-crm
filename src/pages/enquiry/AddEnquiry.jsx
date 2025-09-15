@@ -1,33 +1,15 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { MdKeyboardBackspace } from "react-icons/md";
-import axios from "axios";
 import { Input } from "@material-tailwind/react";
-import BASE_URL from "../../base/BaseUrl";
-import Layout from "../../layout/Layout";
-import Fields from "../../components/common/TextField/TextField";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { MdKeyboardBackspace } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import EnquiryFilter from "../../components/EnquiryFilter";
+import BASE_URL from "../../base/BaseUrl";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
+import Fields from "../../components/common/TextField/TextField";
+import Layout from "../../layout/Layout";
+import employe_name from "../../data/employee_names.json";
 
-const employe_name = [
-  {
-    value: "Ruchi Bhat",
-    label: "Ruchi Bhat",
-  },
-  {
-    value: "Krati Agarwal",
-    label: "Krati Agarwal",
-  },
-  {
-    value: "Pooja",
-    label: "Pooja",
-  },
-  {
-    value: "Aamrapali",
-    label: "Aamrapali",
-  },
-];
 const title = [
   {
     value: "Mr",
@@ -257,7 +239,7 @@ const AddEnquiry = () => {
           />
 
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-            Add Enquiry
+            Add Enquiry 
           </h1>
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">

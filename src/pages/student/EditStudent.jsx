@@ -9,6 +9,7 @@ import Fields from "../../components/common/TextField/TextField";
 import BASE_URL from "../../base/BaseUrl";
 import { toast } from "react-toastify";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
+import employe_name from "../../data/employee_names.json";
 
 const mobile = [
   {
@@ -54,6 +55,7 @@ const EditStudent = () => {
     mobile_device: "",
     admission_form_no: "",
     qualification: "",
+    employee_name: "",
     remarks: "",
     status: "",
     pc_device: "",
@@ -112,6 +114,7 @@ const EditStudent = () => {
       mobile_device: student.mobile_device,
       pc_device: student.pc_device,
       status: student.status,
+      employee_name: student.employee_name,
     };
     try {
       const response = await axios.put(
@@ -257,7 +260,7 @@ const EditStudent = () => {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-4">
               {/* Remark */}
-              <div className="col-span-3">
+              <div className="col-span-2">
                 <Input
                   label="Remarks"
                   type="text"
@@ -267,6 +270,15 @@ const EditStudent = () => {
                 />
               </div>
               {/* Exam Date */}
+              <Fields
+                title="Employee Name"
+                type="whatsappDropdown"
+                autoComplete="Name"
+                name="employee_name"
+                value={student.employee_name}
+                onChange={(e) => onInputChange(e)}
+                options={employe_name}
+              />
               <div>
                 <Fields
                   required={true}
