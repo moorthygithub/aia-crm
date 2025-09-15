@@ -1,15 +1,14 @@
-import React, { useContext, useEffect, useState } from "react";
+import { CircularProgress } from "@mui/material";
+import axios from "axios";
+import moment from "moment";
+import MUIDataTable from "mui-datatables";
+import { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BASE_URL from "../../base/BaseUrl";
+import { StudentView } from "../../components/buttonIndex/ButtonComponents";
 import Layout from "../../layout/Layout";
 import { ContextPanel } from "../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import BASE_URL from "../../base/BaseUrl";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
-import MUIDataTable from "mui-datatables";
-import moment from "moment";
-import { CircularProgress } from "@mui/material";
-import { toast } from "react-toastify";
-import { StudentView } from "../../components/buttonIndex/ButtonComponents";
 
 const StudentList = () => {
   const [studentListData, setStudentListData] = useState(null);
@@ -35,20 +34,8 @@ const StudentList = () => {
         );
 
         const res = response.data?.student;
-       
 
         if (Array.isArray(res)) {
-          const tempRows = res.map((item) => [
-            item["user_uid"],
-            moment(item["registration_date"]).format("DD-MM-YYYY"),
-
-            item["name"],
-            item["mobile"],
-            item["qualification"],
-            item["admission_form_no"],
-            item["status"],
-            item["id"],
-          ]);
           setStudentListData(response.data?.student);
         }
       } catch (error) {
@@ -114,6 +101,14 @@ const StudentList = () => {
       },
     },
     {
+      name: "employee_name",
+      label: "Employee Name",
+      options: {
+        filter: false,
+        sort: false,
+      },
+    },
+    {
       name: "status",
       label: "Status",
       options: {
@@ -131,11 +126,6 @@ const StudentList = () => {
         customBodyRender: (id) => {
           return (
             <div className="flex items-center space-x-2">
-              {/* <MdOutlineRemoveRedEye
-              onClick={() => navigate(`/view-student/${id}`)}
-                title="view "
-                className="h-5 w-5 cursor-pointer"
-              /> */}
               <StudentView
                 onClick={() => navigate(`/view-student/${id}`)}
                 className="h-5 w-5 cursor-pointer"

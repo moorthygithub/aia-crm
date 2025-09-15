@@ -376,7 +376,7 @@ const ViewStudent = () => {
                   <div className="grid grid-cols-1 md:grid-cols-3  h-full">
                     <Typography className="text-black my-3  break-words whitespace-pre-line">
                       <strong>
-                        Employee Name : {enquiryData.enquiry_employee_name}
+                        Employee Name : {student?.employee_name || ""}
                       </strong>
                     </Typography>
 
