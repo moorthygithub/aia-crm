@@ -133,7 +133,7 @@ const EditClassFollowUp = () => {
           <div>
             <Card className="mt-4">
               <CardBody>
-                <div className="grid grid-cols-1 md:grid-cols-3 md:h-[150px] h-full">
+                <div className="grid grid-cols-1 md:grid-cols-3  h-full">
                   {" "}
                   <div className="space-y-2">
                     <Typography className="text-black">
