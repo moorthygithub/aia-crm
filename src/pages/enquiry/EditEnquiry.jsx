@@ -473,10 +473,12 @@ const EditEnquiry = () => {
                               moment(),
                               "day"
                             ) ? (
-                              <FollowUpEdit
-                                className="text-blue-400 cursor-pointer hover:text-blue-600"
-                                onClick={() => handleEditClick(dataSumm)}
-                              />
+                              <>
+                                <FollowUpEdit
+                                  className="text-blue-400 cursor-pointer hover:text-blue-600"
+                                  onClick={() => handleEditClick(dataSumm)}
+                                />
+                              </>
                             ) : (
                               <Tooltip
                                 content="You can only edit today's follow-up"
