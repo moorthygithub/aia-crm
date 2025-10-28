@@ -9,10 +9,9 @@ import {
   View,
   X,
 } from "lucide-react";
-import React from "react";
-import { checkPermission } from "./checkPermission";
-import { FaBirthdayCake, FaWhatsapp, FaWhatsappSquare } from "react-icons/fa";
+import { FaWhatsapp } from "react-icons/fa";
 import { MdEmail, MdOutlineEmail } from "react-icons/md";
+import { checkPermission } from "./checkPermission";
 
 const getStaticPermissions = () => {
   const buttonPermissions = localStorage.getItem("buttonControl");
@@ -152,6 +151,21 @@ export const EnquiryOpenEdit = ({ onClick, className }) => {
 };
 
 EnquiryOpenEdit.page = "Enquiry";
+export const FollowUpEdit = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "FollowUpEdit", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className} title="Edit Follow Up">
+      <Edit className="h-4 w-4" />
+    </button>
+  );
+};
+
+FollowUpEdit.page = "Enquiry";
 
 export const EnquiryOpenView = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -1460,6 +1474,7 @@ export default {
   EnquiryOverDueCreate,
   EnquiryOpenEdit,
   EnquiryOpenView,
+  FollowUpEdit,
   EnquiryCloseEdit,
   EnquiryCloseView,
   EnquiryCloseCreate,

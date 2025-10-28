@@ -1,21 +1,35 @@
-import { Card, CardBody, Input, Textarea } from "@material-tailwind/react";
-import CommonCard from "../../components/common/dataCard/CommonCard";
-import Layout from "../../layout/Layout";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { MdKeyboardBackspace } from "react-icons/md";
-import { useEffect, useState } from "react";
-import Fields from "../../components/common/TextField/TextField";
+import {
+  Card,
+  CardBody,
+  Dialog,
+  DialogBody,
+  DialogFooter,
+  DialogHeader,
+  Input,
+  Textarea,
+  Tooltip,
+} from "@material-tailwind/react";
 import axios from "axios";
-import BASE_URL from "../../base/BaseUrl";
+import { Edit } from "lucide-react";
 import moment from "moment";
+import { useEffect, useState } from "react";
+import { MdKeyboardBackspace } from "react-icons/md";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Student from "../Dowloads/Students/Students";
-import { ButtonCreate, ButtonIcons } from "../../components/common/ButtonCss";
+import BASE_URL from "../../base/BaseUrl";
 import {
   EnquiryViewSendMail,
   EnquiryViewWhatsapp,
+  FollowUpEdit,
 } from "../../components/buttonIndex/ButtonComponents";
-
+import {
+  ButtonBack,
+  ButtonCreate,
+  ButtonIcons,
+} from "../../components/common/ButtonCss";
+import CommonCard from "../../components/common/dataCard/CommonCard";
+import Fields from "../../components/common/TextField/TextField";
+import Layout from "../../layout/Layout";
 const status = [
   {
     value: "New Enquiry",
@@ -41,9 +55,11 @@ const status = [
 
 const EditEnquiry = () => {
   const { id } = useParams();
+  const [openModal, setOpenModal] = useState(false);
+  const handleOpen = () => setOpenModal(!openModal);
+  const [editData, setEditData] = useState({ id: null, value: "" });
 
   const navigate = useNavigate();
-
 
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [enquiry, setEnquiry] = useState({
@@ -61,25 +77,24 @@ const EditEnquiry = () => {
     }
   }, []);
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-enquiry-by-id/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setEnquiry(response.data.enquiry);
+      setFollowUp(response.data.followup);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-enquiry-by-id/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        setEnquiry(response.data.enquiry);
-        setFollowUp(response.data.followup);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
-
     fetchData();
   }, []);
 
@@ -272,6 +287,41 @@ const EditEnquiry = () => {
     e.preventDefault();
     navigate(localStorage.getItem("enquiry_page"));
   };
+  const handleEditClick = (row) => {
+    setEditData({ id: row.id, value: "" });
+    setOpenModal(true);
+  };
+
+  const handleConfirm = async (e) => {
+    e.preventDefault();
+
+    try {
+      const data = {
+        follow_up_sub_type: editData.value,
+      };
+
+      const res = await axios.put(
+        `${BASE_URL}/api/panel-update-enquiry-followup/${editData?.id}`,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      if (res.data.code == 200) {
+        toast.success(res.data.msg || "Data Updated Successfully");
+        setOpenModal(false);
+        fetchData();
+      } else {
+        toast.error("Failed To Updated");
+      }
+    } catch (error) {
+      console.error("Error sending email:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
 
   return (
     <Layout>
@@ -381,6 +431,7 @@ const EditEnquiry = () => {
                         <th class="py-3 px-6 text-center">Time</th>
                         <th class="py-3 px-6 text-center">Type</th>
                         <th class="py-3 px-6 text-center">Description</th>
+                        <th class="py-3 px-6 text-center">Action</th>
                       </tr>
                     </thead>
                     <tbody class="text-gray-600 text-sm font-light">
@@ -417,6 +468,24 @@ const EditEnquiry = () => {
                           <td class="py-3 px-6 text-center">
                             <span>{dataSumm.follow_up_sub_type}</span>
                           </td>
+                          <td class="py-3 px-6 text-center">
+                            {moment(dataSumm.follow_up_date).isSame(
+                              moment(),
+                              "day"
+                            ) ? (
+                              <FollowUpEdit
+                                className="text-blue-400 cursor-pointer hover:text-blue-600"
+                                onClick={() => handleEditClick(dataSumm)}
+                              />
+                            ) : (
+                              <Tooltip
+                                content="You can only edit today's follow-up"
+                                placement="top"
+                              >
+                                <Edit className="text-gray-400 cursor-not-allowed opacity-50 h-5 w-5" />
+                              </Tooltip>
+                            )}
+                          </td>
                         </tr>
                       ))}
                     </tbody>
@@ -431,6 +500,33 @@ const EditEnquiry = () => {
           </div>
         </div>
       </div>
+      <Dialog open={openModal} handler={handleOpen}>
+        <DialogHeader>Edit Follow Up</DialogHeader>
+        <DialogBody>
+          <Textarea
+            label="Follow-up Notes"
+            value={editData.value}
+            onChange={(e) =>
+              setEditData((prev) => ({ ...prev, value: e.target.value }))
+            }
+            rows={4}
+          />
+        </DialogBody>
+        <DialogFooter>
+          <button
+            onClick={handleOpen}
+            className="bg-gray-200 text-gray-800 px-4 py-2 rounded-md mr-2 hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={handleConfirm}
+            className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+          >
+            Update
+          </button>
+        </DialogFooter>
+      </Dialog>
     </Layout>
   );
 };
