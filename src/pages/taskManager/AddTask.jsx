@@ -81,14 +81,13 @@ const AddTask = () => {
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
-            "Content-Type": "multipart/form-data",
           },
         }
       );
 
       if (response.data.code == "200") {
         toast.success("Data Updated Successfully");
-        navigate("/task-pending");
+        navigate(-1);
       } else {
         if (response.data.code == "401") {
           toast.error("Task Duplicate Entry");
@@ -111,9 +110,11 @@ const AddTask = () => {
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-          <Link to="/task-pending">
-            <MdKeyboardBackspace className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-          </Link>
+          <MdKeyboardBackspace
+            onClick={() => navigate(-1)}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
             Add Task
           </h1>
@@ -178,9 +179,14 @@ const AddTask = () => {
               >
                 {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-              <Link to="/task-pending">
-                <button className={ButtonBack}>Back</button>
-              </Link>
+
+              <button
+                type="button"
+                className={ButtonBack}
+                onClick={() => navigate(-1)}
+              >
+                Back
+              </button>
             </div>
           </form>
         </div>

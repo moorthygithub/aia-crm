@@ -98,6 +98,7 @@ import CreateEnquiry from "./pages/websiteEnquiry/CreateEnquiry";
 import DownloadWebsiteEnquiry from "./pages/Dowloads/WebsiteEnquiry/DownloadWebsiteEnquiry";
 import WebsiteEnquiryReport from "./pages/Dowloads/WebsiteEnquiry/WebsiteEnquiryReport";
 import EditRepetitive from "./pages/taskManager/repetitive/EditRepetitive";
+import NotFound from "./components/common/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -293,6 +294,7 @@ const App = () => {
           {/* ///UserTypeList */}
           <Route path="/userType" element={<UserTypeList />} />
           <Route path="/edit-user-type/:id" element={<EditUserType />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </QueryClientProvider>
     </>
