@@ -97,6 +97,8 @@ import WebsiteEnquiryClose from "./pages/websiteEnquiry/WebsiteEnquiryClose";
 import CreateEnquiry from "./pages/websiteEnquiry/CreateEnquiry";
 import DownloadWebsiteEnquiry from "./pages/Dowloads/WebsiteEnquiry/DownloadWebsiteEnquiry";
 import WebsiteEnquiryReport from "./pages/Dowloads/WebsiteEnquiry/WebsiteEnquiryReport";
+import EditRepetitive from "./pages/taskManager/repetitive/EditRepetitive";
+import NotFound from "./components/common/NotFound";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -188,6 +190,7 @@ const App = () => {
           <Route path="/task-inspection" element={<InspectionListTask />} />
           <Route path="/repetitive-list" element={<RepetitiveList />} />
           <Route path="/add-repetitive" element={<AddRepetitive />} />
+          <Route path="/update-repetitive/:id" element={<EditRepetitive />} />
           <Route path="/task-pending" element={<PendingListTask />} />
           <Route path="/task-completed" element={<CompletedListTask />} />
           <Route path="/add-task" element={<AddTask />} />
@@ -291,6 +294,7 @@ const App = () => {
           {/* ///UserTypeList */}
           <Route path="/userType" element={<UserTypeList />} />
           <Route path="/edit-user-type/:id" element={<EditUserType />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </QueryClientProvider>
     </>

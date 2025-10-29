@@ -1035,7 +1035,7 @@ export const TaskManagerRepetitiveEdit = ({ onClick, className }) => {
   }
 
   return (
-    <button onClick={onClick} className={className} title="Edit">
+    <button onClick={onClick} className={className} title="Update">
       <Edit className="h-4 w-4 " />
     </button>
   );

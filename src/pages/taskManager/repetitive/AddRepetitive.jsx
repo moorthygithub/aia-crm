@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Input } from "@material-tailwind/react";
+import { Input, Textarea } from "@material-tailwind/react";
 import { toast } from "react-toastify";
 import BASE_URL from "../../../base/BaseUrl";
 import Layout from "../../../layout/Layout";
@@ -112,7 +112,7 @@ const AddRepetitive = () => {
 
       if (response.data.code == "200") {
         toast.success("Data Updated Successfully");
-        navigate("/repetitive-list");
+        navigate(-1);
       } else {
         if (response.data.code == "401") {
           toast.error("Task Duplicate Entry");
@@ -135,9 +135,11 @@ const AddRepetitive = () => {
       <div>
         {/* Title */}
         <div className="flex mb-4 mt-6">
-          <Link to="/repetitive-list">
-            <MdKeyboardBackspace className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl" />
-          </Link>
+          <MdKeyboardBackspace
+            onClick={() => navigate(-1)}
+            className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+          />
+
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
             Add Repetitive Task
           </h1>
@@ -188,10 +190,10 @@ const AddRepetitive = () => {
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
               {/* Task Details */}
               <div>
-                <Input
+                <Textarea
                   label="Task Details"
                   required
-                  type="text"
+                  // type="text"
                   name="task_details"
                   value={enquiry.task_details}
                   onChange={(e) => onInputChange(e)}
@@ -206,9 +208,13 @@ const AddRepetitive = () => {
               >
                 {isButtonDisabled ? "Submiting..." : "Submit"}
               </button>
-              <Link to="/repetitive-list">
-                <button className={ButtonBack}>Back</button>
-              </Link>
+              <button
+                type="button"
+                onClick={() => navigate(-1)}
+                className={ButtonBack}
+              >
+                Back
+              </button>
             </div>
           </form>
         </div>
