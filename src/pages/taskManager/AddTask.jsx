@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { MdKeyboardBackspace } from "react-icons/md";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { Input } from "@material-tailwind/react";
+import { Input, Textarea } from "@material-tailwind/react";
 import BASE_URL from "../../base/BaseUrl";
 import Layout from "../../layout/Layout";
 import Fields from "../../components/common/TextField/TextField";
@@ -160,10 +160,10 @@ const AddTask = () => {
             <div className="grid grid-cols-1 md:grid-cols-1 gap-6 mb-6">
               {/* Task Details */}
               <div>
-                <Input
+                <Textarea
                   label="Task Details"
                   required
-                  type="text"
+                  // type="text"
                   name="task_details"
                   value={enquiry.task_details}
                   onChange={(e) => onInputChange(e)}

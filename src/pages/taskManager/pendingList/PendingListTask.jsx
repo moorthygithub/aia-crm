@@ -40,15 +40,6 @@ const PendingListTask = () => {
 
         let res = response.data?.taskmanager;
         if (Array.isArray(res)) {
-          const tempRows = res.map((item) => [
-            moment(item["task_from_date"]).format("DD-MM-YYYY"),
-            moment(item["task_to_date"]).format("DD-MM-YYYY"),
-
-            item["name"],
-            item["task_details"],
-            item["task_status"],
-            item["id"],
-          ]);
           setPendingTListData(response.data?.taskmanager);
         }
       } catch (error) {
@@ -89,7 +80,7 @@ const PendingListTask = () => {
       label: "Employee",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {

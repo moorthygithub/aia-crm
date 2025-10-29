@@ -85,7 +85,7 @@ const OverDueTaskList = () => {
       label: "Employee",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {

@@ -86,7 +86,7 @@ const CompletedListTask = () => {
       label: "Employee",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {

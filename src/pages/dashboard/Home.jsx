@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
-import CountUp from "react-countup";
-import Layout from "../../layout/Layout";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import CountUp from "react-countup";
+import { Link, useNavigate } from "react-router-dom";
 import BASE_URL from "../../base/BaseUrl";
-import { Link } from "react-router-dom";
-import img from "../../assets/pbd.png";
+import Layout from "../../layout/Layout";
 
 const Home = () => {
-  const amount = 100;
-
+  const navigate = useNavigate();
   const dateyear = ["2024-25"];
 
   const [cardData, setCardData] = useState([]);

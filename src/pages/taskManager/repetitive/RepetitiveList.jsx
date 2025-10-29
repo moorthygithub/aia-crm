@@ -61,38 +61,38 @@ const RepetitiveList = () => {
     setLoading(false);
   }, []);
 
-  const onUpdate = async (e, id) => {
-    const formData = {
-      task_for: "",
-    };
-    try {
-      const response = await axios.put(
-        `${BASE_URL}/api/panel-update-taskmanager-repetitive/${id}`,
-        formData,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+  // const onUpdate = async (e, id) => {
+  //   const formData = {
+  //     task_for: "",
+  //   };
+  //   try {
+  //     const response = await axios.put(
+  //       `${BASE_URL}/api/panel-update-taskmanager-repetitive/${id}`,
+  //       formData,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
+  //         },
+  //       }
+  //     );
 
-      if (response.data.code == "200") {
-        toast.success("Data Updated Successfully");
-        setRepetitiveListData(response?.data?.taskmanager);
-      } else {
-        if (response.data.code == "401") {
-          toast.error("Task Duplicate Entry");
-        } else if (response.data.code == "402") {
-          toast.error("Task Duplicate Entry");
-        } else {
-          toast.error("Task Duplicate Entry");
-        }
-      }
-    } catch (error) {
-      console.error("Error updating Task:", error);
-      toast.error("Error updating Task");
-    }
-  };
+  //     if (response.data.code == "200") {
+  //       toast.success("Data Updated Successfully");
+  //       setRepetitiveListData(response?.data?.taskmanager);
+  //     } else {
+  //       if (response.data.code == "401") {
+  //         toast.error("Task Duplicate Entry");
+  //       } else if (response.data.code == "402") {
+  //         toast.error("Task Duplicate Entry");
+  //       } else {
+  //         toast.error("Task Duplicate Entry");
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.error("Error updating Task:", error);
+  //     toast.error("Error updating Task");
+  //   }
+  // };
 
   const columns = [
     {
@@ -146,7 +146,7 @@ const RepetitiveList = () => {
           return (
             <div className="flex items-center space-x-2">
               <TaskManagerRepetitiveEdit
-                onClick={(e) => onUpdate(e, id)}
+                onClick={(e) => navigate(`/update-repetitive/${id}`)}
                 className="h-5 w-5 cursor-pointer"
               />
             </div>

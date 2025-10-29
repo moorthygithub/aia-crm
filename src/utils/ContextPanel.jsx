@@ -77,6 +77,7 @@ const AppProvider = ({ children }) => {
           "/view-student-delivery",
           "/repetitive-list",
           "/add-repetitive",
+          "/update-repetitive",
           "/userManagement",
           "/management-dashboard",
           "/page-management",
@@ -146,7 +147,7 @@ const AppProvider = ({ children }) => {
         ) {
           navigate(currentPath);
         } else {
-          navigate("/"); // Redirect to login if no token
+          navigate("/"); 
         }
       }
     }
