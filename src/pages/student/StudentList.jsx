@@ -2,26 +2,21 @@ import { CircularProgress } from "@mui/material";
 import axios from "axios";
 import moment from "moment";
 import MUIDataTable from "mui-datatables";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import BASE_URL from "../../base/BaseUrl";
 import { StudentView } from "../../components/buttonIndex/ButtonComponents";
 import Layout from "../../layout/Layout";
-import { ContextPanel } from "../../utils/ContextPanel";
 
 const StudentList = () => {
   const [studentListData, setStudentListData] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
   useEffect(() => {
     const fetchStudentData = async () => {
       try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
+       
         setLoading(true);
         const token = localStorage.getItem("token");
         const response = await axios.get(
@@ -58,8 +53,19 @@ const StudentList = () => {
       },
     },
     {
+      name: "enquiry_date",
+      label: "Enquiry Date",
+      options: {
+        filter: false,
+        sort: true,
+        customBodyRender: (value) => {
+          return moment(value).format("DD-MM-YYYY");
+        },
+      },
+    },
+    {
       name: "registration_date",
-      label: "Date",
+      label: "Reg Date",
       options: {
         filter: false,
         sort: true,

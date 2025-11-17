@@ -6,13 +6,13 @@ import SideNav from "../components/SideNav";
 const Layout = ({ children }) => {
   const [openSideNav, setOpenSideNav] = useState(false);
 
-   const [openSidebar , setOpenSidebar] = useState(true)
+  const [openSidebar, setOpenSidebar] = useState(true);
   return (
     <div className="bg-blue-gray-50/50">
-      {openSidebar && 
-      <SideNav openSideNav={openSideNav} setOpenSideNav={setOpenSideNav} />
-    }
-     <div className={openSidebar ? "p-4 xl:ml-72" : "w-full p-5"}>
+      {openSidebar && (
+        <SideNav openSideNav={openSideNav} setOpenSideNav={setOpenSideNav} />
+      )}
+      <div className={openSidebar ? "p-4 xl:ml-72" : "w-full p-4"}>
         <DashboardNavbar
           openSideNav={openSideNav}
           setOpenSideNav={setOpenSideNav}
