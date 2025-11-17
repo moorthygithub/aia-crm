@@ -1,71 +1,77 @@
-import React, { useContext, useEffect, useState } from "react";
-import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
-import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL from "../../../base/BaseUrl";
-import { MdEdit } from "react-icons/md";
-import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import MUIDataTable from "mui-datatables";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import BASE_URL from "../../../base/BaseUrl";
 import {
+  TaskManagerInspectionBulkAproveTask,
   TaskManagerInspectionCreateRepetitive,
   TaskManagerInspectionCreateTask,
   TaskManagerInspectionEdit,
 } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
+import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import Layout from "../../../layout/Layout";
 
 const InspectionListTask = () => {
   const [inspectionTListData, setInspectionTListData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
+  const [selectedIds, setSelectedIds] = useState([]);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchPendingTData = async () => {
-      try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
+
+  const fetchPendingTData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-taskmanager-inspection-list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-taskmanager-inspection-list`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+      );
 
-        let res = response.data?.taskmanager;
-        if (Array.isArray(res)) {
-          const tempRows = res.map((item) => [
-            moment(item["task_from_date"]).format("DD-MM-YYYY"),
-            moment(item["task_to_date"]).format("DD-MM-YYYY"),
-
-            item["name"],
-            item["task_details"],
-            item["id"],
-            item["task_status"],
-          ]);
-
-          setInspectionTListData(response.data?.taskmanager);
-        }
-      } catch (error) {
-        console.error(
-          "Error fetching inspection list task manager data",
-          error
-        );
-      } finally {
-        setLoading(false);
+      let res = response.data?.taskmanager;
+      if (Array.isArray(res)) {
+        setInspectionTListData(response.data?.taskmanager);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching inspection list task manager data", error);
+    }
+  };
+  useEffect(() => {
     fetchPendingTData();
-    setLoading(false);
   }, []);
 
   const columns = [
+    {
+      name: "",
+      label: "",
+      options: {
+        filter: false,
+        sort: false,
+        customBodyRenderLite: (dataIndex) => {
+          const rowId = inspectionTListData?.[dataIndex]?.id;
+          const isChecked = selectedIds.includes(rowId);
+
+          return (
+            <input
+              type="checkbox"
+              className="h-4 w-4 cursor-pointer"
+              checked={isChecked}
+              onChange={() => {
+                if (isChecked) {
+                  setSelectedIds(selectedIds.filter((id) => id !== rowId));
+                } else {
+                  setSelectedIds([...selectedIds, rowId]);
+                }
+              }}
+            />
+          );
+        },
+      },
+    },
     {
       name: "task_from_date",
       label: "Assign Date",
@@ -123,6 +129,46 @@ const InspectionListTask = () => {
       },
     },
   ];
+
+  const handleSubmitSelected = async () => {
+    if (selectedIds.length === 0) {
+      toast.error("Please select at least one task!");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        `${BASE_URL}/api/panel-update-taskmanager-bulk`,
+        {
+          task_ids: selectedIds,
+
+          task_status: "Completed",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.code == "200") {
+        toast.success(response.data.msg || "Data Updated Successfully");
+        fetchPendingTData();
+        setSelectedIds([]);
+      } else {
+        if (response.data.code == "401") {
+          toast.error(response.data.msg || "Unknown Error");
+        } else {
+          toast.error("Error submitting selected items");
+        }
+      }
+    } catch (error) {
+      toast.error("Error submitting selected items");
+      console.error("Error submitting selected items", error);
+    }
+  };
   const options = {
     selectableRows: "none",
     elevation: 0,
@@ -132,6 +178,14 @@ const InspectionListTask = () => {
     download: true,
     filter: false,
     print: true,
+    customToolbar: () => {
+      return (
+        <TaskManagerInspectionBulkAproveTask
+          className={ButtonCreate}
+          onClick={handleSubmitSelected}
+        />
+      );
+    },
   };
   return (
     <Layout>
@@ -141,18 +195,6 @@ const InspectionListTask = () => {
           Task Manager Inspection List
         </h3>
         <div>
-          {/* <Link
-            to="/add-task"
-            className="mr-2 btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-          >
-            + Add Task
-          </Link>
-          <Link
-            to="/add-repetitive"
-            className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-          >
-            + Add Repetitive
-          </Link> */}
           <TaskManagerInspectionCreateTask
             className={ButtonCreate}
             onClick={() => navigate("/add-task")}

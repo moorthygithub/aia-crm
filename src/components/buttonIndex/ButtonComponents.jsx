@@ -1119,6 +1119,26 @@ export const TaskManagerInspectionCreateRepetitive = ({
   );
 };
 TaskManagerInspectionCreateRepetitive.page = "Task Manager";
+export const TaskManagerInspectionBulkAproveTask = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (
+    !checkPermission(
+      userId,
+      "TaskManagerInspectionBulkAproveTask",
+      staticPermissions
+    )
+  ) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */} Bulk Approve
+    </button>
+  );
+};
+TaskManagerInspectionBulkAproveTask.page = "Task Manager";
 export const TaskManagerInspectionCreateTask = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -1563,6 +1583,7 @@ export default {
   TaskManagerInspectionCreateRepetitive,
 
   TaskManagerInspectionCreateTask,
+  TaskManagerInspectionBulkAproveTask,
 
   TaskManagerInspectionEdit,
 
