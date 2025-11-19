@@ -190,57 +190,42 @@ const ViewEnquiry = () => {
     <Layout>
       <div>
         <div>
-          {/* Title */}
           <div className="md:flex justify-between">
-            <div className="flex mb-4 mt-6">
+            <div className="flex mb-4 mt-6 items-center">
               <MdKeyboardBackspace
                 onClick={handleBackButton}
-                className=" text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
+                className="text-white bg-[#464D69] p-1 w-10 h-8 cursor-pointer rounded-2xl"
               />
 
-              <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-                View Enquiry 
+              <h1 className="text-2xl text-[#464D69] font-semibold ml-2">
+                View Enquiry
               </h1>
             </div>
-            <div className="mb-4 mt-6 md:w-[30%] w-full flex">
-              {/* <button
-                onClick={sendEmail}
-                className="bg-[#FFB70F] flex text-black px-4 py-2 rounded-md"
-              >
-              <button onClick={sendEmail} className={ButtonIcons}>
-                <MdEmail className="mt-1 mr-2" />
-                Send Email 
-              </button> */}
-              <EnquiryViewSendMail
-                onClick={sendEmail}
-                className={ButtonIcons}
-              />
-              {/* <button
-                onClick={
-                  enquiry.enquiry_status == "New Enquiry"
-                    ? whatsApp1
-                    : enquiry.enquiry_status == "Postponed" ||
-                      enquiry.enquiry_status == "In Process"
-                    ? whatsApp2
-                    : ""
-                }
-                className={ButtonIcons}
-              >
-                <FaWhatsapp className="mt-1 mr-2" /> WhatsApp
-              </button> */}
-              <EnquiryViewWhatsapp
-                onClick={
-                  enquiry.enquiry_status == "New Enquiry"
-                    ? whatsApp1
-                    : enquiry.enquiry_status == "Postponed" ||
-                      enquiry.enquiry_status == "In Process"
-                    ? whatsApp2
-                    : ""
-                }
-                className={ButtonIcons}
-              />
+
+            {/* Right Section */}
+            <div className="mb-4 mt-6 md:w-[30%] w-full flex gap-2">
+              {["New Enquiry", "Postponed", "In Process"].includes(
+                enquiry.enquiry_status
+              ) && (
+                <EnquiryViewWhatsapp
+                  onClick={
+                    enquiry.enquiry_status === "New Enquiry"
+                      ? whatsApp1
+                      : whatsApp2
+                  }
+                  className={ButtonIcons}
+                />
+              )}
+
+              {enquiry.enquiry_email != null && (
+                <EnquiryViewSendMail
+                  onClick={sendEmail}
+                  className={ButtonIcons}
+                />
+              )}
             </div>
           </div>
+
           <div className="grid grid-cols-1 gap-4">
             <div>
               <Card className="mt-4">
@@ -252,7 +237,10 @@ const ViewEnquiry = () => {
                         <strong>Enquiry No : {enquiry.enquiry_no} </strong>
                       </Typography>
                       <Typography className="text-black">
-                        <strong>Enquiry Date : {enquiry.enquiry_date}</strong>
+                        <strong>
+                          Enquiry Date :{" "}
+                          {moment(enquiry.enquiry_date).format("DD-MM-YYYY")}
+                        </strong>
                       </Typography>
                       <Typography className="text-black">
                         <strong>Course : {enquiry.enquiry_course}</strong>
