@@ -78,7 +78,7 @@ const ViewStudentEquiry = () => {
             />
 
             <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-              View Enquiry
+              View Enquiry 
             </h1>
           </div>
 
