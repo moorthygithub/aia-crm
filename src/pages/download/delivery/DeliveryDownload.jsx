@@ -34,7 +34,12 @@ const DownloadCommon = () => {
       color: "from-orange-500 to-cyan-400",
     },
     {
-      label: "Website Enquiry",
+      label: "Task Manager",
+      path: "/taskmanager",
+      color: "from-pink-500 to-teal-400",
+    },
+    {
+      label: "Web Enquiry",
       path: "/download-website-enquiry",
       color: "from-teal-500 to-orange-400",
     },

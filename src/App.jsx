@@ -99,6 +99,8 @@ import DownloadWebsiteEnquiry from "./pages/Dowloads/WebsiteEnquiry/DownloadWebs
 import WebsiteEnquiryReport from "./pages/Dowloads/WebsiteEnquiry/WebsiteEnquiryReport";
 import EditRepetitive from "./pages/taskManager/repetitive/EditRepetitive";
 import NotFound from "./components/common/NotFound";
+import TaskManager from "./pages/Dowloads/taskmanager/TaskManagerDownload";
+import TaskManagerReport from "./pages/Dowloads/taskmanager/TaskManagerReport";
 const queryClient = new QueryClient();
 
 const App = () => {
@@ -197,6 +199,8 @@ const App = () => {
           <Route path="/edit-task/:id" element={<EditTask />} />
           <Route path="/notification" element={<NotificationList />} />
           <Route path="/add-notification" element={<AddNotification />} />
+          <Route path="/taskmanager" element={<TaskManager />} />
+          <Route path="/taskmanagementreport" element={<TaskManagerReport />} />
           <Route path="/download-enquiry" element={<EnquiryDownload />} />
           <Route path="/website-enquiry" element={<WebsiteEnquiry />} />
           <Route

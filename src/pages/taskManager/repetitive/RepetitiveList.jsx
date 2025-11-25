@@ -1,100 +1,100 @@
-import React, { useContext, useEffect, useState } from "react";
-import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
-import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL from "../../../base/BaseUrl";
-import { MdEdit } from "react-icons/md";
 import MUIDataTable from "mui-datatables";
-import moment from "moment";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import BASE_URL from "../../../base/BaseUrl";
 import {
+  TaskManagerRepetativeBulkDeleteTask,
   TaskManagerRepetitiveCreate,
   TaskManagerRepetitiveEdit,
 } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
+import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import Layout from "../../../layout/Layout";
 
 const RepetitiveList = () => {
   const [repetitiveListData, setRepetitiveListData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchPendingTData = async () => {
-      try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-taskmanager-repetitive-list`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
+  const [selectedIds, setSelectedIds] = useState([]);
 
-        let res = response.data?.taskmanager;
-        if (Array.isArray(res)) {
-          const tempRows = res.map((item) => [
-            moment(item["task_from_date"]).format("DD-MM-YYYY"),
-            moment(item["task_to_date"]).format("DD-MM-YYYY"),
-
-            item["name"],
-            item["task_details"],
-            item["task_status"],
-            item["id"],
-          ]);
-          setRepetitiveListData(response.data?.taskmanager);
+  const fetchPendingTData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-taskmanager-repetitive-list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching pending list task manager data", error);
-      } finally {
-        setLoading(false);
+      );
+
+      let res = response.data?.taskmanager;
+      if (Array.isArray(res)) {
+        setRepetitiveListData(response.data?.taskmanager);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching pending list task manager data", error);
+    }
+  };
+  useEffect(() => {
     fetchPendingTData();
-    setLoading(false);
   }, []);
 
-  // const onUpdate = async (e, id) => {
-  //   const formData = {
-  //     task_for: "",
-  //   };
-  //   try {
-  //     const response = await axios.put(
-  //       `${BASE_URL}/api/panel-update-taskmanager-repetitive/${id}`,
-  //       formData,
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${localStorage.getItem("token")}`,
-  //         },
-  //       }
-  //     );
-
-  //     if (response.data.code == "200") {
-  //       toast.success("Data Updated Successfully");
-  //       setRepetitiveListData(response?.data?.taskmanager);
-  //     } else {
-  //       if (response.data.code == "401") {
-  //         toast.error("Task Duplicate Entry");
-  //       } else if (response.data.code == "402") {
-  //         toast.error("Task Duplicate Entry");
-  //       } else {
-  //         toast.error("Task Duplicate Entry");
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.error("Error updating Task:", error);
-  //     toast.error("Error updating Task");
-  //   }
-  // };
-
   const columns = [
+    {
+      name: "select",
+      label: "",
+      options: {
+        filter: false,
+        sort: false,
+        customHeadRender: () => {
+          const allIds = repetitiveListData?.map((item) => item.id) || [];
+          const allSelected =
+            allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
+
+          return (
+            <div className="flex justify-center items-center w-full mt-6">
+              <input
+                type="checkbox"
+                className="h-4 w-4 cursor-pointer"
+                checked={allSelected}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedIds(allIds);
+                  } else {
+                    setSelectedIds([]);
+                  }
+                }}
+              />
+            </div>
+          );
+        },
+
+        customBodyRenderLite: (dataIndex) => {
+          const rowId = repetitiveListData?.[dataIndex]?.id;
+          const isChecked = selectedIds.includes(rowId);
+
+          return (
+            <div className="flex justify-center items-center w-full">
+              <input
+                type="checkbox"
+                className="h-4 w-4 cursor-pointer"
+                checked={isChecked}
+                onChange={() => {
+                  if (isChecked) {
+                    setSelectedIds(selectedIds.filter((id) => id !== rowId));
+                  } else {
+                    setSelectedIds([...selectedIds, rowId]);
+                  }
+                }}
+              />
+            </div>
+          );
+        },
+      },
+    },
     {
       name: "task_for",
       label: "Task On",
@@ -116,7 +116,7 @@ const RepetitiveList = () => {
       label: "Employee",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -124,7 +124,7 @@ const RepetitiveList = () => {
       label: "Task Details",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
     {
@@ -132,9 +132,10 @@ const RepetitiveList = () => {
       label: "Status",
       options: {
         filter: false,
-        sort: false,
+        sort: true,
       },
     },
+   
 
     {
       name: "id",
@@ -155,6 +156,44 @@ const RepetitiveList = () => {
       },
     },
   ];
+  const handleSubmitSelected = async () => {
+    if (selectedIds.length === 0) {
+      toast.error("Please select at least one task!");
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        `${BASE_URL}/api/panel-delete-taskmanager-bulk`,
+        {
+          task_ids: selectedIds,
+
+          // task_status: "Completed",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.data.code == "200") {
+        toast.success(response.data.msg || "Data Deleted Successfully");
+        fetchPendingTData();
+        setSelectedIds([]);
+      } else {
+        if (response.data.code == "401") {
+          toast.error(response.data.msg || "Unknown Error");
+        } else {
+          toast.error("Error Deleted selected items");
+        }
+      }
+    } catch (error) {
+      toast.error("Error Deleted selected items");
+    }
+  };
   const options = {
     selectableRows: "none",
     elevation: 0,
@@ -164,6 +203,14 @@ const RepetitiveList = () => {
     download: true,
     filter: false,
     print: true,
+    customToolbar: () => {
+      return (
+        <TaskManagerRepetativeBulkDeleteTask
+          className={ButtonCreate}
+          onClick={handleSubmitSelected}
+        />
+      );
+    },
   };
   return (
     <Layout>

@@ -9,7 +9,6 @@ import Fields from "../../components/common/TextField/TextField";
 import BASE_URL from "../../base/BaseUrl";
 import { toast } from "react-toastify";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
-import employe_name from "../../data/employee_names.json";
 
 const mobile = [
   {
@@ -49,6 +48,8 @@ const EditStudent = () => {
 
   const { id } = useParams();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [employedata, setEmploye] = useState([]);
+
   const [student, setStudent] = useState({
     address: "",
     user_dob: "",
@@ -61,35 +62,50 @@ const EditStudent = () => {
     pc_device: "",
   });
 
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("id");
-    if (!isLoggedIn) {
-      navigate("/");
-      return;
+  const fetchEnquiryData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-employee-name`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const employees = response.data.employee || [];
+
+      const formattedEmployees = employees.map((emp) => ({
+        label: emp.employee_name,
+        value: emp.employee_name,
+      }));
+
+      setEmploye(formattedEmployees);
+    } catch (error) {
+      console.error("Error fetching services:", error);
     }
-  }, []);
+  };
 
+  const fetchCourseData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-student-by-id/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+
+      setStudent(response.data.studentData);
+    } catch (error) {
+      console.error("Error fetching vendor data:", error);
+    }
+  };
   useEffect(() => {
-    const fetchCourseData = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-student-by-id/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-
-        setStudent(response.data.studentData);
-      } catch (error) {
-        console.error("Error fetching vendor data:", error);
-      }
-    };
-
     fetchCourseData();
+    fetchEnquiryData();
   }, []);
-
   const onInputChange = (e) => {
     setStudent({
       ...student,
@@ -277,7 +293,7 @@ const EditStudent = () => {
                 name="employee_name"
                 value={student.employee_name}
                 onChange={(e) => onInputChange(e)}
-                options={employe_name}
+                options={employedata}
               />
               <div>
                 <Fields

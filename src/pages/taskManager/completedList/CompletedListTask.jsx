@@ -1,61 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
-import Layout from "../../../layout/Layout";
-import TaskManagerFilter from "../../../components/TaskManagerFilter";
-import { ContextPanel } from "../../../utils/ContextPanel";
-import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import BASE_URL from "../../../base/BaseUrl";
-import MUIDataTable from "mui-datatables";
 import moment from "moment";
+import MUIDataTable from "mui-datatables";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import BASE_URL from "../../../base/BaseUrl";
 import {
   TaskManagerCompletedCreateRepetitive,
   TaskManagerCompletedCreateTask,
 } from "../../../components/buttonIndex/ButtonComponents";
 import { ButtonCreate } from "../../../components/common/ButtonCss";
+import TaskManagerFilter from "../../../components/TaskManagerFilter";
+import Layout from "../../../layout/Layout";
 
 const CompletedListTask = () => {
   const [completedTListData, setCompletedTListData] = useState(null);
-  const [loading, setLoading] = useState(false);
-  const { isPanelUp } = useContext(ContextPanel);
   const navigate = useNavigate();
-  useEffect(() => {
-    const fetchCompletedTData = async () => {
-      try {
-        if (!isPanelUp) {
-          navigate("/maintenance");
-          return;
-        }
-        setLoading(true);
-        const token = localStorage.getItem("token");
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-taskmanager-completed-list`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        let res = response.data?.taskmanager;
-        if (Array.isArray(res)) {
-          const tempRows = res.map((item) => [
-            moment(item["task_from_date"]).format("DD-MM-YYYY"),
-            moment(item["task_to_date"]).format("DD-MM-YYYY"),
 
-            item["name"],
-            item["task_details"],
-            item["task_status"],
-            item["id"],
-          ]);
-          setCompletedTListData(response.data?.taskmanager);
+  const fetchCompletedTData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-taskmanager-completed-list`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         }
-      } catch (error) {
-        console.error("Error fetching completed list task manager data", error);
-      } finally {
-        setLoading(false);
+      );
+      let res = response.data?.taskmanager;
+      if (Array.isArray(res)) {
+        setCompletedTListData(response.data?.taskmanager);
       }
-    };
+    } catch (error) {
+      console.error("Error fetching completed list task manager data", error);
+    }
+  };
+  useEffect(() => {
     fetchCompletedTData();
-    setLoading(false);
   }, []);
 
   const columns = [
@@ -95,6 +76,26 @@ const CompletedListTask = () => {
       options: {
         filter: false,
         sort: false,
+      },
+    },
+    {
+      name: "updated_at",
+      label: "Completed Date",
+      options: {
+        filter: false,
+        sort: true,
+        customBodyRender: (value) => {
+          // Check if value exists and is valid
+          if (!value || value === "" || value === null || value === undefined) {
+            return "-";
+          }
+
+          const formatted = moment(value).isValid()
+            ? moment(value).format("DD-MM-YYYY")
+            : "-"; // fallback if date is invalid
+
+          return formatted;
+        },
       },
     },
     {
