@@ -8,7 +8,6 @@ import BASE_URL from "../../base/BaseUrl";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 import Fields from "../../components/common/TextField/TextField";
 import Layout from "../../layout/Layout";
-import employe_name from "../../data/employee_names.json";
 
 const title = [
   {
@@ -79,6 +78,7 @@ const CreateEnquiry = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [employedata, setEmploye] = useState([]);
   const [enquiry, setEnquiry] = useState({
     enquiry_year: "2024-25",
     enquiry_title: "",
@@ -98,12 +98,6 @@ const CreateEnquiry = () => {
   const [course, setCourse] = useState([]);
   const [country, setCountry] = useState([]);
   useEffect(() => {
-    const isLoggedIn = localStorage.getItem("id");
-    if (!isLoggedIn) {
-      window.location = "/signin";
-      return;
-    }
-
     axios({
       url: `${BASE_URL}/api/panel-fetch-webenquiry-by-id/${id}`,
       method: "GET",
@@ -130,40 +124,57 @@ const CreateEnquiry = () => {
       });
     });
   }, [id]);
+  const fetchEnquiryData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-employee-name`,
 
-  useEffect(() => {
-    const fetchCountryData = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-country`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setCountry(response.data.country);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
-
-    fetchCountryData();
-  }, []);
-
-  useEffect(() => {
-    const fetchCourseData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/panel-fetch-course`, {
+        {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        setCourse(response.data.course);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
+        }
+      );
+      const employees = response.data.employee || [];
+
+      const formattedEmployees = employees.map((emp) => ({
+        label: emp.employee_name,
+        value: emp.employee_name,
+      }));
+
+      setEmploye(formattedEmployees);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+  const fetchCountryData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/panel-fetch-country`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCountry(response.data.country);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+
+  const fetchCourseData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/panel-fetch-course`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCourse(response.data.course);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+  useEffect(() => {
+    fetchEnquiryData();
+    fetchCountryData();
 
     fetchCourseData();
   }, []);
@@ -265,7 +276,7 @@ const CreateEnquiry = () => {
           />
 
           <h1 className="text-2xl text-[#464D69] font-semibold ml-2 content-center">
-            Add Enquiry 
+            Add Enquiry
           </h1>
         </div>
         <div className="p-6 mt-5 bg-white shadow-md rounded-lg">
@@ -434,7 +445,7 @@ const CreateEnquiry = () => {
                 name="enquiry_employee_name"
                 value={enquiry.enquiry_employee_name}
                 onChange={(e) => onInputChange(e)}
-                options={employe_name}
+                options={employedata}
               />
             </div>
             <div className="mt-4 text-center">

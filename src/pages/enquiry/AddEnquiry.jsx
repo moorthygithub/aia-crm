@@ -8,7 +8,6 @@ import BASE_URL from "../../base/BaseUrl";
 import { ButtonBack, ButtonCreate } from "../../components/common/ButtonCss";
 import Fields from "../../components/common/TextField/TextField";
 import Layout from "../../layout/Layout";
-import employe_name from "../../data/employee_names.json";
 
 const title = [
   {
@@ -97,48 +96,60 @@ const AddEnquiry = () => {
   });
   const [course, setCourse] = useState([]);
   const [country, setCountry] = useState([]);
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("id");
-    if (!isLoggedIn) {
-      navigate("/");
-      return;
-    }
-  }, []);
+  const [employedata, setEmploye] = useState([]);
 
-  useEffect(() => {
-    const fetchCountryData = async () => {
-      try {
-        const response = await axios.get(
-          `${BASE_URL}/api/panel-fetch-country`,
-          {
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem("token")}`,
-            },
-          }
-        );
-        setCountry(response.data.country);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
+  const fetchEnquiryData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-employee-name`,
 
-    fetchCountryData();
-  }, []);
-
-  useEffect(() => {
-    const fetchCourseData = async () => {
-      try {
-        const response = await axios.get(`${BASE_URL}/api/panel-fetch-course`, {
+        {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        });
-        setCourse(response.data.course);
-      } catch (error) {
-        console.error("Error fetching services:", error);
-      }
-    };
+        }
+      );
+      const employees = response.data.employee || [];
 
+      const formattedEmployees = employees.map((emp) => ({
+        label: emp.employee_name,
+        value: emp.employee_name,
+      }));
+
+      setEmploye(formattedEmployees);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+
+  const fetchCountryData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/panel-fetch-country`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCountry(response.data.country);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+
+  const fetchCourseData = async () => {
+    try {
+      const response = await axios.get(`${BASE_URL}/api/panel-fetch-course`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      setCourse(response.data.course);
+    } catch (error) {
+      console.error("Error fetching services:", error);
+    }
+  };
+  useEffect(() => {
+    fetchCountryData();
+    fetchEnquiryData();
     fetchCourseData();
   }, []);
 
@@ -408,7 +419,7 @@ const AddEnquiry = () => {
                 name="enquiry_employee_name"
                 value={enquiry.enquiry_employee_name}
                 onChange={(e) => onInputChange(e)}
-                options={employe_name}
+                options={employedata}
               />
             </div>
             <div className="mt-4 text-center">

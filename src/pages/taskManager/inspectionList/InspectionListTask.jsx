@@ -46,28 +46,53 @@ const InspectionListTask = () => {
 
   const columns = [
     {
-      name: "",
+      name: "select",
       label: "",
       options: {
         filter: false,
         sort: false,
+        customHeadRender: () => {
+          const allIds = inspectionTListData?.map((item) => item.id) || [];
+          const allSelected =
+            allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
+
+          return (
+            <div className="flex justify-center items-center w-full mt-6">
+              <input
+                type="checkbox"
+                className="h-4 w-4 cursor-pointer"
+                checked={allSelected}
+                onChange={(e) => {
+                  if (e.target.checked) {
+                    setSelectedIds(allIds);
+                  } else {
+                    setSelectedIds([]);
+                  }
+                }}
+              />
+            </div>
+          );
+        },
+
         customBodyRenderLite: (dataIndex) => {
           const rowId = inspectionTListData?.[dataIndex]?.id;
           const isChecked = selectedIds.includes(rowId);
 
           return (
-            <input
-              type="checkbox"
-              className="h-4 w-4 cursor-pointer"
-              checked={isChecked}
-              onChange={() => {
-                if (isChecked) {
-                  setSelectedIds(selectedIds.filter((id) => id !== rowId));
-                } else {
-                  setSelectedIds([...selectedIds, rowId]);
-                }
-              }}
-            />
+            <div className="flex justify-center items-center w-full">
+              <input
+                type="checkbox"
+                className="h-4 w-4 cursor-pointer"
+                checked={isChecked}
+                onChange={() => {
+                  if (isChecked) {
+                    setSelectedIds(selectedIds.filter((id) => id !== rowId));
+                  } else {
+                    setSelectedIds([...selectedIds, rowId]);
+                  }
+                }}
+              />
+            </div>
           );
         },
       },

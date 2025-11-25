@@ -1019,7 +1019,7 @@ export const TaskManagerRepetitiveCreate = ({ onClick, className }) => {
 
   return (
     <button onClick={onClick} className={className}>
-      {/* <Plus className="h-4 w-4 " /> */}+ Repetative
+      {/* <Plus className="h-4 w-4 " /> */}+ Repetitive
     </button>
   );
 };
@@ -1139,6 +1139,26 @@ export const TaskManagerInspectionBulkAproveTask = ({ onClick, className }) => {
   );
 };
 TaskManagerInspectionBulkAproveTask.page = "Task Manager";
+export const TaskManagerRepetativeBulkDeleteTask = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (
+    !checkPermission(
+      userId,
+      "TaskManagerRepetativeBulkDeleteTask",
+      staticPermissions
+    )
+  ) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      {/* <Plus className="h-4 w-4 " /> */} Bulk Delete
+    </button>
+  );
+};
+TaskManagerRepetativeBulkDeleteTask.page = "Task Manager";
 export const TaskManagerInspectionCreateTask = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
   const staticPermissions = getStaticPermissions();
@@ -1266,6 +1286,37 @@ export const DownloadEnquiryView = ({ onClick, className }) => {
   );
 };
 DownloadEnquiryView.page = "Download";
+// //Download-Task Manager
+export const DownloadTaskManagerDownload = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (
+    !checkPermission(userId, "DownloadTaskManagerDownload", staticPermissions)
+  ) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      Download
+    </button>
+  );
+};
+DownloadTaskManagerDownload.page = "Download";
+export const DownloadTaskManagerView = ({ onClick, className }) => {
+  const userId = localStorage.getItem("id") || "";
+  const staticPermissions = getStaticPermissions();
+  if (!checkPermission(userId, "DownloadTaskManagerView", staticPermissions)) {
+    return null;
+  }
+
+  return (
+    <button onClick={onClick} className={className}>
+      View
+    </button>
+  );
+};
+DownloadTaskManagerView.page = "Download";
 // //Download-Student
 export const DownloadStudentDownload = ({ onClick, className }) => {
   const userId = localStorage.getItem("id") || "";
@@ -1584,7 +1635,7 @@ export default {
 
   TaskManagerInspectionCreateTask,
   TaskManagerInspectionBulkAproveTask,
-
+  TaskManagerRepetativeBulkDeleteTask,
   TaskManagerInspectionEdit,
 
   TaskManagerCompletedCreateRepetitive,
@@ -1611,7 +1662,8 @@ export default {
   DownloadAttendanceViewAttend,
 
   DownloadAttendanceDownloadNotAttend,
-
+  DownloadTaskManagerDownload,
+  DownloadTaskManagerView,
   DownloadAttendanceViewNotAttend,
   BirthDayWhatsaApp,
   BirthDayEmail,
