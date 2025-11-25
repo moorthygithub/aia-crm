@@ -17,7 +17,8 @@ const RepetitiveList = () => {
   const [repetitiveListData, setRepetitiveListData] = useState(null);
   const navigate = useNavigate();
   const [selectedIds, setSelectedIds] = useState([]);
-
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
   const fetchPendingTData = async () => {
     try {
       const token = localStorage.getItem("token");
@@ -32,7 +33,7 @@ const RepetitiveList = () => {
 
       let res = response.data?.taskmanager;
       if (Array.isArray(res)) {
-        setRepetitiveListData(response.data?.taskmanager);
+        setRepetitiveListData(res);
       }
     } catch (error) {
       console.error("Error fetching pending list task manager data", error);
@@ -44,53 +45,72 @@ const RepetitiveList = () => {
 
   const columns = [
     {
-      name: "select",
-      label: "",
+      name: "id",
+      label: "Select",
       options: {
         filter: false,
         sort: false,
+        setCellProps: () => ({
+          style: { textAlign: "center", width: "60px" },
+        }),
+
         customHeadRender: () => {
-          const allIds = repetitiveListData?.map((item) => item.id) || [];
+          // slice current page rows
+          const currentPageRows =
+            repetitiveListData?.slice(
+              page * rowsPerPage,
+              page * rowsPerPage + rowsPerPage
+            ) || [];
+
+          const pageIds = currentPageRows.map((item) => item.id);
+
+          // check if all current page rows are selected
           const allSelected =
-            allIds.length > 0 && allIds.every((id) => selectedIds.includes(id));
+            pageIds.length > 0 &&
+            pageIds.every((id) => selectedIds.includes(id));
 
           return (
-            <div className="flex justify-center items-center w-full mt-6">
+            <th style={{ textAlign: "center", padding: 4, width: "60px" }}>
               <input
                 type="checkbox"
                 className="h-4 w-4 cursor-pointer"
                 checked={allSelected}
-                onChange={(e) => {
-                  if (e.target.checked) {
-                    setSelectedIds(allIds);
+                onChange={() => {
+                  if (allSelected) {
+                    // remove current page IDs
+                    setSelectedIds(
+                      selectedIds.filter((id) => !pageIds.includes(id))
+                    );
                   } else {
-                    setSelectedIds([]);
+                    // add only current page IDs
+                    setSelectedIds([...new Set([...selectedIds, ...pageIds])]);
                   }
                 }}
               />
-            </div>
+            </th>
           );
         },
 
         customBodyRenderLite: (dataIndex) => {
-          const rowId = repetitiveListData?.[dataIndex]?.id;
+          const row = repetitiveListData?.[dataIndex];
+          const rowId = row?.id;
           const isChecked = selectedIds.includes(rowId);
 
           return (
-            <div className="flex justify-center items-center w-full">
+            <td style={{ textAlign: "center", width: "60px" }}>
               <input
                 type="checkbox"
                 className="h-4 w-4 cursor-pointer"
-                checked={isChecked}
+                checked={isChecked || false}
                 onChange={() => {
-                  if (isChecked) {
-                    setSelectedIds(selectedIds.filter((id) => id !== rowId));
-                  } else {
-                    setSelectedIds([...selectedIds, rowId]);
-                  }
+                  setSelectedIds(
+                    isChecked
+                      ? selectedIds.filter((id) => id !== rowId)
+                      : [...selectedIds, rowId]
+                  );
                 }}
               />
-            </div>
+            </td>
           );
         },
       },
@@ -135,7 +155,6 @@ const RepetitiveList = () => {
         sort: true,
       },
     },
-   
 
     {
       name: "id",
@@ -195,22 +214,34 @@ const RepetitiveList = () => {
     }
   };
   const options = {
-    selectableRows: "none",
     elevation: 0,
+    selectableRows: "none",
+    page: page,
+    rowsPerPage: rowsPerPage,
+    rowsPerPageOptions: [10, 20, 50, 100],
 
-    responsive: "standard",
-    viewColumns: true,
-    download: true,
-    filter: false,
-    print: true,
-    customToolbar: () => {
-      return (
-        <TaskManagerRepetativeBulkDeleteTask
-          className={ButtonCreate}
-          onClick={handleSubmitSelected}
-        />
-      );
+    onTableChange: (action, tableState) => {
+      switch (action) {
+        case "changePage":
+          setPage(tableState.page);
+          break;
+
+        case "changeRowsPerPage":
+          setRowsPerPage(tableState.rowsPerPage);
+          setPage(0);
+          break;
+
+        default:
+          break;
+      }
     },
+
+    customToolbar: () => (
+      <TaskManagerRepetativeBulkDeleteTask
+        className={ButtonCreate}
+        onClick={handleSubmitSelected}
+      />
+    ),
   };
   return (
     <Layout>
@@ -220,12 +251,6 @@ const RepetitiveList = () => {
           Repetitive List
         </h3>
 
-        {/* <Link
-          to="/add-repetitive"
-          className="btn btn-primary text-center md:text-right text-white bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded-lg shadow-md"
-        >
-          + Add Repetitive
-        </Link> */}
         <TaskManagerRepetitiveCreate
           className={ButtonCreate}
           onClick={() => navigate("/add-repetitive")}
