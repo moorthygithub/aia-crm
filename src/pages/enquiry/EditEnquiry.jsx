@@ -66,16 +66,36 @@ const EditEnquiry = () => {
     enquiry_remarks: "",
     enquiry_follow_date: "",
     enquiry_status: "",
+    enquiry_employee_name: "",
   });
 
   const [followup, setFollowUp] = useState([]);
-  useEffect(() => {
-    const isLoggedIn = localStorage.getItem("id");
-    if (!isLoggedIn) {
-      navigate("/");
-      return;
+
+  const [employedata, setEmploye] = useState([]);
+
+  const fetchEnquiryData = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}/api/panel-fetch-employee-name`,
+
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      const employees = response.data.employee || [];
+
+      const formattedEmployees = employees.map((emp) => ({
+        label: emp.employee_name,
+        value: emp.employee_name,
+      }));
+
+      setEmploye(formattedEmployees);
+    } catch (error) {
+      console.error("Error fetching services:", error);
     }
-  }, []);
+  };
 
   const fetchData = async () => {
     try {
@@ -96,19 +116,12 @@ const EditEnquiry = () => {
   };
   useEffect(() => {
     fetchData();
+    fetchEnquiryData();
   }, []);
-
-  //   const onInputChange = (e) => {
-  //     setEnquiry({
-  //       ...enquiry,
-  //       [e.target.name]: e.target.value,
-  //     });
-  //   };
 
   const onInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Update state with the new value
     setEnquiry({
       ...enquiry,
       [name]: value,
@@ -214,6 +227,7 @@ const EditEnquiry = () => {
       enquiry_remarks: enquiry.enquiry_remarks,
       enquiry_follow_date: enquiry.enquiry_follow_date,
       enquiry_status: enquiry.enquiry_status,
+      enquiry_employee_name: enquiry.enquiry_employee_name,
     };
     try {
       const response = await axios.put(
@@ -368,7 +382,17 @@ const EditEnquiry = () => {
             </div>
             <div className="p-6 mt-3 bg-white shadow-md rounded-lg">
               <form id="addIndiv" autoComplete="off">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <Fields
+                    title="Employee Name"
+                    type="whatsappDropdown"
+                    autoComplete="Name"
+                    name="enquiry_employee_name"
+                    value={enquiry.enquiry_employee_name}
+                    onChange={(e) => onInputChange(e)}
+                    options={employedata}
+                  />
+
                   <div className="form-group">
                     <Fields
                       required={true}
